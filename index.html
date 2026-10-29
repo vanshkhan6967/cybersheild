@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html lang="en" class="h-full bg-slate-900">
+<html lang="en" class="h-full bg-slate-50">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,231 +13,230 @@
   <!-- Canvas Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
-    /* GLOBAL LIGHT/WHITE FONT OVERRIDE & DARK UI */
+    /* GLOBAL LIGHT/WHITE FONT OVERRIDE */
     body, h1, h2, h3, h4, h5, h6, p, span, li, label, td, th, a, strong, b, input, textarea, select {
       color: #ffffff !important;
     }
 
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #090d16 !important;
-}
-h1, h2, h3, .font-heading {
-  font-family: 'Space Grotesk', sans-serif;
-}
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    h1, h2, h3, .font-heading {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    /* Subtle background grid pattern */
+    .bg-grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(226, 232, 240, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(226, 232, 240, 0.1) 1px, transparent 1px);
+    }
+    /* Custom domino collapse animation class */
+    .domino-card {
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .domino-collapsed {
+      transform: rotateX(72deg) translateY(18px) scale(0.92);
+      opacity: 0.6;
+      filter: grayscale(0.8);
+    }
+    /* Custom scrollbar for tab navigation */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* ============ NEON THEME ============ */
+    :root {
+      --neon-orange: #ff6a00;
+      --neon-orange-hot: #ff3d00;
+      --neon-amber: #ffb300;
+      --neon-pink: #ff2b8a;
+      --neon-lime: #00c45a;
+      --neon-red: #ff1f5a;
+      --ink: #ffffff;
+      --ink-soft: #e2e8f0;
+      --ink-dim: #cbd5e1;
+      --panel: rgba(15, 23, 42, 0.95);
+      --line: rgba(255, 106, 0, 0.3);
+      --glow: 0 0 14px rgba(255, 106, 0, 0.55), 0 0 30px rgba(255, 61, 0, 0.3);
+    }
 
-/* Background grid pattern with subtle light lines */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-}
+    body { font-weight: 600; letter-spacing: 0.005em; color: var(--ink); }
+    strong, b { font-weight: 800; color: #ffffff !important; }
+    h1, h2 {
+      font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+      font-weight: 900 !important;
+      letter-spacing: 0.02em;
+    }
+    h3, .font-heading { font-weight: 800 !important; }
 
-/* Custom domino collapse animation class */
-.domino-card {
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.domino-collapsed {
-  transform: rotateX(72deg) translateY(18px) scale(0.92);
-  opacity: 0.6;
-  filter: grayscale(0.8);
-}
+    @media screen {
+      html, html body {
+        background-color: #090d16 !important;
+        color: var(--ink) !important;
+      }
+      ::selection { background: var(--neon-orange); color: #fff; }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+      /* Neon headings */
+      html body h1 {
+        background: linear-gradient(90deg, #ff7a00, #ffb300, #ff2b8a);
+        -webkit-background-clip: text; background-clip: text;
+        color: transparent !important;
+        filter: drop-shadow(0 0 8px rgba(255, 106, 0, 0.5));
+      }
 
-:root {
-  --neon-orange: #ff6a00;
-  --neon-orange-hot: #ff3d00;
-  --neon-amber: #ffb300;
-  --neon-pink: #ff2b8a;
-  --neon-lime: #00c45a;
-  --neon-red: #ff1f5a;
-  --ink: #ffffff;
-  --panel: rgba(15, 23, 42, 0.92);
-  --line: rgba(255, 106, 0, 0.3);
-  --glow: 0 0 14px rgba(255, 106, 0, 0.55), 0 0 30px rgba(255, 61, 0, 0.3);
-}
+      /* Surfaces */
+      html body .bg-white, html body .bg-white\/90, html body .bg-slate-50, html body .bg-slate-100 {
+        background-color: var(--panel) !important;
+        backdrop-filter: blur(10px);
+        color: #ffffff !important;
+      }
+      html body header, html body nav#topic-tabs-bar, html body footer {
+        background-color: rgba(15, 23, 42, 0.92) !important;
+        border-color: var(--line) !important;
+      }
 
-body { font-weight: 600; letter-spacing: 0.005em; color: var(--ink); }
-strong, b { font-weight: 800; color: #ffffff !important; }
-h1, h2 {
-  font-family: 'Orbitron', 'Space Grotesk', sans-serif;
-  font-weight: 900 !important;
-  letter-spacing: 0.02em;
-}
-h3, .font-heading { font-weight: 800 !important; }
+      input::placeholder { color: #94a3b8 !important; }
+      input[type="checkbox"] { accent-color: var(--neon-orange); }
+    }
 
-@media screen {
-  html, html body {
-    background-color: #050b14 !important;
-    color: var(--ink) !important;
-  }
-  ::selection { background: var(--neon-orange); color: #fff; }
+    /* ================= GAMIFIED EXHIBITION LAYER ================= */
+    .game-hud {
+      position: sticky;
+      top: 112px;
+      z-index: 20;
+      margin-bottom: 1.25rem;
+    }
+    .xp-track {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(148,163,184,.25);
+      overflow: hidden;
+    }
+    .xp-fill {
+      height: 100%;
+      border-radius: inherit;
+      width: 0%;
+      background: linear-gradient(90deg,#ffb300,#ff6a00,#ff2b8a);
+      transition: width .55s cubic-bezier(.22,1,.36,1);
+      box-shadow: 0 0 14px rgba(255,106,0,.45);
+    }
+    .mission-card {
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .mission-card:hover { transform: translateY(-3px); }
+    .achievement-pop {
+      animation: achievementPop .55s cubic-bezier(.2,.9,.2,1);
+    }
+    @keyframes achievementPop {
+      0% { transform: scale(.7) translateY(18px); opacity:0; }
+      70% { transform: scale(1.05) translateY(-4px); opacity:1; }
+      100% { transform: scale(1) translateY(0); opacity:1; }
+    }
+    .pulse-target { animation: pulseTarget 1.15s infinite; }
+    @keyframes pulseTarget {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,106,0,.25); }
+      50% { box-shadow: 0 0 0 9px rgba(255,106,0,0); }
+    }
+    .score-pop {
+      animation: scorePop .45s ease-out;
+    }
+    @keyframes scorePop {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.28); }
+      100% { transform: scale(1); }
+    }
+    .challenge-chip {
+      transition: all .2s ease;
+      cursor: pointer;
+    }
+    .challenge-chip:hover { transform: translateY(-2px) scale(1.01); }
 
-  html body h1 {
-    background: linear-gradient(90deg, #ff7a00, #ffb300, #ff2b8a);
-    -webkit-background-clip: text; background-clip: text;
-    color: transparent !important;
-    filter: drop-shadow(0 0 8px rgba(255, 106, 0, 0.5));
-  }
-
-  html body .bg-white, html body .bg-white\/90, html body .bg-slate-50, html body .bg-slate-100 {
-    background-color: var(--panel) !important;
-    backdrop-filter: blur(10px);
-    color: #ffffff !important;
-  }
-  html body header, html body nav#topic-tabs-bar, html body footer {
-    background-color: rgba(15, 23, 42, 0.92) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-  }
-
-  input::placeholder { color: #94a3b8 !important; }
-  input[type="checkbox"] { accent-color: var(--neon-orange); }
-}
-
-/* ================= GAMIFIED EXHIBITION LAYER ================= */
-.game-hud {
-  position: sticky;
-  top: 112px;
-  z-index: 20;
-  margin-bottom: 1.25rem;
-}
-.xp-track {
-  height: 9px;
-  border-radius: 999px;
-  background: rgba(148,163,184,.25);
-  overflow: hidden;
-}
-.xp-fill {
-  height: 100%;
-  border-radius: inherit;
-  width: 0%;
-  background: linear-gradient(90deg,#ffb300,#ff6a00,#ff2b8a);
-  transition: width .55s cubic-bezier(.22,1,.36,1);
-  box-shadow: 0 0 14px rgba(255,106,0,.45);
-}
-.mission-card {
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-.mission-card:hover { transform: translateY(-3px); }
-.achievement-pop {
-  animation: achievementPop .55s cubic-bezier(.2,.9,.2,1);
-}
-@keyframes achievementPop {
-  0% { transform: scale(.7) translateY(18px); opacity:0; }
-  70% { transform: scale(1.05) translateY(-4px); opacity:1; }
-  100% { transform: scale(1) translateY(0); opacity:1; }
-}
-.pulse-target { animation: pulseTarget 1.15s infinite; }
-@keyframes pulseTarget {
-  0%,100% { box-shadow: 0 0 0 0 rgba(255,106,0,.25); }
-  50% { box-shadow: 0 0 0 9px rgba(255,106,0,0); }
-}
-.score-pop {
-  animation: scorePop .45s ease-out;
-}
-@keyframes scorePop {
-  0% { transform: scale(1); }
-  45% { transform: scale(1.28); }
-  100% { transform: scale(1); }
-}
-.challenge-chip {
-  transition: all .2s ease;
-  cursor: pointer;
-}
-.challenge-chip:hover { transform: translateY(-2px) scale(1.01); }
-
-/* Printable styles for certificate modal */
-@media print {
-  body * {
-    visibility: hidden !important;
-  }
-  #certificate-modal, #certificate-modal * {
-    visibility: visible !important;
-  }
-  #certificate-modal {
-    position: fixed !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: white !important;
-    color: #111827 !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow-y: auto !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-}
+    /* Printable styles for certificate modal */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #certificate-modal, #certificate-modal * {
+        visibility: visible !important;
+      }
+      #certificate-modal {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: white !important;
+        color: #111827 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow-y: auto !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body class="h-full bg-slate-900 text-white bg-grid-pattern flex flex-col min-h-screen">
 
   <!-- TOP HEADER / BRAND NAVIGATION -->
-
   <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center space-x-3">
+        <div class="p-2.5 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl shadow-md shadow-blue-500/20">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-white tracking-tight leading-tight">Cyber Shield</h1>
+          <p class="text-[11px] text-slate-300 font-medium">Interactive Digital Safety Exhibition</p>
+        </div>
+      </div>
 
-  <!-- Brand Logo -->
-  <div class="flex items-center space-x-3">
-    <div class="p-2.5 bg-gradient-to-tr from-blue-600 to-indigo-600 text-white rounded-2xl shadow-md shadow-blue-500/20">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-      </svg>
+      <!-- Action Navigation & Score Dashboard -->
+      <div class="flex items-center gap-3">
+        <button onclick="switchView('rules')" id="nav-rules-btn" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-slate-800 text-white border-slate-700 hover:bg-slate-700">
+          <span>🛡️</span>
+          <span class="hidden sm:inline">Golden Rules</span>
+        </button>
+
+        <button onclick="switchView('topics')" id="nav-topics-btn" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20">
+          <span>📚</span>
+          <span class="hidden sm:inline">Topics Hub</span>
+        </button>
+
+        <div class="bg-slate-800 border border-slate-700 px-3.5 py-1.5 rounded-full flex items-center gap-2">
+          <span class="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider">Shield Points</span>
+          <span id="header-score" class="text-sm font-extrabold text-blue-400">0</span>
+        </div>
+
+        <button onclick="openCertificateModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-2 border border-slate-700">
+          <span>📜</span>
+          <span class="hidden md:inline">Certificate & Results</span>
+          <span id="header-badge-count" class="bg-blue-500 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-full">0/5</span>
+        </button>
+
+        <button onclick="openResetModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border bg-rose-950 text-rose-200 border-rose-800 hover:bg-rose-900" title="Reset All Progress">
+          <span>🔄</span>
+          <span class="hidden xl:inline">Reset Progress</span>
+        </button>
+      </div>
+
     </div>
-    <div>
-      <h1 class="text-xl font-bold text-white tracking-tight leading-tight">Cyber Shield</h1>
-      <p class="text-[11px] text-slate-300 font-medium">Interactive Digital Safety Exhibition</p>
-    </div>
-  </div>
-
-  <!-- Action Navigation & Score Dashboard -->
-  <div class="flex items-center gap-3">
-    <button onclick="switchView('rules')" id="nav-rules-btn" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-slate-800 text-white border-slate-700 hover:bg-slate-700">
-      <span>🛡️</span>
-      <span class="hidden sm:inline">Golden Rules</span>
-    </button>
-
-    <button onclick="switchView('topics')" id="nav-topics-btn" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20">
-      <span>📚</span>
-      <span class="hidden sm:inline">Topics Hub</span>
-    </button>
-
-    <div class="bg-slate-800 border border-slate-700 px-3.5 py-1.5 rounded-full flex items-center gap-2">
-      <span class="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider">Shield Points</span>
-      <span id="header-score" class="text-sm font-extrabold text-blue-400">0</span>
-    </div>
-
-    <button onclick="openCertificateModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-2 border border-slate-700">
-      <span>📜</span>
-      <span class="hidden md:inline">Certificate & Results</span>
-      <span id="header-badge-count" class="bg-blue-500 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-full">0/5</span>
-    </button>
-
-    <button onclick="openResetModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border bg-rose-950 text-rose-200 border-rose-800 hover:bg-rose-900" title="Reset All Progress">
-      <span>🔄</span>
-      <span class="hidden xl:inline">Reset Progress</span>
-    </button>
-  </div>
-
-</div>
   </header>
 
   <!-- SECONDARY TAB NAVIGATION FOR TOPICS -->
-
   <nav id="topic-tabs-bar" class="bg-slate-900 border-b border-slate-800 sticky top-[61px] z-30 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex overflow-x-auto space-x-2 py-2.5 no-scrollbar" id="topic-tabs"></div>
@@ -246,261 +244,258 @@ h3, .font-heading { font-weight: 800 !important; }
   </nav>
 
   <!-- MAIN APP CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full text-white">
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-100 text-white">
-
-<!-- GAMIFIED VISITOR HUD -->
-<section id="game-hud" class="game-hud">
-  <div class="bg-slate-900/95 backdrop-blur-md rounded-3xl border border-slate-800 p-4 sm:p-5 shadow-xl">
-    <div class="flex flex-col lg:flex-row gap-4 lg:items-center">
-      <div class="flex items-center gap-3 min-w-[210px]">
-        <div id="level-icon" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center text-2xl shadow-lg">🛡️</div>
-        <div class="min-w-0">
-          <div class="flex items-center gap-2">
-            <span id="level-name" class="font-black text-sm text-white">Cyber Rookie</span>
-            <span id="combo-label" class="hidden text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-950 text-amber-200 border border-amber-800">🔥 Combo x2</span>
+    <!-- GAMIFIED VISITOR HUD -->
+    <section id="game-hud" class="game-hud">
+      <div class="bg-slate-900/95 backdrop-blur-md rounded-3xl border border-slate-800 p-4 sm:p-5 shadow-xl">
+        <div class="flex flex-col lg:flex-row gap-4 lg:items-center">
+          <div class="flex items-center gap-3 min-w-[210px]">
+            <div id="level-icon" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center text-2xl shadow-lg">🛡️</div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <span id="level-name" class="font-black text-sm text-white">Cyber Rookie</span>
+                <span id="combo-label" class="hidden text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-950 text-amber-200 border border-amber-800">🔥 Combo x2</span>
+              </div>
+              <div class="text-[10px] text-slate-300 font-bold"><span id="xp-label">0 XP</span> · <span id="next-level-label">100 XP to next level</span></div>
+              <div class="xp-track mt-1.5 w-44 sm:w-56"><div id="xp-fill" class="xp-fill"></div></div>
+            </div>
           </div>
-          <div class="text-[10px] text-slate-300 font-bold"><span id="xp-label">0 XP</span> · <span id="next-level-label">100 XP to next level</span></div>
-          <div class="xp-track mt-1.5 w-44 sm:w-56"><div id="xp-fill" class="xp-fill"></div></div>
-        </div>
-      </div>
-      <div class="grid grid-cols-3 gap-2 flex-1">
-        <div class="rounded-2xl bg-slate-800 border border-amber-500/30 p-2.5 text-center"><div class="text-[9px] uppercase font-black text-amber-300">XP</div><div id="hud-xp" class="text-lg font-black text-amber-200">0</div></div>
-        <div class="rounded-2xl bg-slate-800 border border-rose-500/30 p-2.5 text-center"><div class="text-[9px] uppercase font-black text-rose-300">Streak</div><div id="hud-streak" class="text-lg font-black text-rose-200">0 🔥</div></div>
-        <div class="rounded-2xl bg-slate-800 border border-emerald-500/30 p-2.5 text-center"><div class="text-[9px] uppercase font-black text-emerald-300">Missions</div><div id="hud-missions" class="text-lg font-black text-emerald-200">0/5</div></div>
-      </div>
-      <button onclick="openMissionModal()" class="challenge-chip rounded-2xl bg-slate-800 border border-slate-700 text-white px-4 py-3 text-left shadow-lg min-w-[190px]">
-        <div class="text-[9px] uppercase tracking-widest font-black text-amber-400">🎯 Visitor Mission</div>
-        <div id="mission-hud-title" class="font-black text-sm mt-0.5 text-white">Complete a safety challenge</div>
-        <div id="mission-hud-progress" class="text-[10px] text-slate-300 mt-0.5">Earn XP and unlock badges</div>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- QUICK CHALLENGE -->
-<section id="quick-challenge" class="mb-6">
-  <div class="rounded-3xl bg-gradient-to-r from-slate-950 via-indigo-950 to-blue-950 text-white p-5 sm:p-6 shadow-2xl overflow-hidden relative border border-slate-800">
-    <div class="absolute -right-10 -top-10 text-[130px] opacity-10">🎮</div>
-    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
-      <div>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white">⚡ 30-Second Challenge</div>
-        <h2 class="text-2xl sm:text-3xl font-black text-white mt-2">Would YOU spot the scam?</h2>
-        <p class="text-xs sm:text-sm text-slate-200 mt-1 max-w-2xl">Make one decision. Get instant feedback. Earn bonus XP. Then explore the full exhibition.</p>
-      </div>
-      <button onclick="startQuickChallenge()" class="pulse-target shrink-0 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-black px-6 py-3 rounded-2xl shadow-xl hover:scale-105 transition">Play Quick Challenge ⚡</button>
-    </div>
-    <div id="quick-challenge-area" class="relative z-10 mt-4"></div>
-  </div>
-</section>
-
-<!-- MISSION MODAL -->
-<div id="mission-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[60] hidden items-center justify-center p-4">
-  <div class="bg-slate-900 text-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border-4 border-slate-700">
-    <div class="flex items-start justify-between gap-4">
-      <div><div class="text-[10px] uppercase tracking-widest font-black text-orange-400">🎮 Mission Control</div><h3 class="text-2xl font-black mt-1 text-white">Become a Cyber Guardian</h3><p class="text-xs text-slate-300 mt-1">Visitors earn XP by exploring, making safe decisions and completing challenges.</p></div>
-      <button onclick="closeMissionModal()" class="p-2 rounded-full bg-slate-800 text-white">✕</button>
-    </div>
-    <div id="mission-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6"></div>
-    <div class="mt-5 p-4 rounded-2xl bg-slate-800 border border-amber-500/30">
-      <div class="font-black text-sm text-white">🏆 Rank up!</div>
-      <p id="mission-rank-tip" class="text-xs text-slate-300 mt-1">Complete missions to level up and unlock your Cyber Guardian certificate.</p>
-    </div>
-  </div>
-</div>
-
-<!-- VIEW 1: GOLDEN RULES SECTION -->
-<section id="view-rules" class="hidden space-y-8">
-  <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden border border-slate-800">
-    <div class="relative z-10 space-y-3 max-w-3xl">
-      <span class="inline-flex items-center gap-1.5 bg-blue-500/20 text-blue-300 border border-blue-400/30 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
-        🛡️ Universal Guidelines
-      </span>
-      <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">The 5 Golden Rules of Digital Safety</h2>
-      <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-        Protecting yourself online doesn't require technical degrees. Follow these 5 fundamental principles in your everyday digital life to stay safe from scammers, hackers, and privacy leaks.
-      </p>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3">
-      <div class="w-12 h-12 bg-amber-950 text-amber-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-amber-800">🔑</div>
-      <div class="text-xs font-extrabold text-amber-400 uppercase tracking-wider">Rule #1</div>
-      <h3 class="text-lg font-bold text-white">1 Account = 1 Unique Password</h3>
-      <p class="text-xs text-slate-300 leading-relaxed">Never reuse the same password across multiple sites. If one site gets breached, hackers try that same password on your bank, email, and social accounts!</p>
-    </div>
-
-    <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3">
-      <div class="w-12 h-12 bg-rose-950 text-rose-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-rose-800">🤫</div>
-      <div class="text-xs font-extrabold text-rose-400 uppercase tracking-wider">Rule #2</div>
-      <h3 class="text-lg font-bold text-white">OTPs &amp; PINs are Top Secret</h3>
-      <p class="text-xs text-slate-300 leading-relaxed">Bank staff, police, and customer support will NEVER ask for your One-Time Password (OTP) or card PIN. Never share them over phone calls or texts!</p>
-    </div>
-
-    <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3">
-      <div class="w-12 h-12 bg-emerald-950 text-emerald-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-emerald-800">🔍</div>
-      <div class="text-xs font-extrabold text-emerald-400 uppercase tracking-wider">Rule #3</div>
-      <h3 class="text-lg font-bold text-white">Verify Sender Before You Click</h3>
-      <p class="text-xs text-slate-300 leading-relaxed">Unexpected package tracking SMS? Bank emergency email? Always check the exact web address link and sender phone number before tapping any links.</p>
-    </div>
-
-    <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3">
-      <div class="w-12 h-12 bg-blue-950 text-blue-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-blue-800">📸</div>
-      <div class="text-xs font-extrabold text-blue-400 uppercase tracking-wider">Rule #4</div>
-      <h3 class="text-lg font-bold text-white">Pause &amp; Check Backgrounds</h3>
-      <p class="text-xs text-slate-300 leading-relaxed">Before posting photos or memes, zoom in on the background. Check for street signs, house numbers, work IDs, or school logos that reveal where you live or work.</p>
-    </div>
-
-    <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3 md:col-span-2 lg:col-span-1">
-      <div class="w-12 h-12 bg-purple-950 text-purple-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-purple-800">🧹</div>
-      <div class="text-xs font-extrabold text-purple-400 uppercase tracking-wider">Rule #5</div>
-      <h3 class="text-lg font-bold text-white">Clean Up Your Trail</h3>
-      <p class="text-xs text-slate-300 leading-relaxed">Delete unused apps, keep social media profiles set to 'Private', and clean up old inactive online accounts to minimize your digital footprint.</p>
-    </div>
-  </div>
-
-  <div class="bg-slate-900 text-white rounded-3xl border border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
-    <h3 class="text-xl font-bold text-white flex items-center gap-2">
-      <span>⚖️</span> Real-Life DOs &amp; DON'Ts Cheat Sheet
-    </h3>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-slate-800 border border-emerald-500/30 rounded-2xl p-5 space-y-3">
-        <h4 class="font-extrabold text-emerald-300 text-sm flex items-center gap-2">
-          <span class="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs">✓</span> ALWAYS DO
-        </h4>
-        <ul class="text-xs text-slate-200 space-y-2.5 font-medium">
-          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">•</span> Turn on Two-Step Verification (2FA) on your WhatsApp, Email, and Banking apps.</li>
-          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">•</span> Call your bank directly using the phone number printed on your card if you get suspicious SMS alerts.</li>
-          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">•</span> Use a trusted Password Manager app to remember long, strong passwords.</li>
-          <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">•</span> Keep your smartphone's operating system and apps updated to the latest version.</li>
-        </ul>
-      </div>
-
-      <div class="bg-slate-800 border border-rose-500/30 rounded-2xl p-5 space-y-3">
-        <h4 class="font-extrabold text-rose-300 text-sm flex items-center gap-2">
-          <span class="w-6 h-6 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs">✕</span> NEVER DO
-        </h4>
-        <ul class="text-xs text-slate-200 space-y-2.5 font-medium">
-          <li class="flex items-start gap-2"><span class="text-rose-400 font-bold">•</span> Never answer phone callers asking you to install 'remote control' repair apps (like AnyDesk or TeamViewer).</li>
-          <li class="flex items-start gap-2"><span class="text-rose-400 font-bold">•</span> Never post pictures of your concert tickets, boarding passes, or new house keys.</li>
-          <li class="flex items-start gap-2"><span class="text-rose-400 font-bold">•</span> Never grant simple utility apps (like calculators or flashlights) access to your phone contacts.</li>
-          <li class="flex items-start gap-2"><span class="text-rose-400 font-bold">•</span> Never answer viral social media quizzes asking for your birth city or pet's name.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="bg-slate-900 text-white rounded-3xl border border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
-      <div>
-        <h3 class="text-xl font-bold text-white flex items-center gap-2"><span>📋</span> Daily Cyber Hygiene Compliance Checker</h3>
-        <p class="text-xs text-slate-300 mt-1">Check off the safety habits you already follow in your daily life</p>
-      </div>
-      <div class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-2xl text-right">
-        <span class="text-[10px] uppercase font-bold text-slate-300 block">Compliance Rating</span>
-        <span id="compliance-score-display" class="text-base font-black text-rose-400">0% (Needs Attention)</span>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="compliance-checklist"></div>
-  </div>
-</section>
-
-<!-- VIEW 2: TOPIC EXHIBITION HUB & QUIZ SECTION -->
-<section id="view-topics" class="space-y-8">
-  <div id="topic-hero-card" class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-800 bg-cover bg-center relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1800&q=85');">
-    <div class="absolute inset-0 bg-slate-950/75 pointer-events-none"></div>
-    <div class="relative z-10 space-y-2 text-center md:text-left">
-      <div class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white border border-white/20">
-        <span id="topic-tag">Subtopic 1 of 5</span>
-      </div>
-      <h2 id="topic-title" class="text-2xl sm:text-4xl font-extrabold text-white">Title</h2>
-      <p id="topic-description" class="text-slate-200 text-xs sm:text-sm max-w-2xl leading-relaxed">Description</p>
-       <div class="flex flex-wrap gap-2 pt-1">
-         <span class="text-[9px] font-black bg-white/10 border border-white/20 px-2.5 py-1 rounded-full text-white">🎮 Play the simulator</span>
-         <span class="text-[9px] font-black bg-white/10 border border-white/20 px-2.5 py-1 rounded-full text-white">🧠 Answer scenarios</span>
-         <span class="text-[9px] font-black bg-white/10 border border-white/20 px-2.5 py-1 rounded-full text-white">🏆 Unlock the badge</span>
-       </div>
-    </div>
-
-    <div class="relative z-10 bg-slate-900/85 backdrop-blur-md p-4 rounded-2xl border border-slate-700 text-center min-w-[200px] shrink-0">
-        <div class="text-[10px] uppercase tracking-wider text-slate-300 font-extrabold">Topic Progress</div>
-        <div class="mt-2 w-full bg-slate-800 rounded-full h-2 overflow-hidden"><div id="topic-progress-bar" class="topic-progress h-full bg-amber-400 rounded-full" style="width:0%"></div></div>
-        <div id="topic-progress-label" class="text-[10px] text-slate-300 mt-1 font-bold">0% mastered</div>
-        <div class="mt-3 pt-3 border-t border-slate-800"></div>
-        <div class="text-[10px] uppercase tracking-wider text-slate-300 font-extrabold">Exhibition Badge</div>
-      <div id="badge-icon-display" class="text-4xl my-1">🔑</div>
-      <div id="badge-status-display" class="text-xs font-medium text-white">🔒 Locked</div>
-      <div class="text-[10px] text-slate-400 mt-1">Score 70%+ on scenario quiz</div>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-    <!-- LEFT COLUMN: EXPLANATION + MINI-GAME SIMULATOR -->
-    <div class="lg:col-span-5 space-y-6">
-      <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-sm space-y-4">
-        <div>
-          <h3 class="text-xs font-extrabold text-blue-400 uppercase tracking-wider">Information Hub</h3>
-          <h4 class="text-lg font-bold text-white mt-0.5">What Is This Topic About?</h4>
-        </div>
-
-        <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
-          <p id="topic-explanation-what" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 font-medium text-white"></p>
-          <div class="space-y-1.5">
-            <span class="font-extrabold text-rose-400 flex items-center gap-1">⚠️ Real-World Dangers &amp; Risks:</span>
-            <p id="topic-explanation-dangers" class="bg-slate-800 p-3.5 rounded-xl border border-rose-900/50 text-rose-200 font-medium"></p>
+          <div class="grid grid-cols-3 gap-2 flex-1">
+            <div class="rounded-2xl bg-slate-800 border border-amber-500/30 p-2.5 text-center"><div class="text-[9px] uppercase font-black text-amber-300">XP</div><div id="hud-xp" class="text-lg font-black text-amber-200">0</div></div>
+            <div class="rounded-2xl bg-slate-800 border border-rose-500/30 p-2.5 text-center"><div class="text-[9px] uppercase font-black text-rose-300">Streak</div><div id="hud-streak" class="text-lg font-black text-rose-200">0 🔥</div></div>
+            <div class="rounded-2xl bg-slate-800 border border-emerald-500/30 p-2.5 text-center"><div class="text-[9px] uppercase font-black text-emerald-300">Missions</div><div id="hud-missions" class="text-lg font-black text-emerald-200">0/5</div></div>
           </div>
+          <button onclick="openMissionModal()" class="challenge-chip rounded-2xl bg-slate-800 border border-slate-700 text-white px-4 py-3 text-left shadow-lg min-w-[190px]">
+            <div class="text-[9px] uppercase tracking-widest font-black text-amber-400">🎯 Visitor Mission</div>
+            <div id="mission-hud-title" class="font-black text-sm mt-0.5 text-white">Complete a safety challenge</div>
+            <div id="mission-hud-progress" class="text-[10px] text-slate-300 mt-0.5">Earn XP and unlock badges</div>
+          </button>
         </div>
       </div>
+    </section>
 
-      <!-- INTERACTIVE MINI GAME SIMULATOR -->
-      <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-sm space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-          <h3 class="text-base font-bold text-white flex items-center gap-2">🎮 Interactive Mini-Simulator</h3>
-          <span class="text-[10px] font-extrabold text-blue-400 bg-blue-950 px-2 py-0.5 rounded-md border border-blue-800 uppercase">Hands-on</span>
-        </div>
-        <div id="demo-container"></div>
-      </div>
-
-      <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-4 flex items-start gap-3">
-        <div class="text-2xl p-2 bg-amber-950 rounded-xl shrink-0 border border-amber-800">💡</div>
-        <div>
-          <h4 class="font-bold text-amber-300 text-xs">Golden Safety Rule</h4>
-          <p id="topic-tip" class="text-[11px] text-amber-100/90 mt-0.5 leading-relaxed"></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- RIGHT COLUMN: SCENARIO QUIZZES -->
-    <div class="lg:col-span-7 space-y-6">
-      <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-sm space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+    <!-- QUICK CHALLENGE -->
+    <section id="quick-challenge" class="mb-6">
+      <div class="rounded-3xl bg-gradient-to-r from-slate-950 via-indigo-950 to-blue-950 text-white p-5 sm:p-6 shadow-2xl overflow-hidden relative border border-slate-800">
+        <div class="absolute -right-10 -top-10 text-[130px] opacity-10">🎮</div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div>
-            <h3 class="text-lg font-bold text-white flex items-center gap-2">💬 Everyday Scenario Quizzes</h3>
-            <p class="text-xs text-slate-300 mt-0.5">Test your decision skills in practical situations</p>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] font-black uppercase tracking-widest text-white">⚡ 30-Second Challenge</div>
+            <h2 class="text-2xl sm:text-3xl font-black text-white mt-2">Would YOU spot the scam?</h2>
+            <p class="text-xs sm:text-sm text-slate-200 mt-1 max-w-2xl">Make one decision. Get instant feedback. Earn bonus XP. Then explore the full exhibition.</p>
           </div>
-          <div class="text-right">
-            <span id="quiz-progress-text" class="text-xs font-bold text-blue-300 bg-blue-950 px-3 py-1 rounded-lg border border-blue-800">Scenario 1 of 10</span>
-            <span id="quiz-xp-hint" class="text-[10px] font-black text-amber-300 bg-amber-950 px-3 py-1 rounded-lg border border-amber-800 ml-2">+10 XP</span>
-          </div>
+          <button onclick="startQuickChallenge()" class="pulse-target shrink-0 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-black px-6 py-3 rounded-2xl shadow-xl hover:scale-105 transition">Play Quick Challenge ⚡</button>
         </div>
+        <div id="quick-challenge-area" class="relative z-10 mt-4"></div>
+      </div>
+    </section>
 
-        <div id="quiz-container" class="space-y-6"></div>
-
-        <div class="flex items-center justify-between pt-4 border-t border-slate-800">
-          <button id="prev-quiz-btn" onclick="prevQuiz()" class="px-4 py-2 border border-slate-700 rounded-xl text-xs font-bold text-slate-200 hover:bg-slate-800 transition disabled:opacity-40 disabled:hover:bg-slate-900" disabled>← Previous</button>
-          <div id="quiz-dots" class="flex gap-1.5 overflow-x-auto max-w-[180px] sm:max-w-xs py-1"></div>
-          <button id="next-quiz-btn" onclick="nextQuiz()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm">Next Scenario →</button>
+    <!-- MISSION MODAL -->
+    <div id="mission-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[60] hidden items-center justify-center p-4">
+      <div class="bg-slate-900 text-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border-4 border-slate-700">
+        <div class="flex items-start justify-between gap-4">
+          <div><div class="text-[10px] uppercase tracking-widest font-black text-orange-400">🎮 Mission Control</div><h3 class="text-2xl font-black mt-1 text-white">Become a Cyber Guardian</h3><p class="text-xs text-slate-300 mt-1">Visitors earn XP by exploring, making safe decisions and completing challenges.</p></div>
+          <button onclick="closeMissionModal()" class="p-2 rounded-full bg-slate-800 text-white">✕</button>
+        </div>
+        <div id="mission-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6"></div>
+        <div class="mt-5 p-4 rounded-2xl bg-slate-800 border border-amber-500/30">
+          <div class="font-black text-sm text-white">🏆 Rank up!</div>
+          <p id="mission-rank-tip" class="text-xs text-slate-300 mt-1">Complete missions to level up and unlock your Cyber Guardian certificate.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+
+    <!-- VIEW 1: GOLDEN RULES SECTION -->
+    <section id="view-rules" class="hidden space-y-8">
+      <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden border border-slate-800">
+        <div class="relative z-10 space-y-3 max-w-3xl">
+          <span class="inline-flex items-center gap-1.5 bg-blue-500/20 text-blue-300 border border-blue-400/30 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">
+            🛡️ Universal Guidelines
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">The 5 Golden Rules of Digital Safety</h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Protecting yourself online doesn't require technical degrees. Follow these 5 fundamental principles in your everyday digital life to stay safe from scammers, hackers, and privacy leaks.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3">
+          <div class="w-12 h-12 bg-amber-950 text-amber-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-amber-800">🔑</div>
+          <div class="text-xs font-extrabold text-amber-400 uppercase tracking-wider">Rule #1</div>
+          <h3 class="text-lg font-bold text-white">1 Account = 1 Unique Password</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">Never reuse the same password across multiple sites. If one site gets breached, hackers try that same password on your bank, email, and social accounts!</p>
+        </div>
+
+        <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3">
+          <div class="w-12 h-12 bg-rose-950 text-rose-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-rose-800">🤫</div>
+          <div class="text-xs font-extrabold text-rose-400 uppercase tracking-wider">Rule #2</div>
+          <h3 class="text-lg font-bold text-white">OTPs &amp; PINs are Top Secret</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">Bank staff, police, and customer support will NEVER ask for your One-Time Password (OTP) or card PIN. Never share them over phone calls or texts!</p>
+        </div>
+
+        <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3">
+          <div class="w-12 h-12 bg-emerald-950 text-emerald-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-emerald-800">🔍</div>
+          <div class="text-xs font-extrabold text-emerald-400 uppercase tracking-wider">Rule #3</div>
+          <h3 class="text-lg font-bold text-white">Verify Sender Before You Click</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">Unexpected package tracking SMS? Bank emergency email? Always check the exact web address link and sender phone number before tapping any links.</p>
+        </div>
+
+        <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3">
+          <div class="w-12 h-12 bg-blue-950 text-blue-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-blue-800">📸</div>
+          <div class="text-xs font-extrabold text-blue-400 uppercase tracking-wider">Rule #4</div>
+          <h3 class="text-lg font-bold text-white">Pause &amp; Check Backgrounds</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">Before posting photos or memes, zoom in on the background. Check for street signs, house numbers, work IDs, or school logos that reveal where you live or work.</p>
+        </div>
+
+        <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 shadow-sm space-y-3 md:col-span-2 lg:col-span-1">
+          <div class="w-12 h-12 bg-purple-950 text-purple-300 rounded-2xl flex items-center justify-center text-2xl font-bold border border-purple-800">🧹</div>
+          <div class="text-xs font-extrabold text-purple-400 uppercase tracking-wider">Rule #5</div>
+          <h3 class="text-lg font-bold text-white">Clean Up Your Trail</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">Delete unused apps, keep social media profiles set to 'Private', and clean up old inactive online accounts to minimize your digital footprint.</p>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 text-white rounded-3xl border border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>⚖️</span> Real-Life DOs &amp; DON'Ts Cheat Sheet
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-slate-800 border border-emerald-500/30 rounded-2xl p-5 space-y-3">
+            <h4 class="font-extrabold text-emerald-300 text-sm flex items-center gap-2">
+              <span class="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs">✓</span> ALWAYS DO
+            </h4>
+            <ul class="text-xs text-slate-200 space-y-2.5 font-medium">
+              <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">•</span> Turn on Two-Step Verification (2FA) on your WhatsApp, Email, and Banking apps.</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">•</span> Call your bank directly using the phone number printed on your card if you get suspicious SMS alerts.</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">•</span> Use a trusted Password Manager app to remember long, strong passwords.</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">•</span> Keep your smartphone's operating system and apps updated to the latest version.</li>
+            </ul>
+          </div>
+
+          <div class="bg-slate-800 border border-rose-500/30 rounded-2xl p-5 space-y-3">
+            <h4 class="font-extrabold text-rose-300 text-sm flex items-center gap-2">
+              <span class="w-6 h-6 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs">✕</span> NEVER DO
+            </h4>
+            <ul class="text-xs text-slate-200 space-y-2.5 font-medium">
+              <li class="flex items-start gap-2"><span class="text-rose-400 font-bold">•</span> Never answer phone callers asking you to install 'remote control' repair apps (like AnyDesk or TeamViewer).</li>
+              <li class="flex items-start gap-2"><span class="text-rose-400 font-bold">•</span> Never post pictures of your concert tickets, boarding passes, or new house keys.</li>
+              <li class="flex items-start gap-2"><span class="text-rose-400 font-bold">•</span> Never grant simple utility apps (like calculators or flashlights) access to your phone contacts.</li>
+              <li class="flex items-start gap-2"><span class="text-rose-400 font-bold">•</span> Never answer viral social media quizzes asking for your birth city or pet's name.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 text-white rounded-3xl border border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+          <div>
+            <h3 class="text-xl font-bold text-white flex items-center gap-2"><span>📋</span> Daily Cyber Hygiene Compliance Checker</h3>
+            <p class="text-xs text-slate-300 mt-1">Check off the safety habits you already follow in your daily life</p>
+          </div>
+          <div class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-2xl text-right">
+            <span class="text-[10px] uppercase font-bold text-slate-300 block">Compliance Rating</span>
+            <span id="compliance-score-display" class="text-base font-black text-rose-400">0% (Needs Attention)</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="compliance-checklist"></div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: TOPIC EXHIBITION HUB & QUIZ SECTION -->
+    <section id="view-topics" class="space-y-8">
+      <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-800">
+        <div class="space-y-2 text-center md:text-left">
+          <div class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white border border-white/20">
+            <span id="topic-tag">Subtopic 1 of 5</span>
+          </div>
+          <h2 id="topic-title" class="text-2xl sm:text-4xl font-extrabold text-white">Title</h2>
+          <p id="topic-description" class="text-slate-200 text-xs sm:text-sm max-w-2xl leading-relaxed">Description</p>
+           <div class="flex flex-wrap gap-2 pt-1">
+             <span class="text-[9px] font-black bg-white/10 border border-white/20 px-2.5 py-1 rounded-full text-white">🎮 Play the simulator</span>
+             <span class="text-[9px] font-black bg-white/10 border border-white/20 px-2.5 py-1 rounded-full text-white">🧠 Answer scenarios</span>
+             <span class="text-[9px] font-black bg-white/10 border border-white/20 px-2.5 py-1 rounded-full text-white">🏆 Unlock the badge</span>
+           </div>
+        </div>
+
+        <div class="bg-slate-900/80 backdrop-blur-md p-4 rounded-2xl border border-slate-700 text-center min-w-[200px] shrink-0">
+            <div class="text-[10px] uppercase tracking-wider text-slate-300 font-extrabold">Topic Progress</div>
+            <div class="mt-2 w-full bg-slate-800 rounded-full h-2 overflow-hidden"><div id="topic-progress-bar" class="topic-progress h-full bg-amber-400 rounded-full" style="width:0%"></div></div>
+            <div id="topic-progress-label" class="text-[10px] text-slate-300 mt-1 font-bold">0% mastered</div>
+            <div class="mt-3 pt-3 border-t border-slate-800"></div>
+            <div class="text-[10px] uppercase tracking-wider text-slate-300 font-extrabold">Exhibition Badge</div>
+          <div id="badge-icon-display" class="text-4xl my-1">🔑</div>
+          <div id="badge-status-display" class="text-xs font-medium text-white">🔒 Locked</div>
+          <div class="text-[10px] text-slate-400 mt-1">Score 70%+ on scenario quiz</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- LEFT COLUMN: EXPLANATION + MINI-GAME SIMULATOR -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-sm space-y-4">
+            <div>
+              <h3 class="text-xs font-extrabold text-blue-400 uppercase tracking-wider">Information Hub</h3>
+              <h4 class="text-lg font-bold text-white mt-0.5">What Is This Topic About?</h4>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+              <p id="topic-explanation-what" class="bg-slate-800 p-3.5 rounded-xl border border-slate-700 font-medium text-white"></p>
+              <div class="space-y-1.5">
+                <span class="font-extrabold text-rose-400 flex items-center gap-1">⚠️ Real-World Dangers &amp; Risks:</span>
+                <p id="topic-explanation-dangers" class="bg-slate-800 p-3.5 rounded-xl border border-rose-900/50 text-rose-200 font-medium"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTERACTIVE MINI GAME SIMULATOR -->
+          <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 class="text-base font-bold text-white flex items-center gap-2">🎮 Interactive Mini-Simulator</h3>
+              <span class="text-[10px] font-extrabold text-blue-400 bg-blue-950 px-2 py-0.5 rounded-md border border-blue-800 uppercase">Hands-on</span>
+            </div>
+            <div id="demo-container"></div>
+          </div>
+
+          <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-4 flex items-start gap-3">
+            <div class="text-2xl p-2 bg-amber-950 rounded-xl shrink-0 border border-amber-800">💡</div>
+            <div>
+              <h4 class="font-bold text-amber-300 text-xs">Golden Safety Rule</h4>
+              <p id="topic-tip" class="text-[11px] text-amber-100/90 mt-0.5 leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: SCENARIO QUIZZES -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-sm space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+              <div>
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">💬 Everyday Scenario Quizzes</h3>
+                <p class="text-xs text-slate-300 mt-0.5">Test your decision skills in practical situations</p>
+              </div>
+              <div class="text-right">
+                <span id="quiz-progress-text" class="text-xs font-bold text-blue-300 bg-blue-950 px-3 py-1 rounded-lg border border-blue-800">Scenario 1 of 10</span>
+                <span id="quiz-xp-hint" class="text-[10px] font-black text-amber-300 bg-amber-950 px-3 py-1 rounded-lg border border-amber-800 ml-2">+10 XP</span>
+              </div>
+            </div>
+
+            <div id="quiz-container" class="space-y-6"></div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+              <button id="prev-quiz-btn" onclick="prevQuiz()" class="px-4 py-2 border border-slate-700 rounded-xl text-xs font-bold text-slate-200 hover:bg-slate-800 transition disabled:opacity-40 disabled:hover:bg-slate-900" disabled>← Previous</button>
+              <div id="quiz-dots" class="flex gap-1.5 overflow-x-auto max-w-[180px] sm:max-w-xs py-1"></div>
+              <button id="next-quiz-btn" onclick="nextQuiz()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm">Next Scenario →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- FOOTER -->
-
   <footer class="bg-slate-900 border-t border-slate-800 mt-auto py-6">
     <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 space-y-1">
       <p class="font-semibold text-white">Cyber Shield Exhibition Project — Designed for General Public Awareness</p>
@@ -509,7 +504,6 @@ h3, .font-heading { font-weight: 800 !important; }
   </footer>
 
   <!-- RESET PROGRESS CONFIRMATION MODAL -->
-
   <div id="reset-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[70] hidden items-center justify-center p-4">
     <div class="bg-slate-900 text-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border-4 border-slate-700 text-center space-y-4">
       <div class="w-16 h-16 bg-rose-950 text-rose-300 rounded-full flex items-center justify-center text-3xl mx-auto border-2 border-rose-800">
@@ -533,116 +527,115 @@ h3, .font-heading { font-weight: 800 !important; }
   </div>
 
   <!-- CERTIFICATE & RESULTS MODAL -->
-
   <div id="certificate-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 text-white rounded-3xl border-4 border-slate-700 shadow-2xl max-w-4xl w-full p-6 sm:p-10 relative text-center max-h-[95vh] overflow-y-auto">
-
-  <button onclick="closeCertificateModal()" class="no-print absolute top-4 right-4 p-2.5 bg-slate-800 hover:bg-slate-700 rounded-full text-white transition z-10 shadow-xs">✕</button>
-
-  <!-- CERTIFICATE CONTAINER -->
-  <div id="printable-certificate-card" class="bg-gradient-to-br from-amber-50/10 via-slate-900 to-blue-950/30 border-[6px] border-double border-amber-500/80 p-6 sm:p-10 rounded-2xl shadow-inner relative space-y-6 overflow-hidden text-white">
-    
-    <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none">
-      <span class="text-[220px]">🛡️</span>
-    </div>
-
-    <!-- Certificate Header -->
-    <div class="relative z-10 space-y-2">
-      <div class="flex items-center justify-center gap-2">
-        <span class="w-12 h-0.5 bg-amber-500"></span>
-        <span class="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-amber-300 bg-amber-950/80 px-4 py-1.5 rounded-full border border-amber-700">
-          Official Exhibition Certificate of Achievement
-        </span>
-        <span class="w-12 h-0.5 bg-amber-500"></span>
-      </div>
-
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-heading tracking-tight mt-2" style="font-family: 'Orbitron', sans-serif;">
-        CERTIFICATE OF MASTERY
-      </h2>
-      <p class="text-xs sm:text-sm text-slate-300 font-medium italic">
-        Presented for distinguished excellence and verified completion of the Cyber Shield Digital Safety Exhibition
-      </p>
-    </div>
-
-    <!-- Recipient Name Section -->
-    <div class="relative z-10 py-3 space-y-1">
-      <p class="text-xs uppercase tracking-widest text-slate-400 font-extrabold">This is proudly presented to</p>
-      <input type="text" id="cert-user-name" autocomplete="name" placeholder="Enter your full name" aria-label="Certificate recipient full name" class="no-print cert-name-input border-b-2 border-amber-500 focus:border-blue-400 text-center text-2xl sm:text-3xl font-black outline-none pb-1 w-3/4 sm:w-1/2 bg-transparent text-white transition">
-      <h3 id="cert-printed-name" class="text-2xl sm:text-3xl font-black text-white border-b-2 border-amber-600 pb-1 w-3/4 sm:w-1/2 mx-auto hidden tracking-wide">Recipient Name</h3>
-    </div>
-
-    <!-- Achievement Statement -->
-    <p class="relative z-10 text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
-      For successfully mastering the <strong>5 Core Pillars of Cyber Safety</strong>: navigating meme privacy risks, establishing bulletproof password security, inspecting app permission requests, identifying phishing and financial scams, and maintaining a secure digital footprint.
-    </p>
-
-    <!-- EARNED BADGES SHOWCASE -->
-    <div class="relative z-10 pt-2 pb-1">
-      <div class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300 mb-2">Exhibition Skill Badges Earned</div>
-      <div id="cert-badges-grid" class="flex flex-wrap items-center justify-center gap-2 sm:gap-4"></div>
-    </div>
-
-    <!-- FORMAL SIGNATURE, SEAL & EVALUATION REPORT -->
-    <div class="relative z-10 border-t-2 border-slate-800 pt-6 mt-4 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
       
-      <div class="md:col-span-5 flex items-center justify-around md:justify-start gap-4 text-left">
-        <div class="text-center">
-          <div class="text-lg font-serif font-bold text-white italic border-b border-slate-600 pb-1 px-4">CyberShield Director</div>
-          <span class="text-[10px] uppercase font-extrabold text-slate-400 mt-1 block">Exhibition Board</span>
-        </div>
+      <button onclick="closeCertificateModal()" class="no-print absolute top-4 right-4 p-2.5 bg-slate-800 hover:bg-slate-700 rounded-full text-white transition z-10 shadow-xs">✕</button>
+
+      <!-- CERTIFICATE CONTAINER -->
+      <div id="printable-certificate-card" class="bg-gradient-to-br from-amber-50/10 via-slate-900 to-blue-950/30 border-[6px] border-double border-amber-500/80 p-6 sm:p-10 rounded-2xl shadow-inner relative space-y-6 overflow-hidden text-white">
         
-        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-amber-500 via-amber-400 to-yellow-300 p-1 shadow-md flex items-center justify-center shrink-0 border-2 border-amber-600">
-          <div class="w-full h-full rounded-full border border-dashed border-amber-900 flex flex-col items-center justify-center text-amber-950 text-center p-1">
-            <span class="text-xs">🛡️</span>
-            <span class="text-[8px] font-black uppercase tracking-tighter">Verified</span>
-          </div>
+        <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none">
+          <span class="text-[220px]">🛡️</span>
         </div>
+
+        <!-- Certificate Header -->
+        <div class="relative z-10 space-y-2">
+          <div class="flex items-center justify-center gap-2">
+            <span class="w-12 h-0.5 bg-amber-500"></span>
+            <span class="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-amber-300 bg-amber-950/80 px-4 py-1.5 rounded-full border border-amber-700">
+              Official Exhibition Certificate of Achievement
+            </span>
+            <span class="w-12 h-0.5 bg-amber-500"></span>
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-heading tracking-tight mt-2" style="font-family: 'Orbitron', sans-serif;">
+            CERTIFICATE OF MASTERY
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-300 font-medium italic">
+            Presented for distinguished excellence and verified completion of the Cyber Shield Digital Safety Exhibition
+          </p>
+        </div>
+
+        <!-- Recipient Name Section -->
+        <div class="relative z-10 py-3 space-y-1">
+          <p class="text-xs uppercase tracking-widest text-slate-400 font-extrabold">This is proudly presented to</p>
+          <input type="text" id="cert-user-name" autocomplete="name" placeholder="Enter your full name" aria-label="Certificate recipient full name" class="no-print cert-name-input border-b-2 border-amber-500 focus:border-blue-400 text-center text-2xl sm:text-3xl font-black outline-none pb-1 w-3/4 sm:w-1/2 bg-transparent text-white transition">
+          <h3 id="cert-printed-name" class="text-2xl sm:text-3xl font-black text-white border-b-2 border-amber-600 pb-1 w-3/4 sm:w-1/2 mx-auto hidden tracking-wide">Recipient Name</h3>
+        </div>
+
+        <!-- Achievement Statement -->
+        <p class="relative z-10 text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
+          For successfully mastering the <strong>5 Core Pillars of Cyber Safety</strong>: navigating meme privacy risks, establishing bulletproof password security, inspecting app permission requests, identifying phishing and financial scams, and maintaining a secure digital footprint.
+        </p>
+
+        <!-- EARNED BADGES SHOWCASE -->
+        <div class="relative z-10 pt-2 pb-1">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300 mb-2">Exhibition Skill Badges Earned</div>
+          <div id="cert-badges-grid" class="flex flex-wrap items-center justify-center gap-2 sm:gap-4"></div>
+        </div>
+
+        <!-- FORMAL SIGNATURE, SEAL & EVALUATION REPORT -->
+        <div class="relative z-10 border-t-2 border-slate-800 pt-6 mt-4 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          
+          <div class="md:col-span-5 flex items-center justify-around md:justify-start gap-4 text-left">
+            <div class="text-center">
+              <div class="text-lg font-serif font-bold text-white italic border-b border-slate-600 pb-1 px-4">CyberShield Director</div>
+              <span class="text-[10px] uppercase font-extrabold text-slate-400 mt-1 block">Exhibition Board</span>
+            </div>
+            
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-amber-500 via-amber-400 to-yellow-300 p-1 shadow-md flex items-center justify-center shrink-0 border-2 border-amber-600">
+              <div class="w-full h-full rounded-full border border-dashed border-amber-900 flex flex-col items-center justify-center text-amber-950 text-center p-1">
+                <span class="text-xs">🛡️</span>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Verified</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-7 bg-slate-800/90 border border-slate-700 rounded-2xl p-4 shadow-xs text-left space-y-2.5">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-2">
+              <span class="text-[11px] font-extrabold text-white uppercase">📊 Performance Evaluation</span>
+              <span id="cert-overall-accuracy" class="text-[11px] font-black text-blue-300 bg-blue-950 px-2 py-0.5 rounded border border-blue-800">Overall: 0%</span>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-2 text-center">
+              <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+                <span class="text-[9px] uppercase font-extrabold text-slate-400 block">Shield Pts</span>
+                <span id="cert-score" class="text-sm font-black text-blue-400">0 pts</span>
+              </div>
+              <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+                <span class="text-[9px] uppercase font-extrabold text-slate-400 block">Scenarios</span>
+                <span id="cert-questions-solved" class="text-sm font-black text-white">0 / 50</span>
+              </div>
+              <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+                <span class="text-[9px] uppercase font-extrabold text-slate-400 block">Badges</span>
+                <span id="cert-badges" class="text-sm font-black text-emerald-400">0 / 5</span>
+              </div>
+              <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+                <span class="text-[9px] uppercase font-extrabold text-slate-400 block">Rank</span>
+                <span id="cert-rank" class="text-sm font-black text-purple-400">Rookie</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="md:col-span-7 bg-slate-800/90 border border-slate-700 rounded-2xl p-4 shadow-xs text-left space-y-2.5">
-        <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-          <span class="text-[11px] font-extrabold text-white uppercase">📊 Performance Evaluation</span>
-          <span id="cert-overall-accuracy" class="text-[11px] font-black text-blue-300 bg-blue-950 px-2 py-0.5 rounded border border-blue-800">Overall: 0%</span>
-        </div>
-        
-        <div class="grid grid-cols-4 gap-2 text-center">
-          <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
-            <span class="text-[9px] uppercase font-extrabold text-slate-400 block">Shield Pts</span>
-            <span id="cert-score" class="text-sm font-black text-blue-400">0 pts</span>
-          </div>
-          <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
-            <span class="text-[9px] uppercase font-extrabold text-slate-400 block">Scenarios</span>
-            <span id="cert-questions-solved" class="text-sm font-black text-white">0 / 50</span>
-          </div>
-          <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
-            <span class="text-[9px] uppercase font-extrabold text-slate-400 block">Badges</span>
-            <span id="cert-badges" class="text-sm font-black text-emerald-400">0 / 5</span>
-          </div>
-          <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
-            <span class="text-[9px] uppercase font-extrabold text-slate-400 block">Rank</span>
-            <span id="cert-rank" class="text-sm font-black text-purple-400">Rookie</span>
-          </div>
-        </div>
+      <!-- Modal Action Buttons -->
+      <div class="no-print mt-6 flex flex-wrap justify-center gap-3">
+        <button onclick="window.print()" class="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-xs font-bold px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2">
+          <span>🖨️</span>
+          <span>Print Professional Certificate</span>
+        </button>
+        <button onclick="openResetModal()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition flex items-center gap-1.5">
+          <span>🔄</span>
+          <span>Reset All Progress</span>
+        </button>
+        <button onclick="closeCertificateModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition border border-slate-700">Close</button>
       </div>
 
     </div>
-
-  </div>
-
-  <!-- Modal Action Buttons -->
-  <div class="no-print mt-6 flex flex-wrap justify-center gap-3">
-    <button onclick="window.print()" class="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-xs font-bold px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2">
-      <span>🖨️</span>
-      <span>Print Professional Certificate</span>
-    </button>
-    <button onclick="openResetModal()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition flex items-center gap-1.5">
-      <span>🔄</span>
-      <span>Reset All Progress</span>
-    </button>
-    <button onclick="closeCertificateModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition border border-slate-700">Close</button>
-  </div>
-
-</div>
   </div>
 
   <script>
@@ -654,7 +647,6 @@ h3, .font-heading { font-weight: 800 !important; }
         badgeIcon: "📸",
         badgeName: "Photo Guardian",
         description: "Learn how details in your photos and viral social media posts can give away your location, habits, and answers to password security questions.",
-        heroImage: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1800&q=85",
         whatIsIt: "When you upload a picture or post memes, details like street signs, work IDs, or camera location logs (EXIF metadata) travel with the photo to the internet.",
         dangers: "Burglars can figure out when you are away from home, and scammers use viral quiz answers (e.g., 'your pet's name') to answer your bank security reset questions.",
         tip: "Before clicking share, crop out house numbers, street names, work badges, or school uniforms!",
@@ -678,7 +670,6 @@ h3, .font-heading { font-weight: 800 !important; }
         badgeIcon: "🔑",
         badgeName: "Lock Master",
         description: "Reusing one password across multiple websites is like having one key for your house, car, and bank vault. If one falls, all fall.",
-        heroImage: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1800&q=85",
         whatIsIt: "Password reuse happens when you use the exact same login password for your email, streaming, social media, and banking accounts.",
         dangers: "When a small, insecure website gets hacked, automated hacker tools try that leaked password on thousands of major sites like Amazon, Gmail, and online banks (the 'Domino Effect').",
         tip: "Golden Rule #1: Use unique passwords for important accounts. Let a password manager app remember them for you!",
@@ -702,7 +693,6 @@ h3, .font-heading { font-weight: 800 !important; }
         badgeIcon: "📱",
         badgeName: "App Inspector",
         description: "When downloading new apps or joining websites, watch out for sneaky permissions, fake sign-up forms, and unsafe downloads.",
-        heroImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=85",
         whatIsIt: "When installing apps or registering on new websites, apps request access to phone hardware (camera, contacts, location) or personal profile data.",
         dangers: "Malicious apps can harvest your entire phone contact list, track your physical GPS movements 24/7, or read your private text messages.",
         tip: "Rule of Thumb: Does a flashlight or calculator app really need access to your phone contacts or camera? Deny unnecessary requests!",
@@ -725,7 +715,6 @@ h3, .font-heading { font-weight: 800 !important; }
         tagline: "Subtopic 4 of 5",
         badgeIcon: "🏦",
         badgeName: "Scam Shield",
-        heroImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1800&q=85",
         description: "Scammers use fake urgent texts, phone calls, and phishing websites to steal your money and banking credentials. Learn to spot their traps.",
         whatIsIt: "Financial phishing happens when fraudsters pretend to be your bank, police, or delivery service to panic you into revealing card numbers or OTP codes.",
         dangers: "Sharing a single 6-digit OTP code or clicking a fake banking link can allow scammers to drain your savings account in seconds.",
@@ -749,7 +738,6 @@ h3, .font-heading { font-weight: 800 !important; }
         tagline: "Subtopic 5 of 5",
         badgeIcon: "👣",
         badgeName: "Footprint Scout",
-        heroImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1800&q=85",
         description: "Every search, click, comment, and post creates a permanent digital trail. Understand how tracking works and how to clean up your history.",
         whatIsIt: "Your digital footprint is the cumulative trail of data you leave behind whenever you browse websites, post comments, or use GPS apps.",
         dangers: "Advertisers track your habits, old embarrassing posts can be found years later by employers, and data brokers build detailed behavioral profiles about you.",
@@ -769,7 +757,6 @@ h3, .font-heading { font-weight: 800 !important; }
       }
     ];
 
-
     const COMPLIANCE_ITEMS = [
       { id: "c1", label: "I use different passwords for my bank, email, and social media." },
       { id: "c2", label: "I never share OTP codes or card PINs with callers or texts." },
@@ -780,7 +767,6 @@ h3, .font-heading { font-weight: 800 !important; }
       { id: "c7", label: "I deny unnecessary permissions (like contacts) to simple app tools." },
       { id: "c8", label: "I delete old unused apps and online accounts from time to time." }
     ];
-
 
     let currentState = {
       view: 'topics',
@@ -816,7 +802,6 @@ h3, .font-heading { font-weight: 800 !important; }
       ]
     };
 
-
     window.onload = function() {
       loadSavedProgress();
       renderTopicTabs();
@@ -827,7 +812,6 @@ h3, .font-heading { font-weight: 800 !important; }
       updateGameHUD();
     };
 
-
     const LEVELS = [
       { min: 0, name: "Cyber Rookie", icon: "🛡️" },
       { min: 100, name: "Scam Spotter", icon: "🔎" },
@@ -836,7 +820,6 @@ h3, .font-heading { font-weight: 800 !important; }
       { min: 700, name: "Digital Defender", icon: "🏆" }
     ];
 
-
     const MISSIONS = [
       { id: "explore", icon: "🗺️", title: "Explore 3 Topics", text: "Visit at least 3 different safety topics.", reward: 50 },
       { id: "quiz", icon: "🧠", title: "Score a Quiz Win", text: "Answer a scenario correctly.", reward: 25 },
@@ -844,7 +827,6 @@ h3, .font-heading { font-weight: 800 !important; }
       { id: "champion", icon: "🛡️", title: "Cyber Champion", text: "Reach 75% on the safety checklist.", reward: 60 },
       { id: "quick", icon: "⚡", title: "Quick Challenge", text: "Make the right call in the 30-second challenge.", reward: 35 }
     ];
-
 
     function loadSavedProgress() {
       try {
@@ -858,7 +840,6 @@ h3, .font-heading { font-weight: 800 !important; }
         currentState.missions = { ...currentState.missions, ...(saved.missions || {}) };
       } catch (e) {}
     }
-
 
     function saveProgress() {
       try {
@@ -880,12 +861,10 @@ h3, .font-heading { font-weight: 800 !important; }
       } catch (e) {}
     }
 
-
     function resetAllProgress() {
       localStorage.removeItem("cyberShieldGamified");
       window.location.reload();
     }
-
 
     function openResetModal() {
       closeCertificateModal();
@@ -894,26 +873,22 @@ h3, .font-heading { font-weight: 800 !important; }
       modal.classList.add("flex");
     }
 
-
     function closeResetModal() {
       const modal = document.getElementById("reset-modal");
       modal.classList.add("hidden");
       modal.classList.remove("flex");
     }
 
-
     function confirmResetProgress() {
       closeResetModal();
       resetAllProgress();
     }
-
 
     function getLevel() {
       let level = LEVELS[0];
       LEVELS.forEach(l => { if (currentState.xp >= l.min) level = l; });
       return level;
     }
-
 
     function awardXP(amount, reason = "Great move!") {
       const oldLevel = getLevel();
@@ -923,7 +898,6 @@ h3, .font-heading { font-weight: 800 !important; }
       const newLevel = getLevel();
       currentState.streak += 1;
       currentState.bestStreak = Math.max(currentState.bestStreak, currentState.streak);
-
 
       if (oldLevel.name !== newLevel.name) {
         showAchievement(`LEVEL UP! ${newLevel.icon} ${newLevel.name}`, `You reached ${newLevel.min} XP.`);
@@ -936,7 +910,6 @@ h3, .font-heading { font-weight: 800 !important; }
       saveProgress();
     }
 
-
     function showAchievement(title, text) {
       const existing = document.getElementById("achievement-toast");
       if (existing) existing.remove();
@@ -947,7 +920,6 @@ h3, .font-heading { font-weight: 800 !important; }
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 2300);
     }
-
 
     function updateGameHUD() {
       const level = getLevel();
@@ -971,7 +943,6 @@ h3, .font-heading { font-weight: 800 !important; }
         combo.innerText = `🔥 Combo x${Math.min(5, currentState.streak)}`;
       } else combo.classList.add("hidden");
 
-
       const nextMission = MISSIONS.find(m => !currentState.missions[m.id]);
       document.getElementById("mission-hud-title").innerText = nextMission ? nextMission.title : "All missions complete!";
       document.getElementById("mission-hud-progress").innerText = nextMission ? `+${nextMission.reward} XP · ${nextMission.text}` : "🏆 You are a Cyber Guardian!";
@@ -979,12 +950,10 @@ h3, .font-heading { font-weight: 800 !important; }
       document.getElementById("topic-progress-label").innerText = `${getTopicPercent(currentState.currentTopicIndex)}% mastered`;
     }
 
-
     function getTopicPercent(index) {
       const total = EXHIBITION_DATA[index].quiz.length;
       return Math.round((currentState.topicScores[index] / total) * 100);
     }
-
 
     function markMission(id) {
       if (currentState.missions[id]) return;
@@ -1000,7 +969,6 @@ h3, .font-heading { font-weight: 800 !important; }
       renderMissionPanel();
       saveProgress();
     }
-
 
     function renderMissionPanel() {
       const el = document.getElementById("mission-list");
@@ -1023,7 +991,6 @@ h3, .font-heading { font-weight: 800 !important; }
         `${completed}/5 missions complete. ${5-completed} more to unlock the full Guardian experience.`;
     }
 
-
     function openMissionModal() {
       renderMissionPanel();
       document.getElementById("mission-modal").classList.remove("hidden");
@@ -1033,7 +1000,6 @@ h3, .font-heading { font-weight: 800 !important; }
       document.getElementById("mission-modal").classList.add("hidden");
       document.getElementById("mission-modal").classList.remove("flex");
     }
-
 
     function startQuickChallenge() {
       const area = document.getElementById("quick-challenge-area");
@@ -1052,7 +1018,6 @@ h3, .font-heading { font-weight: 800 !important; }
         </div>`;
     }
 
-
     function finishQuickChallenge(correct) {
       currentState.quickChallengeDone = true;
       if (correct) {
@@ -1068,7 +1033,6 @@ h3, .font-heading { font-weight: 800 !important; }
       saveProgress();
     }
 
-
     function switchView(viewName) {
       currentState.view = viewName;
       const rulesSec = document.getElementById('view-rules');
@@ -1076,7 +1040,6 @@ h3, .font-heading { font-weight: 800 !important; }
       const tabsBar = document.getElementById('topic-tabs-bar');
       const rulesBtn = document.getElementById('nav-rules-btn');
       const topicsBtn = document.getElementById('nav-topics-btn');
-
 
       if (viewName === 'rules') {
         rulesSec.classList.remove('hidden');
@@ -1092,7 +1055,6 @@ h3, .font-heading { font-weight: 800 !important; }
         rulesBtn.className = "px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-slate-800 text-white border-slate-700 hover:bg-slate-700";
       }
     }
-
 
     function renderTopicTabs() {
       const navContainer = document.getElementById('topic-tabs');
@@ -1111,7 +1073,6 @@ h3, .font-heading { font-weight: 800 !important; }
       }).join('');
     }
 
-
     function switchTopic(index) {
       currentState.currentTopicIndex = index;
       if (!currentState.visitedTopics) currentState.visitedTopics = [];
@@ -1125,7 +1086,6 @@ h3, .font-heading { font-weight: 800 !important; }
       loadTopic(index);
     }
 
-
     function loadTopic(index) {
       const topic = EXHIBITION_DATA[index];
       document.getElementById('topic-tag').innerText = topic.tagline;
@@ -1134,19 +1094,15 @@ h3, .font-heading { font-weight: 800 !important; }
       document.getElementById('topic-explanation-what').innerText = topic.whatIsIt;
       document.getElementById('topic-explanation-dangers').innerText = topic.dangers;
       document.getElementById('topic-tip').innerText = topic.tip;
-      document.getElementById('topic-hero-card').style.backgroundImage = `url('${topic.heroImage}')`;
-
 
       document.getElementById('badge-icon-display').innerText = topic.badgeIcon;
       const hasBadge = currentState.badgesEarned[index];
       document.getElementById('badge-status-display').innerText = hasBadge ? "⭐ Badge Unlocked!" : "🔒 Locked";
       document.getElementById('badge-status-display').className = hasBadge ? "text-xs font-extrabold text-amber-300" : "text-xs font-medium text-white";
 
-
       renderSimulatorDemo(index);
       renderQuiz();
     }
-
 
     function renderSimulatorDemo(topicIndex) {
       const container = document.getElementById('demo-container');
@@ -1178,7 +1134,6 @@ h3, .font-heading { font-weight: 800 !important; }
           color = "text-amber-400";
           width = "w-2/4 bg-amber-500";
         }
-
 
         container.innerHTML = `
           <div class="space-y-3">
@@ -1261,7 +1216,6 @@ h3, .font-heading { font-weight: 800 !important; }
       }
     }
 
-
     function toggleDangerSpot(id) {
       if (!currentState.photoSpotterFound.includes(id)) currentState.photoSpotterFound.push(id);
       else currentState.photoSpotterFound = currentState.photoSpotterFound.filter(i => i !== id);
@@ -1273,12 +1227,10 @@ h3, .font-heading { font-weight: 800 !important; }
       renderSimulatorDemo(0);
     }
 
-
     function updatePasswordTest(val) {
       currentState.passwordTestVal = val;
       renderSimulatorDemo(1);
     }
-
 
     function triggerDominoEffect() {
       const container = document.getElementById('domino-cards-container');
@@ -1298,15 +1250,12 @@ h3, .font-heading { font-weight: 800 !important; }
       }
     }
 
-
     function resetDominoEffect() { renderSimulatorDemo(1); }
-
 
     function switchAppTab(tab) {
       currentState.activeAppTab = tab;
       renderSimulatorDemo(2);
     }
-
 
     function toggleAppPerm(perm) {
       currentState.appPermissions[currentState.activeAppTab][perm] = !currentState.appPermissions[currentState.activeAppTab][perm];
@@ -1318,7 +1267,6 @@ h3, .font-heading { font-weight: 800 !important; }
       }
       renderSimulatorDemo(2);
     }
-
 
     function inspectSms(id) {
       const sms = currentState.smsMessages.find(s => s.id === id);
@@ -1336,12 +1284,10 @@ h3, .font-heading { font-weight: 800 !important; }
       renderSimulatorDemo(3);
     }
 
-
     function toggleDeleteAccount(idx) {
       currentState.footprintAccounts[idx].deleted = !currentState.footprintAccounts[idx].deleted;
       renderSimulatorDemo(4);
     }
-
 
     function clearTrackingCookies() {
       if (!currentState.miniGameRewarded[4]) {
@@ -1352,7 +1298,6 @@ h3, .font-heading { font-weight: 800 !important; }
       alert("All tracking cookies and browser cache successfully cleared!");
     }
 
-
     function renderQuiz() {
       const topicIndex = currentState.currentTopicIndex;
       const quizIndex = currentState.currentQuizIndex;
@@ -1360,16 +1305,13 @@ h3, .font-heading { font-weight: 800 !important; }
       const answerKey = `${topicIndex}-${quizIndex}`;
       const selectedOption = currentState.quizAnswers[answerKey];
 
-
       document.getElementById('quiz-progress-text').innerText = `Scenario ${quizIndex + 1} of ${EXHIBITION_DATA[topicIndex].quiz.length}`;
-
 
       const dotsContainer = document.getElementById('quiz-dots');
       dotsContainer.innerHTML = EXHIBITION_DATA[topicIndex].quiz.map((_, i) => {
         const isAnswered = currentState.quizAnswers[`${topicIndex}-${i}`] !== undefined;
         return `<div class="w-2.5 h-2.5 rounded-full shrink-0 transition-all ${i === quizIndex ? 'bg-blue-500 w-5' : isAnswered ? 'bg-emerald-400' : 'bg-slate-700'}"></div>`;
       }).join('');
-
 
       const container = document.getElementById('quiz-container');
       container.innerHTML = `
@@ -1401,18 +1343,15 @@ h3, .font-heading { font-weight: 800 !important; }
           ${selectedOption !== undefined ? `<div class="mt-4 p-4 rounded-xl border ${selectedOption === quizData.correct ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-200' : 'bg-slate-800 border-slate-700 text-slate-200'} text-xs leading-relaxed"><strong>${selectedOption === quizData.correct ? '🎉 Correct!' : '💡 Tip:'}</strong> ${quizData.explanation}</div>` : ''}
         </div>`;
 
-
       document.getElementById('prev-quiz-btn').disabled = quizIndex === 0;
       document.getElementById('next-quiz-btn').innerText = quizIndex === EXHIBITION_DATA[topicIndex].quiz.length - 1 ? "Finish Subtopic 🎉" : "Next Scenario →";
     }
-
 
     function selectQuizAnswer(optionIndex) {
       const topicIndex = currentState.currentTopicIndex;
       const quizIndex = currentState.currentQuizIndex;
       const answerKey = `${topicIndex}-${quizIndex}`;
       if (currentState.quizAnswers[answerKey] !== undefined) return;
-
 
       currentState.quizAnswers[answerKey] = optionIndex;
       if (optionIndex === EXHIBITION_DATA[topicIndex].quiz[quizIndex].correct) {
@@ -1431,7 +1370,6 @@ h3, .font-heading { font-weight: 800 !important; }
       updateGameHUD();
       renderQuiz();
     }
-
 
     function checkBadgeUnlock(topicIndex) {
       const percentage = (currentState.topicScores[topicIndex] / EXHIBITION_DATA[topicIndex].quiz.length) * 100;
@@ -1454,7 +1392,6 @@ h3, .font-heading { font-weight: 800 !important; }
       }
     }
 
-
     function prevQuiz() { if (currentState.currentQuizIndex > 0) { currentState.currentQuizIndex--; renderQuiz(); } }
     function nextQuiz() {
       const maxQuiz = EXHIBITION_DATA[currentState.currentTopicIndex].quiz.length;
@@ -1462,7 +1399,6 @@ h3, .font-heading { font-weight: 800 !important; }
       else if (currentState.currentTopicIndex < EXHIBITION_DATA.length - 1) { switchTopic(currentState.currentTopicIndex + 1); }
       else { openCertificateModal(); }
     }
-
 
     function renderComplianceChecklist() {
       const container = document.getElementById('compliance-checklist');
@@ -1475,12 +1411,10 @@ h3, .font-heading { font-weight: 800 !important; }
       updateComplianceScore();
     }
 
-
     function toggleComplianceItem(id) {
       currentState.complianceChecked[id] = !currentState.complianceChecked[id];
       renderComplianceChecklist();
     }
-
 
     function updateComplianceScore() {
       const checkedCount = Object.values(currentState.complianceChecked).filter(Boolean).length;
@@ -1490,7 +1424,6 @@ h3, .font-heading { font-weight: 800 !important; }
       if (percentage >= 75) markMission("champion");
       updateGameHUD();
     }
-
 
     function updateHeaderStats() {
       const scoreEl = document.getElementById('header-score');
@@ -1502,12 +1435,10 @@ h3, .font-heading { font-weight: 800 !important; }
       if (document.getElementById('hud-xp')) updateGameHUD();
     }
 
-
     function openCertificateModal() {
       document.getElementById('cert-score').innerText = `${currentState.score} pts`;
       document.getElementById('cert-badges').innerText = `${currentState.badgesEarned.filter(Boolean).length} / 5`;
       document.getElementById('cert-rank').innerText = getLevel().name;
-
 
       const badgeGrid = document.getElementById('cert-badges-grid');
       badgeGrid.innerHTML = EXHIBITION_DATA.map((topic, idx) => {
@@ -1521,11 +1452,9 @@ h3, .font-heading { font-weight: 800 !important; }
         `;
       }).join('');
 
-
       let totalAnswered = 0;
       let totalCorrect = 0;
       const totalExhibitionQuestions = EXHIBITION_DATA.reduce((sum, t) => sum + t.quiz.length, 0);
-
 
       EXHIBITION_DATA.forEach((topic, topicIdx) => {
         topic.quiz.forEach((q, qIdx) => {
@@ -1537,11 +1466,9 @@ h3, .font-heading { font-weight: 800 !important; }
         });
       });
 
-
       document.getElementById('cert-questions-solved').innerText = `${totalAnswered} / ${totalExhibitionQuestions}`;
       const overallAcc = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
       document.getElementById('cert-overall-accuracy').innerText = `Overall Accuracy: ${overallAcc}%`;
-
 
       document.getElementById('certificate-modal').classList.remove('hidden');
       const nameInput = document.getElementById('cert-user-name');
@@ -1554,9 +1481,7 @@ h3, .font-heading { font-weight: 800 !important; }
       setTimeout(() => nameInput.focus(), 50);
     }
 
-
     function closeCertificateModal() { document.getElementById('certificate-modal').classList.add('hidden'); }
   </script>
-
 </body>
 </html>
