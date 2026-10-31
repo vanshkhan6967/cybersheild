@@ -317,86 +317,87 @@
 </style>
 <style id="certificate-print-fix">
 @media print {
-  @page {
-    size: A4 landscape;
-    margin: 0;
-  }
+  @page { size: auto; margin: 10mm; }
 
   html, body {
-    width: 297mm !important;
-    height: 210mm !important;
+    width: auto !important;
+    height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     background: white !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
-  body * {
-    visibility: hidden !important;
-  }
+  body * { visibility: hidden !important; }
 
   #certificate-modal,
-  #certificate-modal * {
-    visibility: visible !important;
-  }
+  #certificate-modal * { visibility: visible !important; }
 
   #certificate-modal {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 297mm !important;
-    height: 210mm !important;
+    position: absolute !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
+    display: block !important;
     background: white !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: hidden !important;
-    z-index: 999999 !important;
+    overflow: visible !important;
   }
 
   #certificate-modal > div {
-    width: 297mm !important;
-    height: 210mm !important;
+    width: 100% !important;
     max-width: none !important;
+    height: auto !important;
     max-height: none !important;
     margin: 0 !important;
-    box-shadow: none !important;
+    padding: 0 !important;
+    border: none !important;
     border-radius: 0 !important;
-    transform: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
   }
 
-  #certificate-content {
+  #printable-certificate-card {
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
     box-sizing: border-box !important;
+    margin: 0 auto !important;
+    padding: 7mm !important;
+    border: 4px double #b45309 !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    gap: 3mm !important;
+    background: white !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    transform: none !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
-  #certificate-content .no-print,
   #certificate-modal button,
-  #certificate-modal input {
-    display: none !important;
+  #certificate-modal input,
+  #certificate-modal .no-print { display: none !important; }
+
+  #printable-certificate-card img {
+    max-width: 100% !important;
+    max-height: 18mm !important;
+    object-fit: contain !important;
   }
 
-  #certificate-content {
-    background: white !important;
-    color: #111827 !important;
-  }
+  #printable-certificate-card * { box-sizing: border-box !important; }
+  #printable-certificate-card .text-blue-900 { color: #1e3a8a !important; }
+  #printable-certificate-card .text-amber-700,
+  #printable-certificate-card .text-amber-600 { color: #b45309 !important; }
 
-  #certificate-content * {
-    color: inherit;
-  }
-
-  #certificate-content .text-blue-900 {
-    color: #1e3a8a !important;
-  }
-
-  #certificate-content .text-amber-700,
-  #certificate-content .text-amber-600 {
-    color: #b45309 !important;
-  }
+  body::before,
+  body::after { display: none !important; }
 }
 </style>
 
