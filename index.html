@@ -2807,7 +2807,8 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
         const topicCount = EXHIBITION_DATA.length;
         currentState.currentTopicIndex = Number.isInteger(saved.currentTopicIndex)
           ? Math.min(Math.max(saved.currentTopicIndex, 0), topicCount - 1) : 0;
-        currentState.currentQuizIndex = 0;
+        const savedQuizIndex = Number.isInteger(saved.currentQuizIndex) ? saved.currentQuizIndex : 0;
+        currentState.currentQuizIndex = Math.min(Math.max(savedQuizIndex, 0), EXHIBITION_DATA[currentState.currentTopicIndex].quiz.length - 1);
         currentState.score = Number.isFinite(saved.score) ? Math.max(0, saved.score) : 0;
         currentState.xp = Number.isFinite(saved.xp) ? Math.max(0, saved.xp) : 0;
         currentState.streak = Number.isFinite(saved.streak) ? Math.max(0, saved.streak) : 0;
@@ -3415,6 +3416,12 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
     }
 
     /* ============ QUIZ RENDERER ============ */
+    function escapeQuizHTML(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[char]);
+    }
+
     function renderQuiz() {
       const topicIndex = currentState.currentTopicIndex;
       const quizIndex = currentState.currentQuizIndex;
@@ -3433,7 +3440,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       const container = document.getElementById('quiz-container');
       container.innerHTML = `
         <div class="space-y-4">
-          <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">${quizIndex + 1}. ${quizData.question}</h4>
+          <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">${quizIndex + 1}. ${escapeQuizHTML(quizData.question)}</h4>
           <div class="space-y-2.5">
             ${quizData.options.map((option, optIdx) => {
               let btnStyle = "bg-white hover:bg-slate-50 border-slate-200 text-slate-700";
