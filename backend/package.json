@@ -1,0 +1,14 @@
+{
+  "name": "cyber-shield-ai-quiz-backend",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.mjs" },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0",
+    "openai": "^5.20.0"
+  }
+}
