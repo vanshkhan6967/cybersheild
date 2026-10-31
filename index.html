@@ -2842,6 +2842,86 @@ button, input, select, textarea { max-width: 100%; }
   }
 </style>
 
+
+<style id="certificate-layout-source-fix">
+  #certificate-global-close {
+    display: none;
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 2147483647;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: #dc2626;
+    color: #fff;
+    font: 900 30px/1 Arial, sans-serif;
+    box-shadow: 0 4px 18px rgba(0,0,0,.55);
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  #certificate-global-close.is-visible { display: flex !important; }
+  @media screen and (max-width: 767px) {
+    #certificate-modal:not(.hidden) {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      padding: 68px 8px 12px !important;
+      display: block !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      box-sizing: border-box !important;
+    }
+    #certificate-modal > div {
+      display: block !important;
+      position: relative !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
+      max-height: none !important;
+      margin: 0 auto !important;
+      padding: 12px !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
+    }
+    #printable-certificate-card {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      padding: 9px !important;
+      border-width: 3px !important;
+      overflow: hidden !important;
+      overflow-wrap: anywhere !important;
+      box-sizing: border-box !important;
+    }
+    #printable-certificate-card *,
+    #certificate-modal .no-print.mt-6,
+    #certificate-modal .no-print.mt-6 button {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      overflow-wrap: anywhere !important;
+    }
+    #printable-certificate-card .flex { flex-wrap: wrap !important; }
+    #printable-certificate-card .grid { grid-template-columns: minmax(0,1fr) !important; }
+    #printable-certificate-card .grid.grid-cols-4 { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    #certificate-modal .no-print.mt-6 {
+      display: grid !important;
+      grid-template-columns: minmax(0,1fr) !important;
+      width: 100% !important;
+    }
+    #certificate-modal .no-print.mt-6 button { width: 100% !important; white-space: normal !important; }
+  }
+</style>
+
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
@@ -3247,9 +3327,10 @@ button, input, select, textarea { max-width: 100%; }
     </div>
   </div>
 
+  <button type="button" id="certificate-global-close" onclick="closeCertificateModal()" aria-label="Close certificate and results" title="Close certificate">×</button>
+
   <!-- CERTIFICATE & RESULTS MODAL -->
   <div id="certificate-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <button type="button" onclick="closeCertificateModal()" aria-label="Close certificate and results" title="Close certificate" class="certificate-close-btn no-print">×</button>
     <div class="bg-white rounded-3xl border-4 border-slate-900 shadow-2xl max-w-4xl w-full p-6 sm:p-10 relative text-center max-h-[95vh] overflow-y-auto">
       
       
@@ -4402,6 +4483,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       document.getElementById('cert-overall-accuracy').innerText = `Overall Accuracy: ${overallAcc}%`;
 
       document.getElementById('certificate-modal').classList.remove('hidden');
+      document.getElementById('certificate-global-close').classList.add('is-visible');
       const nameInput = document.getElementById('cert-user-name');
       const printedName = document.getElementById('cert-printed-name');
       nameInput.oninput = function() {
@@ -4412,7 +4494,10 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       setTimeout(() => nameInput.focus(), 50);
     }
 
-    function closeCertificateModal() { document.getElementById('certificate-modal').classList.add('hidden'); }
+    function closeCertificateModal() {
+      document.getElementById('certificate-modal').classList.add('hidden');
+      document.getElementById('certificate-global-close').classList.remove('is-visible');
+    }
   </script>
 
 <script id="exhibition-slide-engine">
