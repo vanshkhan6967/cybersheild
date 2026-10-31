@@ -1967,6 +1967,15 @@ body { min-width: 320px; }
   }
   footer { padding-bottom: max(20px, env(safe-area-inset-bottom)) !important; }
 }
+/* Compact, readable visitor guide on phone screens. */
+@media (max-width: 767px) {
+  #how-cyber-shield-works { padding: 16px !important; gap: 12px !important; }
+  #how-cyber-shield-works ol { gap: 12px !important; }
+  #how-cyber-shield-works ol li { align-items: flex-start !important; line-height: 1.55 !important; }
+  #how-cyber-shield-works ol li > span:last-child { flex: 1 1 0%; overflow-wrap: anywhere; }
+  #how-cyber-shield-works p { overflow-wrap: anywhere; }
+}
+
 @media (max-width: 390px) {
   header > div { padding-left: 10px !important; padding-right: 10px !important; }
   header > div > div:last-child { gap: 5px !important; }
@@ -2526,7 +2535,7 @@ button, input, select, textarea { max-width: 100%; }
         <!-- LEFT COLUMN: EXPLANATION + MINI-GAME SIMULATOR -->
         <div class="lg:col-span-5 space-y-6">
           <!-- HOW THE WEBSITE WORKS -->
-          <div class="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-6 shadow-sm space-y-3 sm:space-y-4">
+          <div id="how-cyber-shield-works" class="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-6 shadow-sm space-y-3 sm:space-y-4">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-cyan-400/10 border border-cyan-300/25 flex items-center justify-center text-lg sm:text-xl">🧭</div>
               <div>
