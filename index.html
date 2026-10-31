@@ -4421,6 +4421,31 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       document.getElementById('cert-overall-accuracy').innerText = `Overall Accuracy: ${overallAcc}%`;
 
       document.getElementById('certificate-modal').classList.remove('hidden');
+      // Put the close control directly on body, outside the backdrop-filter/scrolling modal.
+      let globalClose = document.getElementById('certificate-global-close');
+      if (!globalClose) {
+        globalClose = document.createElement('button');
+        globalClose.id = 'certificate-global-close';
+        globalClose.type = 'button';
+        globalClose.textContent = '×';
+        globalClose.setAttribute('aria-label', 'Close certificate and results');
+        globalClose.title = 'Close';
+        globalClose.onclick = closeCertificateModal;
+        Object.assign(globalClose.style, {
+          position: 'fixed', top: 'max(10px, env(safe-area-inset-top))',
+          right: '12px', left: 'auto', bottom: 'auto', zIndex: '2147483647',
+          display: 'flex', visibility: 'visible', opacity: '1',
+          alignItems: 'center', justifyContent: 'center',
+          width: '48px', height: '48px', minWidth: '48px', minHeight: '48px',
+          padding: '0', border: '3px solid #fff', borderRadius: '50%',
+          background: '#dc2626', color: '#fff',
+          font: '900 34px/1 Arial,sans-serif',
+          boxShadow: '0 4px 18px rgba(0,0,0,.65)', cursor: 'pointer',
+          pointerEvents: 'auto'
+        });
+        document.body.appendChild(globalClose);
+      }
+      globalClose.style.display = 'flex';
       const nameInput = document.getElementById('cert-user-name');
       const printedName = document.getElementById('cert-printed-name');
       nameInput.oninput = function() {
@@ -4433,6 +4458,8 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
 
     function closeCertificateModal() {
       document.getElementById('certificate-modal').classList.add('hidden');
+      const globalClose = document.getElementById('certificate-global-close');
+      if (globalClose) globalClose.style.display = 'none';
     }
   </script>
 
