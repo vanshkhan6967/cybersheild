@@ -3,35 +3,32 @@ import express from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import OpenAI from "openai";
+import { randomUUID } from "node:crypto";
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
 
-// ================= CONFIGURATION =================
-
 const GROQ_MODEL =
-  process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+  process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 
 const allowedOrigins = (
   process.env.ALLOWED_ORIGINS ||
   "https://vanshkhan6967.github.io"
 )
   .split(",")
-  .map(value => value.trim().replace(/\/$/, ""))
+  .map(v => v.trim().replace(/\/$/, ""))
   .filter(Boolean);
 
-// Groq uses an OpenAI-compatible API.
 const client = process.env.GROQ_API_KEY
   ? new OpenAI({
       apiKey: process.env.GROQ_API_KEY,
       baseURL: "https://api.groq.com/openai/v1",
-      timeout: 60000,
+      timeout: 90000,
       maxRetries: 1
     })
   : null;
 
-// ================= SECURITY =================
-
+// SECURITY
 app.set("trust proxy", 1);
 app.disable("x-powered-by");
 
@@ -41,14 +38,8 @@ app.use((req, res, next) => {
   if (origin && allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Vary", "Origin");
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, OPTIONS"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type"
-    );
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   }
 
   if (req.method === "OPTIONS") {
@@ -70,18 +61,14 @@ app.use("/api/", rateLimit({
   legacyHeaders: false
 }));
 
-// ================= HOME =================
-
+// HEALTH CHECK
 app.get("/", (req, res) => {
   res.json({
     ok: true,
     service: "Cyber Shield API",
-    provider: "Groq",
-    health: "/api/health"
+    provider: "Groq"
   });
 });
-
-// ================= HEALTH CHECK =================
 
 app.get("/api/health", (req, res) => {
   res.json({
@@ -93,45 +80,95 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// ================= AI QUIZ GENERATOR =================
+// STRICT JSON SCHEMA
+function getQuizSchema() {
+  const option = {
+    type: "object",
+    properties: {
+      id: {
+        type: "string",
+        enum: ["A", "B", "C", "D"]
+      },
+      text: {
+        type: "string"
+      }
+    },
+    required: ["id", "text"],
+    additionalProperties: false
+  };
 
+  const question = {
+    type: "object",
+    properties: {
+      question: { type: "string" },
+      options: {
+        type: "array",
+        items: option
+      },
+      answer: {
+        type: "string",
+        enum: ["A", "B", "C", "D"]
+      },
+      explanation: { type: "string" }
+    },
+    required: [
+      "question",
+      "options",
+      "answer",
+      "explanation"
+    ],
+    additionalProperties: false
+  };
+
+  return {
+    type: "object",
+    properties: {
+      questions: {
+        type: "array",
+        items: question
+      }
+    },
+    required: ["questions"],
+    additionalProperties: false
+  };
+}
+
+// GENERATE QUIZ
 app.post("/api/generate-quiz", async (req, res) => {
   const { topic, difficulty, count } = req.body || {};
   const questionCount = Number(count);
 
-  // Validate topic
   if (
     typeof topic !== "string" ||
     !topic.trim() ||
     topic.trim().length > 2000
   ) {
     return res.status(400).json({
-      error: "Topic is required and must be 2,000 characters or fewer."
+      error: "Enter a valid quiz topic."
     });
   }
 
-  // Validate difficulty
   if (!["Beginner", "Intermediate", "Advanced"].includes(difficulty)) {
     return res.status(400).json({
-      error: "Choose a valid difficulty."
+      error: "Invalid difficulty."
     });
   }
 
-  // Validate question count
   if (![5, 8, 10].includes(questionCount)) {
     return res.status(400).json({
-      error: "Choose 5, 8, or 10 questions."
+      error: "Question count must be 5, 8, or 10."
     });
   }
 
-  // Check API configuration
   if (!client) {
     return res.status(503).json({
-      error: "Groq AI service is not configured. Check GROQ_API_KEY."
+      error: "Groq API key is not configured."
     });
   }
 
   try {
+    const variationId = randomUUID();
+
     const completion = await client.chat.completions.create({
       model: GROQ_MODEL,
 
@@ -139,122 +176,113 @@ app.post("/api/generate-quiz", async (req, res) => {
         {
           role: "system",
           content: `
-You are Cyber Shield's educational quiz generator.
+You are the Cyber Shield educational quiz generator.
 
-Create accurate, age-appropriate cyber-safety questions.
+Generate accurate, age-appropriate cybersecurity awareness questions.
 
-Return ONLY a valid JSON object in this exact structure:
+Every quiz must contain genuinely varied questions.
+Avoid repeating questions or using the same scenario repeatedly.
+Use realistic educational situations.
+Make all four answer options plausible.
+Exactly one answer must be correct.
+Write clear explanations.
 
-{
-  "questions": [
-    {
-      "question": "Question text",
-      "options": [
-        { "id": "A", "text": "Option A" },
-        { "id": "B", "text": "Option B" },
-        { "id": "C", "text": "Option C" },
-        { "id": "D", "text": "Option D" }
-      ],
-      "answer": "A",
-      "explanation": "Explanation of the correct answer."
-    }
-  ]
-}
-
-Rules:
-1. Generate exactly the requested number of questions.
-2. Every question must have exactly four options.
-3. Option IDs must be A, B, C and D.
-4. Exactly one answer must be correct.
-5. The answer must match one option ID.
-6. Explanations must be educational and clear.
-7. Questions must match the requested difficulty.
-8. Do not include markdown or text outside the JSON.
-9. Do not repeat questions.
+Return the requested structured quiz only.
 `
         },
         {
           role: "user",
           content: `
-Generate exactly ${questionCount} multiple-choice questions.
+Generate exactly ${questionCount} new questions.
 
 Topic: ${topic.trim()}
 Difficulty: ${difficulty}
 Language: English.
+
+Variation ID: ${variationId}
+
+Use this variation ID to inspire a different selection of
+scenarios and knowledge points. Do not mention it in the quiz.
+
+Do not copy a previous question set.
 `
         }
       ],
 
       response_format: {
-        type: "json_object"
+        type: "json_schema",
+        json_schema: {
+          name: "cyber_shield_quiz",
+          strict: true,
+          schema: getQuizSchema()
+        }
       },
 
-      temperature: 0.2,
-      max_completion_tokens: 4500
+      temperature: 0.7,
+      max_completion_tokens: 6000
     });
 
     const output =
       completion.choices?.[0]?.message?.content;
 
     if (!output) {
-      return res.status(502).json({
-        error: "Groq returned an empty response."
-      });
+      throw new Error("Groq returned an empty response.");
     }
 
     const parsed = JSON.parse(output);
-    const questions = parsed?.questions;
+    const questions = parsed.questions;
 
-    // Validate number of questions
     if (
       !Array.isArray(questions) ||
       questions.length !== questionCount
     ) {
-      return res.status(502).json({
-        error: "AI returned an invalid number of questions."
-      });
+      throw new Error("Incorrect question count.");
     }
 
-    // Validate each question
     for (const q of questions) {
-      const validIds = ["A", "B", "C", "D"];
+      const ids = ["A", "B", "C", "D"];
 
       if (
-        typeof q?.question !== "string" ||
+        typeof q.question !== "string" ||
         !q.question.trim() ||
-        typeof q?.explanation !== "string" ||
+        typeof q.explanation !== "string" ||
         !q.explanation.trim() ||
-        !validIds.includes(q.answer) ||
+        !ids.includes(q.answer) ||
         !Array.isArray(q.options) ||
         q.options.length !== 4
       ) {
-        return res.status(502).json({
-          error: "AI returned invalid quiz data."
-        });
+        throw new Error("Invalid question structure.");
       }
 
-      const optionIds = q.options.map(option => option?.id);
+      const optionIds = q.options.map(o => o.id);
 
       if (
-        !validIds.every(id => optionIds.includes(id)) ||
         new Set(optionIds).size !== 4 ||
+        !ids.every(id => optionIds.includes(id)) ||
         q.options.some(
-          option =>
-            typeof option?.text !== "string" ||
-            !option.text.trim()
+          o => typeof o.text !== "string" || !o.text.trim()
         )
       ) {
-        return res.status(502).json({
-          error: "AI returned invalid answer options."
-        });
+        throw new Error("Invalid answer options.");
       }
     }
 
-    // Return the same response structure as before.
+    const uniqueQuestions = new Set(
+      questions.map(q => q.question.trim().toLowerCase())
+    );
+
+    if (uniqueQuestions.size !== questions.length) {
+      throw new Error("Duplicate questions detected.");
+    }
+
+    console.log(
+      `Generated ${questions.length} questions for: ${topic.trim()}`
+    );
+
     return res.json({ questions });
 
   } catch (error) {
-    console.error("Groq request failed:", {
+    console.error("Groq quiz error:", {
       status: error?.status,
       code: error?.code,
       message: error?.message
@@ -262,38 +290,25 @@ Language: English.
 
     if (error?.status === 401) {
       return res.status(502).json({
-        error: "Groq API key is invalid. Check your Render environment."
+        error: "Invalid Groq API key."
       });
     }
 
     if (error?.status === 429) {
       return res.status(429).json({
-        error: "Groq usage limit reached. Please try again later."
-      });
-    }
-
-    if (error?.status === 400) {
-      return res.status(502).json({
-        error: "Groq rejected the request. Check the model configuration."
-      });
-    }
-
-    if (error?.status === 503 || error?.status === 502) {
-      return res.status(503).json({
-        error: "Groq AI is temporarily unavailable. Try again later."
+        error: "Groq free usage limit reached. Please try again later."
       });
     }
 
     return res.status(502).json({
-      error: "AI could not generate the quiz. Please try again."
+      error: "Quiz generation failed. Please try again."
     });
   }
 });
 
-// ================= START SERVER =================
-
+// START SERVER
 app.listen(port, () => {
   console.log(`Cyber Shield API listening on port ${port}`);
-  console.log(`AI Provider: Groq`);
+  console.log("AI Provider: Groq");
   console.log(`AI Model: ${GROQ_MODEL}`);
 });
