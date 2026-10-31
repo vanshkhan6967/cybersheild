@@ -24,7 +24,7 @@ const client = process.env.GROQ_API_KEY
       apiKey: process.env.GROQ_API_KEY,
       baseURL: "https://api.groq.com/openai/v1",
       timeout: 90000,
-      maxRetries: 1
+      maxRetries: 0
     })
   : null;
 
