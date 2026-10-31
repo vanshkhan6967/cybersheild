@@ -3267,8 +3267,8 @@ button, input, select, textarea { max-width: 100%; }
 
   <!-- CERTIFICATE & RESULTS MODAL -->
   <div id="certificate-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <button type="button" onclick="closeCertificateModal()" aria-label="Close certificate and results" title="Close certificate" class="certificate-close-btn no-print">×</button>
     <div class="bg-white rounded-3xl border-4 border-slate-900 shadow-2xl max-w-4xl w-full p-6 sm:p-10 relative text-center max-h-[95vh] overflow-y-auto">
+      <button type="button" onclick="closeCertificateModal()" aria-label="Close certificate and results" title="Close certificate" class="certificate-close-btn">×</button>
       
       
 
@@ -5007,46 +5007,34 @@ main [style*="--fx-hero-image"] {
 </script>
 
 
-<style id="certificate-close-button-last-override">
-  /* Final visible close control for the certificate dialog. */
-  #certificate-modal > button.certificate-close-btn {
+
+<style id="certificate-close-button-final">
+  #certificate-modal > div > button.certificate-close-btn {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 2147483000 !important;
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
     align-items: center !important;
     justify-content: center !important;
-    position: absolute !important;
-    top: 12px !important;
-    right: 12px !important;
-    z-index: 2147483000 !important;
-    width: 46px !important;
-    height: 46px !important;
-    min-width: 46px !important;
-    min-height: 46px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
     padding: 0 !important;
-    margin: 0 !important;
     border: 3px solid #fff !important;
     border-radius: 50% !important;
     background: #dc2626 !important;
     color: #fff !important;
-    font-family: Arial, sans-serif !important;
-    font-size: 32px !important;
-    font-weight: 900 !important;
-    line-height: 1 !important;
-    text-align: center !important;
-    box-shadow: 0 4px 18px rgba(0,0,0,.55) !important;
+    font: 900 30px/1 Arial, sans-serif !important;
+    box-shadow: 0 3px 14px rgba(0,0,0,.5) !important;
     cursor: pointer !important;
     pointer-events: auto !important;
   }
-  @media screen and (max-width: 767px) {
-    #certificate-modal > button.certificate-close-btn {
-      position: fixed !important;
-      top: max(12px, env(safe-area-inset-top)) !important;
-      right: 12px !important;
-    }
-  }
   @media print {
-    #certificate-modal > button.certificate-close-btn { display: none !important; }
+    #certificate-modal > div > button.certificate-close-btn { display: none !important; }
   }
 </style>
 
