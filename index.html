@@ -2299,7 +2299,10 @@ body { min-width: 320px; }
               </div>
             </div>
 
-            <div id="topic-ai-status" role="status" aria-live="polite" class="hidden rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs font-semibold text-cyan-900"></div>
+            <div class="flex flex-col sm:flex-row gap-2 sm:items-center">
+              <div id="topic-ai-status" role="status" aria-live="polite" class="hidden rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs font-semibold text-cyan-900"></div>
+              <button id="topic-ai-generate-btn" type="button" onclick="refreshTopicQuizzesWithAI()" class="shrink-0 rounded-xl border border-cyan-300 bg-cyan-50 px-4 py-2.5 text-xs font-bold text-cyan-900 hover:bg-cyan-100 transition">✨ Optional AI: generate fresh questions</button>
+            </div>
             <div id="quiz-container" class="space-y-6"></div>
 
             <div class="flex items-center justify-between pt-4 border-t border-slate-100">
@@ -2646,7 +2649,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       updateHeaderStats();
       renderMissionPanel();
       updateGameHUD();
-      refreshTopicQuizzesWithAI();
+      setTopicAIStatus('Built-in practical quizzes are ready. AI question generation is optional.', 'success');
     };
 
 
@@ -3208,120 +3211,58 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
 
     async function refreshTopicQuizzesWithAI() {
       if (topicQuizGenerationState === 'loading') return;
+      const topicIndex = currentState.currentTopicIndex || 0;
+      const topic = EXHIBITION_DATA[topicIndex];
+      const button = document.getElementById('topic-ai-generate-btn');
       topicQuizGenerationState = 'loading';
-      setTopicAIStatus('✨ AI is creating fresh questions for all topics. Please wait a moment before answering.');
+      if (button) { button.disabled = true; button.textContent = 'Generating…'; }
+      setTopicAIStatus('✨ Asking the optional AI service for fresh questions for this topic only…');
       renderQuiz();
 
-      
-const results = [];
-
-for (const topic of EXHIBITION_DATA) {
-  try {
-    console.log(`Generating quiz for: ${topic.title}`);
-
-    const response = await fetch(
-      `${CYBER_SHIELD_API_BASE}/api/generate-quiz`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          topic: `${topic.title}. Focus on: ${topic.description} Key safety guidance: ${topic.tip}`,
-          difficulty: 'Intermediate',
-          count: 10
-        })
-      }
-    );
-
-    const payload = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-      throw new Error(
-        payload.error || `AI request failed (${response.status})`
-      );
-    }
-
-    if (
-      !Array.isArray(payload.questions) ||
-      payload.questions.length !== 10
-    ) {
-      throw new Error('AI returned an incomplete question set.');
-    }
-
-    const converted = payload.questions.map((q) => {
-      const ordered = ['A', 'B', 'C', 'D'].map(
-        id => q.options.find(option => option.id === id)?.text || ''
-      );
-
-      const correct = ['A', 'B', 'C', 'D'].indexOf(q.answer);
-
-      if (
-        !q.question ||
-        ordered.some(option => !option) ||
-        correct < 0
-      ) {
-        throw new Error('AI returned an invalid question.');
-      }
-
-      return {
-        question: q.question,
-        options: ordered,
-        correct,
-        explanation: q.explanation || ''
-      };
-    });
-
-    results.push({
-      status: 'fulfilled',
-      value: {
-        topicId: topic.id,
-        quiz: converted
-      }
-    });
-
-    console.log(`✓ Quiz generated for: ${topic.title}`);
-
-  } catch (error) {
-    console.error(
-      `Quiz generation failed for ${topic.title}:`,
-      error.message
-    );
-
-    results.push({
-      status: 'rejected',
-      reason: error
-    });
-  }
-}
-
-      let refreshed = 0;
-      results.forEach(result => {
-        if (result.status !== 'fulfilled') return;
-        const topicIndex = EXHIBITION_DATA.findIndex(topic => topic.id === result.value.topicId);
-        if (topicIndex >= 0) {
-          EXHIBITION_DATA[topicIndex].quiz = result.value.quiz;
-          refreshed++;
+      try {
+        const response = await fetch(`${CYBER_SHIELD_API_BASE}/api/generate-quiz`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            topic: `${topic.title}. Write practical, moderate-difficulty cyber-safety questions for everyday adults aged roughly 28–50 who are not technical specialists. Use familiar situations involving family, work, shopping, banking, messaging and smartphones. Avoid programming, jargon and obscure technical facts. Focus on sensible decisions and explain why.`,
+            difficulty: 'Intermediate',
+            count: 10
+          })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || `AI request failed (${response.status})`);
+        if (!Array.isArray(payload.questions) || payload.questions.length < 5) {
+          throw new Error('The AI returned too few usable questions.');
         }
-      });
 
-      // The quiz content changed, so answers and scores from the old question set no longer apply.
-      currentState.quizAnswers = {};
-      currentState.topicScores = EXHIBITION_DATA.map(() => 0);
-      currentState.currentQuizIndex = 0;
-      topicQuizGenerationState = refreshed === EXHIBITION_DATA.length ? 'ready' : 'fallback';
-      if (refreshed === EXHIBITION_DATA.length) {
-        setTopicAIStatus('✓ Fresh AI-generated questions are ready in every topic. They will be generated again next time the site loads.', 'success');
-      } else if (refreshed > 0) {
-        setTopicAIStatus(`AI refreshed ${refreshed} of ${EXHIBITION_DATA.length} topics. The remaining topics are using their built-in questions; check your server/API configuration.`, 'error');
-      } else {
-        setTopicAIStatus('AI could not refresh the questions, so the built-in questions are still available. Start the site through the backend and check OPENAI_API_KEY.', 'error');
+        const converted = payload.questions.map(q => {
+          const ordered = ['A', 'B', 'C', 'D'].map(id => q.options?.find(option => option.id === id)?.text || '');
+          const correct = ['A', 'B', 'C', 'D'].indexOf(q.answer);
+          if (!q.question || ordered.some(option => !option) || correct < 0) {
+            throw new Error('The AI returned a question in an unsupported format.');
+          }
+          return { question: q.question, options: ordered, correct, explanation: q.explanation || 'Choose the safest practical option and verify unexpected requests independently.' };
+        });
+
+        topic.quiz = converted;
+        Object.keys(currentState.quizAnswers).forEach(key => {
+          if (key.startsWith(topicIndex + '-')) delete currentState.quizAnswers[key];
+        });
+        currentState.topicScores[topicIndex] = 0;
+        currentState.currentQuizIndex = 0;
+        topicQuizGenerationState = 'ready';
+        setTopicAIStatus('✓ Fresh AI questions are ready for this topic. Other topics continue using the built-in question bank.', 'success');
+        loadTopic(topicIndex);
+        updateHeaderStats();
+        updateGameHUD();
+        saveProgress();
+      } catch (error) {
+        topicQuizGenerationState = 'fallback';
+        setTopicAIStatus(`AI is unavailable right now (${error.message}). Your built-in moderate-level questions are still ready—no API credits are needed to continue.`, 'error');
+        renderQuiz();
+      } finally {
+        if (button) { button.disabled = false; button.textContent = '✨ Optional AI: generate fresh questions'; }
       }
-      renderTopicTabs();
-      loadTopic(currentState.currentTopicIndex || 0);
-      updateHeaderStats();
-      updateGameHUD();
-      saveProgress();
     }
 
     /* ============ QUIZ RENDERER ============ */
@@ -4000,6 +3941,80 @@ main [style*="--fx-hero-image"] {
     questions.forEach((q,i)=>{const item=document.createElement('div');item.style.cssText='padding:12px 0;border-top:1px solid #2a3b51'; const head=safeText('div','',`${i+1}. ${q.question}`);head.style.cssText='font-weight:700;color:#eaf4ff;line-height:1.5';const detail=safeText('div','aiq-muted',`${answers[i]===q.answer?'Correct':'Review'} · Answer: ${q.options.find(o=>o.id===q.answer)?.text || q.answer}. ${q.explanation}`);detail.style.cssText='font-size:13px;line-height:1.55;margin-top:5px';item.append(head,detail);list.appendChild(item);}); area().appendChild(list);
     const again=document.createElement('button'); again.className='aiq-primary'; again.style.marginTop='16px'; again.textContent='Generate another quiz'; again.onclick=()=>{questions=[];area().replaceChildren();$('aiq-status').textContent='Choose your settings and generate a new quiz.';$('aiq-generate').textContent='✨ Generate quiz';$('aiq-topic').focus();}; area().appendChild(again);
   }
+})();
+</script>
+
+
+<script id="adult-friendly-built-in-quiz-bank">
+/* Offline-first question bank: practical, moderate scenarios for non-technical adults. */
+(() => {
+  const q = (question, options, correct, explanation) => ({ question, options, correct, explanation });
+  const banks = {
+    photos: [
+      q("You are posting a family celebration photo. A house number and your child's school badge are visible. What is the best choice?", ["Post it because the account is private.", "Crop or blur identifying details and limit who can see the post.", "Add your neighbourhood so friends know where it was taken."], 1, "Photos can reveal addresses, routines and school details. A private audience helps, but removing unnecessary clues is safer."),
+      q("A social media quiz asks for your first car, childhood street and mother's maiden name to create a fun profile. What should you do?", ["Answer only the questions that seem fun.", "Use made-up answers that you will remember.", "Skip it because these details may help someone guess account recovery answers."], 2, "Personal-history questions are often used in account recovery. Avoid sharing answers publicly."),
+      q("You want to post a picture of an event ticket. Which detail should be hidden?", ["The barcode or QR code and booking reference.", "The event name.", "The colour of the ticket."], 0, "Someone may copy a ticket code or use booking details before you arrive."),
+      q("A colleague shares a photo of an office whiteboard. It includes customer names and phone numbers. What is the responsible response?", ["Forward it only to colleagues.", "Ask them to remove it and share a version with private details covered.", "Save it before it disappears."], 1, "Work information should not be exposed in public posts or casual group chats."),
+      q("You are leaving for a two-week holiday. When is the safer time to share holiday photos publicly?", ["Post live updates showing that the house is empty.", "Share boarding passes so friends can follow the trip.", "Wait until you return, and avoid sharing travel documents."], 2, "Real-time travel updates can reveal when a home is unoccupied. Travel documents also contain personal booking information."),
+      q("A stranger comments accurately that you visit the same café every morning. You never tagged the location. What might have revealed it?", ["A familiar shop sign or landmark in repeated photos.", "Your phone battery level.", "The colour filter on your photos."], 0, "Background details and repeated routines can reveal more than a location tag."),
+      q("A friend asks you to share a photo of a family member who is not on social media. What should you consider first?", ["Whether the photo will get many likes.", "Whether the person is comfortable with the photo being shared.", "Whether to add their full name and workplace."], 1, "Respect other people's privacy and ask before posting identifiable photos."),
+      q("You receive a message from an unknown number with a link to view a photo album. What is the safest action?", ["Open it quickly before the link expires.", "Forward it to your family group to check.", "Do not open the unexpected link; verify with the sender through a known contact method."], 2, "Unexpected links can lead to fake sign-in pages or harmful downloads."),
+      q("Your phone camera app offers to add location information to every photo. What is a sensible privacy choice?", ["Turn location tagging off unless you have a clear reason to use it.", "Leave it on and post every photo publicly.", "Add your home address in the photo caption instead."], 0, "Location details can disclose where a photo was taken. Share them only when needed."),
+      q("You want relatives to see family photos without making them public. What should you use?", ["A public social media post.", "A private album shared only with selected people.", "A public link posted in a community group."], 1, "A restricted album reduces exposure. Review who has access and remove people who no longer need it.")
+    ],
+    passwords: [
+      q("You use the same password for shopping, email and banking. A small shopping site reports a data leak. What should you do first?", ["Change the reused password on important accounts, starting with email and banking.", "Wait to see whether money disappears.", "Keep it because the shopping site was not your bank."], 0, "Stolen passwords are often tried on other services. Unique passwords prevent one leak from opening several accounts."),
+      q("Which password is generally the strongest choice?", ["Your name followed by your birth year.", "A long, unique passphrase that is not based on public personal details.", "The word 'Welcome' with an exclamation mark."], 1, "Length and uniqueness matter. Avoid names, birthdays and common patterns."),
+      q("A caller says they are from your bank and asks you to read out the one-time password sent to your phone. What should you do?", ["Share it if they know your account name.", "Share only the first few digits.", "Do not share it; end the call and contact the bank using its official number."], 2, "A one-time password is meant for you. Genuine support staff should not ask you to disclose it."),
+      q("You need to sign in to your email on a hotel computer. What is the safest approach?", ["Avoid it if possible; if necessary, do not save the password and sign out fully.", "Save the password so the next visit is easier.", "Ask the reception desk to remember it."], 0, "Shared computers may retain sessions or saved passwords. Use your own trusted device where possible."),
+      q("Your password manager offers to create a different password for every website. Why is this useful?", ["It makes every password shorter.", "A leak on one site will not automatically expose your other accounts.", "It means you no longer need to protect your email."], 1, "Unique passwords limit the damage if one service is breached. Protect the password manager with a strong master password."),
+      q("You receive an email saying your password will expire today and you must sign in through its link. What should you do?", ["Click the link because it sounds urgent.", "Reply with your current password to confirm your identity.", "Open the service using its official app or website and check for an alert there."], 2, "Urgency and sign-in links are common phishing tactics. Navigate to the service independently."),
+      q("A family member wants access to your streaming service. What is safer than sending your main password?", ["Use the service's official family or profile-sharing option, if available.", "Send the password in a large family group.", "Use the same password for their email too."], 0, "Official sharing features avoid exposing the password you may reuse or use to recover other accounts."),
+      q("You wrote your passwords in a notebook kept beside your computer at work. What is the main concern?", ["Paper cannot be read by anyone else.", "Visitors or coworkers could see or photograph it.", "It makes the computer run slowly."], 1, "Passwords in plain view can be copied. Use a secure password manager or an appropriately protected record."),
+      q("You receive a login approval notification, but you are not trying to sign in. What should you do?", ["Approve it to clear the notification.", "Ignore it and do nothing else.", "Deny it, change your password from the official service, and review recent account activity."], 2, "An unexpected approval request may mean someone has your password. Deny it and secure the account."),
+      q("Which accounts deserve especially strong, unique passwords?", ["Your primary email, banking and important shopping or social accounts.", "Only accounts where you store photos.", "Only accounts you use every day."], 0, "Email often controls password resets for other services, while financial and personal accounts contain sensitive information.")
+    ],
+    apps: [
+      q("A free torch app asks for access to your contacts, microphone and location. What is the sensible response?", ["Allow everything because it is free.", "Deny permissions that are not needed and consider uninstalling the app.", "Give permission only while the phone is charging."], 1, "Permissions should match what an app needs to do. A torch generally does not need contacts or microphone access."),
+      q("You find a banking app through an advertisement in a message. What should you do before installing it?", ["Install it if the logo looks familiar.", "Ask the sender to confirm it is genuine.", "Find the bank's official website or app store listing and verify the publisher."], 2, "Fake apps can imitate trusted brands. Use official sources and check the developer name."),
+      q("A website offers a free prize but asks for your date of birth, home address and card details. What is the safest choice?", ["Leave the page; the information requested is excessive for a prize claim.", "Enter the details but use a different email.", "Provide the card details only if the page has bright colours."], 0, "Unnecessary personal and payment details are a warning sign. Do not trade sensitive information for an unverified offer."),
+      q("Your phone shows an update for its operating system. Why should you install updates from the official settings menu?", ["Updates only change wallpaper.", "They often fix security problems and improve reliability.", "They make your passwords visible to the manufacturer."], 1, "Security updates close weaknesses that criminals may try to exploit."),
+      q("A pop-up says you must install a special video player to continue watching a clip. What should you do?", ["Install it immediately.", "Call the phone number displayed.", "Close the page and use a trusted app or website instead."], 2, "Unexpected plug-ins and downloads promoted by pop-ups may contain unwanted or harmful software."),
+      q("A shopping app asks for your precise location even when you are not using it. What can you do?", ["Change its permission to while using the app or deny it if not needed.", "Allow it permanently to improve battery life.", "Share your location in the app review."], 0, "Review permissions in your phone settings and grant only what is necessary."),
+      q("You no longer use an app that has access to your photos and contacts. What is a sensible step?", ["Keep it installed just in case.", "Remove the app and review its permissions or account access.", "Give it access to more files before deleting it."], 1, "Removing unused apps reduces unnecessary access. You can also revoke connected-account permissions."),
+      q("A website asks you to sign in using your social media account. What should you check?", ["Whether the website promises a discount.", "Whether your friends use it.", "Whether the site is trustworthy and what account information it wants to access."], 2, "Third-party sign-in can share profile details. Review the permissions and avoid unfamiliar sites."),
+      q("Your phone is lost. Which preparation makes it easier to protect your information?", ["Enable the phone's built-in find, lock and erase features and keep a screen lock.", "Write your phone PIN on the phone case.", "Keep all accounts signed in without a screen lock."], 0, "A screen lock and built-in device protection can help prevent access and support recovery."),
+      q("An app offers a paid subscription after a free trial. What should you check?", ["Only the app icon.", "The renewal date, recurring price and cancellation terms.", "Whether the app has a large number of downloads."], 1, "Trials may convert to paid subscriptions. Check the terms and set a reminder if you do not want to continue.")
+    ],
+    bank: [
+      q("You receive a call claiming your bank account will be blocked unless you share an OTP. What should you do?", ["Share the OTP to prevent the block.", "Press a number to speak to the caller's manager.", "End the call and contact your bank using the number on its official website or card."], 2, "Do not share OTPs, PINs or passwords. Contact the bank through a trusted channel."),
+      q("A message says a parcel is held and asks you to pay a small fee through a link. You are expecting a delivery. What is safest?", ["Check the delivery status in the courier's official app or website.", "Pay immediately because the fee is small.", "Reply with your card number to confirm the address."], 0, "Scammers use realistic delivery messages. Check independently rather than using the message link."),
+      q("You notice a card transaction you do not recognise. What should you do?", ["Wait a few weeks to see if it disappears.", "Contact your bank promptly through its official channel and follow its card-blocking or dispute process.", "Post a screenshot of the transaction online."], 1, "Prompt reporting helps the bank secure the account and investigate unauthorised activity."),
+      q("A caller asks you to install a screen-sharing app to help fix a banking problem. What is the safest response?", ["Install it if they know your name.", "Share your screen but hide the banking app.", "Do not install it; end the call and contact the bank independently."], 2, "Remote access can expose messages, account details and transactions. Banks should not need a stranger to control your device."),
+      q("A seller asks you to scan a QR code to receive money for an item you are selling. What should you remember?", ["Receiving money normally does not require you to enter your UPI PIN or approve a collect request.", "Scan any QR code if the buyer sounds polite.", "Enter your UPI PIN to confirm your bank account."], 0, "A UPI PIN is used to authorise payments, not to receive money. Read the screen before approving anything."),
+      q("You receive a UPI collect request from someone you do not know. What should you do?", ["Approve it to see who sent it.", "Decline it unless you independently know and expect the request.", "Share the request with your contacts."], 1, "Approving a collect request can send money from your account. Never approve unexpected requests."),
+      q("A person claiming to be from customer support asks for your card PIN to verify your identity. What should you do?", ["Give it only if they know your last transaction.", "Share a changed PIN instead.", "Never share your PIN; end the conversation and use official customer support."], 2, "Your PIN is confidential. Genuine support should not ask you to disclose it."),
+      q("An online store offers a price far below every other seller and insists on payment by direct transfer. What is the safer choice?", ["Check the seller's reputation and use a protected payment method; walk away if it cannot be verified.", "Pay quickly before the offer ends.", "Send a photo of your card to reserve the item."], 0, "Unusually low prices and pressure to pay outside the platform are common scam warning signs."),
+      q("You receive a bank alert for a transaction while your card is with you. What should you do if you did not make it?", ["Delete the alert because you still have the card.", "Use the bank's official app or phone number to report it and secure the account.", "Reply to the alert with your PIN."], 1, "Card details can be misused even when the physical card is safe. Report unexpected activity promptly."),
+      q("A caller says you must move your savings to a 'safe account' to protect them from fraud. What should you do?", ["Transfer a small amount first.", "Follow their instructions if they sound professional.", "Do not transfer money; end the call and verify with your bank or the relevant authority independently."], 2, "Requests to move money to a new safe account are a major warning sign. Verify independently.")
+    ],
+    footprint: [
+      q("You use the same public computer to check email and then leave without signing out. What should you do if you are still nearby?", ["Return, sign out of the account and close the browser; change the password if you suspect it was saved.", "Leave it because the browser will sign out automatically.", "Ask the next person to sign out for you."], 0, "Public devices may keep sessions open. Always sign out and avoid saving passwords on shared computers."),
+      q("A free Wi-Fi network at a café has a name almost identical to the café's official network. What is safest?", ["Connect to whichever network has the strongest signal.", "Ask staff to confirm the correct network and avoid sensitive transactions on untrusted Wi-Fi.", "Use the network that asks for your bank login."], 1, "Fake hotspots can imitate legitimate networks. Verify the network name and use trusted connections for sensitive tasks."),
+      q("A website asks you to accept all tracking cookies before reading an article. What is a reasonable choice?", ["Accept everything without checking.", "Close your browser forever.", "Review the choices and reject optional tracking where possible."], 2, "Some cookies are necessary, while others track activity for advertising. Use the available privacy choices."),
+      q("You are selling an old phone. What should you do before handing it to the buyer?", ["Back up what you need, sign out of accounts, remove linked services and perform the manufacturer's factory reset.", "Delete a few photos and hand it over.", "Give the buyer your screen-lock PIN."], 0, "A proper reset after backing up and removing account links helps protect personal information."),
+      q("A website asks to remember your card details for faster checkout. What should you consider?", ["Save the details on every website.", "Use this only on a trusted service after considering the convenience and account security.", "Share the card details in the order comments."], 1, "Stored payment details can be convenient but increase the impact if the account is compromised."),
+      q("You receive an unexpected email attachment labelled 'Invoice'. You were not expecting an invoice. What should you do?", ["Open it to find out who sent it.", "Forward it to your work group.", "Verify with the sender using a known contact method before opening it."], 2, "Unexpected attachments may contain harmful files or links. Confirm the message is genuine first."),
+      q("You are asked to enter your email password on a page opened from a social media message. The page looks familiar. What should you do?", ["Close it and open the email provider's official app or type its known website address yourself.", "Enter the password because the logo looks correct.", "Use the same password but change one letter."], 0, "Fake pages can copy familiar logos. Navigate independently instead of trusting a message link."),
+      q("Your old social media account still contains your phone number and public posts. What is a good privacy review?", ["Post more personal details to make the profile look current.", "Remove details you no longer want public, review the audience and close unused accounts.", "Share the password with a friend to manage it."], 1, "Old accounts can reveal personal information long after you stop using them. Review or close them."),
+      q("A colleague sends confidential work information to your personal email for convenience. What is the better practice?", ["Forward it to more people so it is backed up.", "Store it in a public cloud folder.", "Use your organisation's approved secure tools and follow its data-handling rules."], 2, "Work information should stay in approved systems with appropriate access controls."),
+      q("You receive a message from a friend asking for urgent money, but the writing style seems unusual. What should you do?", ["Call the friend using the number you already have or verify in person before sending anything.", "Transfer the money because the profile photo is familiar.", "Ask them to send their account password."], 0, "Accounts can be taken over. Verify unusual money requests through a separate, trusted channel.")
+    ]
+  };
+  Object.entries(banks).forEach(([id, quiz]) => {
+    const topic = EXHIBITION_DATA.find(item => item.id === id);
+    if (topic) topic.quiz = quiz;
+  });
 })();
 </script>
 
