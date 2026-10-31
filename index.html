@@ -3188,7 +3188,7 @@ button, input, select, textarea { max-width: 100%; }
   <div id="certificate-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl border-4 border-slate-900 shadow-2xl max-w-4xl w-full p-6 sm:p-10 relative text-center max-h-[95vh] overflow-y-auto">
       
-      <button onclick="closeCertificateModal()" class="no-print absolute top-4 right-4 p-2.5 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-700 transition z-10 shadow-xs">✕</button>
+      <button type="button" onclick="closeCertificateModal()" aria-label="Close certificate and results" title="Close certificate" class="no-print absolute top-2 right-2 sm:top-4 sm:right-4 p-2.5 w-10 h-10 flex items-center justify-center bg-slate-100 hover:bg-rose-100 hover:text-rose-700 rounded-full text-slate-700 transition z-20 shadow-sm text-xl font-bold">×</button>
 
       <!-- ULTRA-PROFESSIONAL CERTIFICATE CONTAINER -->
       <div id="printable-certificate-card" class="bg-gradient-to-br from-amber-50/40 via-white to-blue-50/30 border-[6px] border-double border-amber-600/80 p-6 sm:p-10 rounded-2xl shadow-inner relative space-y-6 overflow-hidden">
