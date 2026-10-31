@@ -3267,7 +3267,7 @@ button, input, select, textarea { max-width: 100%; }
 
   <!-- CERTIFICATE & RESULTS MODAL -->
   <div id="certificate-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <button type="button" onclick="closeCertificateModal()" aria-label="Close certificate and results" title="Close certificate" class="certificate-close-btn" style="position:fixed!important;top:16px!important;right:16px!important;z-index:2147483647!important;display:flex!important;visibility:visible!important;opacity:1!important;align-items:center!important;justify-content:center!important;width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;padding:0!important;border:3px solid #fff!important;border-radius:50%!important;background:#dc2626!important;color:#fff!important;font:900 32px/1 Arial,sans-serif!important;box-shadow:0 4px 18px rgba(0,0,0,.6)!important;cursor:pointer!important;pointer-events:auto!important;">×</button>
+    <button type="button" onclick="closeCertificateModal()" aria-label="Close certificate and results" title="Close certificate" class="certificate-close-btn" style="position:absolute!important;top:8px!important;right:10px!important;left:auto!important;bottom:auto!important;z-index:2147483647!important;display:flex!important;visibility:visible!important;opacity:1!important;align-items:center!important;justify-content:center!important;width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;padding:0!important;border:3px solid #fff!important;border-radius:50%!important;background:#dc2626!important;color:#fff!important;font:900 32px/1 Arial,sans-serif!important;box-shadow:0 4px 18px rgba(0,0,0,.6)!important;cursor:pointer!important;pointer-events:auto!important;">×</button>
     <div class="bg-white rounded-3xl border-4 border-slate-900 shadow-2xl max-w-4xl w-full p-6 sm:p-10 relative text-center max-h-[95vh] overflow-y-auto">
       
       
@@ -5185,4 +5185,36 @@ main [style*="--fx-hero-image"] {
       white-space: normal !important;
     }
   }
+</style>
+
+
+<style id="certificate-x-visibility-final-v3">
+  @media screen {
+    #certificate-modal:not(.hidden) > button.certificate-close-btn {
+      position: absolute !important;
+      top: 8px !important;
+      right: 10px !important;
+      left: auto !important;
+      bottom: auto !important;
+      z-index: 2147483647 !important;
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto !important;
+      color: #fff !important;
+      background: #dc2626 !important;
+      border: 3px solid #fff !important;
+      border-radius: 50% !important;
+      width: 46px !important;
+      height: 46px !important;
+      min-width: 46px !important;
+      min-height: 46px !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font: 900 32px/1 Arial, sans-serif !important;
+      box-shadow: 0 4px 18px rgba(0,0,0,.6) !important;
+    }
+  }
+  @media print { #certificate-modal > button.certificate-close-btn { display:none !important; } }
 </style>
