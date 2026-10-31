@@ -2495,7 +2495,7 @@ button, input, select, textarea { max-width: 100%; }
     </div>
   </header>
 
-  <!-- SECONDARY TAB NAVIGATION FOR TOPICS -->
+  <!-- SECONDARY TAB NAVIGATION FOR ZONES -->
   <nav id="topic-tabs-bar" class="bg-white border-b border-slate-200 sticky top-[61px] z-30 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex overflow-x-auto space-x-2 py-2.5 no-scrollbar" id="topic-tabs"></div>
@@ -2518,16 +2518,16 @@ button, input, select, textarea { max-width: 100%; }
       <div class="topic-home-hero">
         <span class="topic-home-kicker">🛡️ CYBER SHIELD LEARNING HUB</span>
         <h2>Choose a Topic. Test Your Cyber Skills.</h2>
-        <p>Explore any of the five digital-safety topics. Each topic has a short guide, its own interactive mini-game, and a scenario-based quiz.</p>
+        <p>Explore any of the five digital-safety zones. Each zone has a short guide, its own interactive mini-game, and a scenario-based quiz.</p>
         <div class="topic-home-steps">
           <span>01 · Select a topic</span><span>02 · Play its mini-game</span><span>03 · Answer its quiz</span>
         </div>
       </div>
       <div class="flex items-end justify-between gap-3 px-1">
-        <div><p class="topic-home-eyebrow">YOUR LEARNING PATHS</p><h3 class="text-xl sm:text-2xl font-black">Explore all 5 topics</h3></div>
-        <span class="topic-home-count">5 TOPICS</span>
+        <div><p class="topic-home-eyebrow">YOUR LEARNING PATHS</p><h3 class="text-xl sm:text-2xl font-black">Explore all 5 zones</h3></div>
+        <span class="topic-home-count">5 ZONES</span>
       </div>
-      <div id="topic-home-grid" class="topic-home-grid" aria-label="Choose a cyber safety topic"></div>
+      <div id="topic-home-grid" class="topic-home-grid" aria-label="Choose a cyber safety zone"></div>
     </section>
 
     <!-- GAMIFIED VISITOR HUD -->
@@ -2691,7 +2691,7 @@ button, input, select, textarea { max-width: 100%; }
 
     <!-- VIEW 2: TOPIC EXHIBITION HUB & QUIZ SECTION -->
     <section id="view-topics" class="hidden space-y-8">
-      <button type="button" onclick="switchView('topics')" class="topic-back-button">← All five topics</button>
+      <button type="button" onclick="switchView('topics')" class="topic-back-button">← All five zones</button>
       <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="space-y-2 text-center md:text-left">
           <div class="inline-flex items-center gap-1.5 bg-white/25 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white">
@@ -3162,7 +3162,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
     ];
 
     const MISSIONS = [
-      { id: "explore", icon: "🗺️", title: "Explore 3 Zones", text: "Visit at least 3 different safety topics.", reward: 50 },
+      { id: "explore", icon: "🗺️", title: "Explore 3 Zones", text: "Visit at least 3 different safety zones.", reward: 50 },
       { id: "quiz", icon: "🧠", title: "Score a Quiz Win", text: "Answer a scenario correctly.", reward: 25 },
       { id: "mini", icon: "🎮", title: "Beat a Mini Game", text: "Complete one interactive simulator.", reward: 40 },
       { id: "champion", icon: "🛡️", title: "Cyber Champion", text: "Reach 75% on the safety checklist.", reward: 60 },
@@ -3797,7 +3797,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
         currentState.topicScores[topicIndex] = 0;
         currentState.currentQuizIndex = 0;
         topicQuizGenerationState = 'ready';
-        setTopicAIStatus('✓ Fresh AI questions are ready for this topic. Other topics continue using the built-in question bank.', 'success');
+        setTopicAIStatus('✓ Fresh AI questions are ready for this topic. Other zones continue using the built-in question bank.', 'success');
         loadTopic(topicIndex);
         updateHeaderStats();
         updateGameHUD();
