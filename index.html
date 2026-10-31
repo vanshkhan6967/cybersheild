@@ -3504,12 +3504,15 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       const topic = EXHIBITION_DATA[topicIndex];
       const button = document.getElementById('topic-ai-generate-btn');
       topicQuizGenerationState = 'loading';
-      if (button) { button.disabled = true; button.textContent = 'Generating…'; }
-      setTopicAIStatus('✨ Asking the optional AI service for fresh questions for this topic only…');
+      if (button) { button.disabled = true; button.setAttribute('aria-busy', 'true'); button.textContent = '⏳ Connecting to Groq…'; }
+      setTopicAIStatus('Connecting to Groq… The service may need extra time to wake up on the first request. Please keep this page open.');
       renderQuiz();
 
       const controller = new AbortController();
-      const requestTimeout = setTimeout(() => controller.abort(), 45000);
+      const requestTimeout = setTimeout(() => controller.abort(), 150000);
+      const loadingMessages = ['Groq is preparing your questions…', 'Still working… the first request can take longer while the service wakes up.', 'Generating and checking your question set…'];
+      let loadingStep = 0;
+      const loadingTicker = setInterval(() => { loadingStep = (loadingStep + 1) % loadingMessages.length; setTopicAIStatus(loadingMessages[loadingStep]); }, 12000);
       try {
         const response = await fetch(`${CYBER_SHIELD_API_BASE}/api/generate-quiz`, {
           method: 'POST',
@@ -3555,7 +3558,8 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
         renderQuiz();
       } finally {
         clearTimeout(requestTimeout);
-        if (button) { button.disabled = false; button.textContent = '✨ Optional AI: generate fresh questions'; }
+        clearInterval(loadingTicker);
+        if (button) { button.disabled = false; button.removeAttribute('aria-busy'); button.textContent = '✨ Optional Groq: generate fresh questions'; }
       }
     }
 
@@ -4192,14 +4196,17 @@ main [style*="--fx-hero-image"] {
   window.generateAIQuiz = async function() {
     const topic = $('aiq-topic').value.trim();
     if (!topic) { $('aiq-status').textContent='Enter a topic to get started.'; $('aiq-topic').focus(); return; }
-    const button=$('aiq-generate'); button.disabled=true; button.textContent='Generating…'; $('aiq-status').textContent='Asking the optional AI service to build your quiz…'; area().replaceChildren();
+    const button=$('aiq-generate'); button.disabled=true; button.setAttribute('aria-busy','true'); button.textContent='⏳ Connecting to Groq…'; $('aiq-status').textContent='Connecting to Groq… The first request may take longer while the service wakes up. Keep this window open.'; area().replaceChildren();
     try {
       const controller = new AbortController();
-      const requestTimeout = setTimeout(() => controller.abort(), 45000);
+      const requestTimeout = setTimeout(() => controller.abort(), 150000);
+      const loadingMessages=['Groq is preparing your quiz…','Still working… the service may be waking up.','Generating and checking your questions…'];
+      let loadingStep=0;
+      const loadingTicker=setInterval(()=>{loadingStep=(loadingStep+1)%loadingMessages.length;$('aiq-status').textContent=loadingMessages[loadingStep];},12000);
       let response;
       try {
         response = await fetch(`${CYBER_SHIELD_API_BASE}/api/generate-quiz`, { method:'POST', headers:{'Content-Type':'application/json'}, signal:controller.signal, body:JSON.stringify({topic, difficulty:$('aiq-difficulty').value, count:Number($('aiq-count').value)}) });
-      } finally { clearTimeout(requestTimeout); }
+      } finally { clearTimeout(requestTimeout); clearInterval(loadingTicker); }
       const payload = await response.json().catch(()=>({}));
       if (!response.ok) throw new Error(payload.error || `Request failed (${response.status}).`);
       if (!Array.isArray(payload.questions) || payload.questions.length < 1) throw new Error('The AI returned an empty quiz. Please try again.');
@@ -4209,7 +4216,7 @@ main [style*="--fx-hero-image"] {
       $('aiq-status').textContent='Could not generate quiz.';
       const box=safeText('p','',err.message || 'Something went wrong.'); box.style.cssText='color:#fda4af;margin-top:12px'; area().replaceChildren(box);
       const help=safeText('p','aiq-muted','The optional AI service may be unavailable or out of quota. Your built-in quiz bank works without it.'); area().appendChild(help);
-    } finally { button.disabled=false; button.textContent='↻ Generate another quiz'; }
+    } finally { button.disabled=false; button.removeAttribute('aria-busy'); button.textContent='↻ Generate another quiz'; }
   };
   function renderQuestion() {
     const q=questions[current]; if(!q) return;
