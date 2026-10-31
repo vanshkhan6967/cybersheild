@@ -2394,6 +2394,51 @@ button, input, select, textarea { max-width: 100%; }
 @media(prefers-reduced-motion:reduce){.topic-home-card{transition:none}}
 </style>
 
+
+<style id="cybershield-phone-performance-2026">
+/* Keep touch interactions responsive and reduce expensive mobile paint effects. */
+@media (max-width: 767px) {
+  html { scroll-behavior: auto !important; }
+  body, button, a { -webkit-tap-highlight-color: transparent; }
+  button, a { touch-action: manipulation; }
+  header, #topic-tabs-bar, #mobile-bottom-dock {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  header { background: #07111f !important; }
+  #topic-tabs-bar { background: #081322 !important; }
+  #mobile-bottom-dock {
+    background: #07101d !important;
+    box-shadow: 0 -4px 12px rgba(0,0,0,.18) !important;
+  }
+  #topic-home-layout-2026, .topic-home-hero, .topic-home-card,
+  #game-hud, #view-topics .bg-white, #view-rules .bg-white {
+    filter: none !important;
+    text-shadow: none !important;
+  }
+  .topic-home-hero { box-shadow: none !important; }
+  .topic-home-card {
+    box-shadow: 0 3px 10px rgba(0,0,0,.06) !important;
+    transition: border-color .12s ease !important;
+  }
+  .topic-home-card:hover { transform: none !important; }
+  #view-topics *, #view-rules *, #view-home * {
+    scroll-margin-top: 72px;
+  }
+}
+@media (max-width: 767px) and (hover: none) {
+  .topic-home-card:hover { border-color: rgba(255,106,0,.22) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
@@ -2423,7 +2468,7 @@ button, input, select, textarea { max-width: 100%; }
 
         <button onclick="switchView('topics')" id="nav-topics-btn" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20">
           <span>📚</span>
-          <span class="hidden sm:inline">Topics Hub</span>
+          <span class="hidden sm:inline">Zones Hub</span>
         </button>
 
         <button type="button" onclick="openAIQuiz()" id="nav-ai-quiz-btn" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border border-cyan-400/40 bg-cyan-400/10 text-cyan-100 hover:bg-cyan-300/20">
@@ -2769,7 +2814,7 @@ button, input, select, textarea { max-width: 100%; }
 
   <!-- PHONE-ONLY QUICK NAVIGATION DOCK -->
   <nav id="mobile-bottom-dock" aria-label="Quick navigation">
-    <button type="button" id="mobile-dock-topics" class="mobile-dock-item is-active" onclick="switchView('topics')"><span>📚</span><small>Topics</small></button>
+    <button type="button" id="mobile-dock-topics" class="mobile-dock-item is-active" onclick="switchView('topics')"><span>📚</span><small>Zones</small></button>
     <button type="button" id="mobile-dock-rules" class="mobile-dock-item" onclick="switchView('rules')"><span>🛡️</span><small>Safety</small></button>
     <button type="button" id="mobile-dock-mission" class="mobile-dock-item" onclick="openMissionModal()"><span>🎯</span><small>Missions</small></button>
     <button type="button" id="mobile-dock-ai" class="mobile-dock-item" onclick="openAIQuiz()"><span>✨</span><small>AI Quiz</small></button>
@@ -3063,7 +3108,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       currentQuizIndex: 0,
       score: 0,
       xp: 0,
-      visitedTopics: [],
+      visitedZones: [],
       streak: 0,
       bestStreak: 0,
       missions: { explore: false, quiz: false, mini: false, champion: false, quick: false },
@@ -3095,7 +3140,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
 
     window.onload = function() {
       loadSavedProgress();
-      renderHomeTopics();
+      renderHomeZones();
       renderTopicTabs();
       switchView('topics');
       renderComplianceChecklist();
@@ -3117,7 +3162,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
     ];
 
     const MISSIONS = [
-      { id: "explore", icon: "🗺️", title: "Explore 3 Topics", text: "Visit at least 3 different safety topics.", reward: 50 },
+      { id: "explore", icon: "🗺️", title: "Explore 3 Zones", text: "Visit at least 3 different safety topics.", reward: 50 },
       { id: "quiz", icon: "🧠", title: "Score a Quiz Win", text: "Answer a scenario correctly.", reward: 25 },
       { id: "mini", icon: "🎮", title: "Beat a Mini Game", text: "Complete one interactive simulator.", reward: 40 },
       { id: "champion", icon: "🛡️", title: "Cyber Champion", text: "Reach 75% on the safety checklist.", reward: 60 },
@@ -3141,8 +3186,8 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
         currentState.topicScores = Array.from({ length: topicCount }, (_, i) =>
           Number.isFinite(saved.topicScores?.[i]) ? Math.max(0, saved.topicScores[i]) : 0);
         currentState.badgesEarned = Array.from({ length: topicCount }, (_, i) => Boolean(saved.badgesEarned?.[i]));
-        currentState.visitedTopics = Array.isArray(saved.visitedTopics)
-          ? saved.visitedTopics.filter(i => Number.isInteger(i) && i >= 0 && i < topicCount) : [];
+        currentState.visitedZones = Array.isArray(saved.visitedZones)
+          ? saved.visitedZones.filter(i => Number.isInteger(i) && i >= 0 && i < topicCount) : [];
         currentState.quizAnswers = saved.quizAnswers && typeof saved.quizAnswers === "object" && !Array.isArray(saved.quizAnswers)
           ? saved.quizAnswers : {};
         currentState.complianceChecked = saved.complianceChecked && typeof saved.complianceChecked === "object" && !Array.isArray(saved.complianceChecked)
@@ -3164,7 +3209,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
           missions: currentState.missions,
           miniGameRewarded: currentState.miniGameRewarded,
           quickChallengeDone: currentState.quickChallengeDone,
-          visitedTopics: currentState.visitedTopics || [],
+          visitedZones: currentState.visitedZones || [],
           topicScores: currentState.topicScores,
           badgesEarned: currentState.badgesEarned,
           quizAnswers: currentState.quizAnswers,
@@ -3181,7 +3226,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
         currentQuizIndex: 0,
         score: 0,
         xp: 0,
-        visitedTopics: [],
+        visitedZones: [],
         streak: 0,
         bestStreak: 0,
         missions: { explore: false, quiz: false, mini: false, champion: false, quick: false },
@@ -3396,7 +3441,7 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       saveProgress();
     }
 
-    function renderHomeTopics() {
+    function renderHomeZones() {
       const grid = document.getElementById('topic-home-grid');
       if (!grid) return;
       grid.innerHTML = EXHIBITION_DATA.map((topic, index) => {
@@ -3462,10 +3507,10 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
 
     function switchTopic(index) {
       currentState.currentTopicIndex = index;
-      if (!currentState.visitedTopics) currentState.visitedTopics = [];
-      if (!currentState.visitedTopics.includes(index)) {
-        currentState.visitedTopics.push(index);
-        if (currentState.visitedTopics.length === 3) markMission("explore");
+      if (!currentState.visitedZones) currentState.visitedZones = [];
+      if (!currentState.visitedZones.includes(index)) {
+        currentState.visitedZones.push(index);
+        if (currentState.visitedZones.length === 3) markMission("explore");
       }
       currentState.currentQuizIndex = 0;
       switchView('topic-detail');
