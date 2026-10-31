@@ -5058,3 +5058,67 @@ main [style*="--fx-hero-image"] {
 
 </body>
 </html>
+
+
+<style id="certificate-mobile-viewport-fit-v2">
+  /* Mobile: reserve space for the fixed close button and scroll the certificate inside the screen. */
+  @media screen and (max-width: 767px) {
+    #certificate-modal:not(.hidden) {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      max-height: 100dvh !important;
+      padding: 66px 10px 10px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: 0 !important;
+      overflow: hidden !important;
+      overscroll-behavior: contain !important;
+    }
+    #certificate-modal > button.certificate-close-btn {
+      position: fixed !important;
+      top: max(8px, env(safe-area-inset-top)) !important;
+      right: 10px !important;
+      left: auto !important;
+      bottom: auto !important;
+      z-index: 2147483647 !important;
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 46px !important;
+      height: 46px !important;
+      min-width: 46px !important;
+      min-height: 46px !important;
+      align-items: center !important;
+      justify-content: center !important;
+      pointer-events: auto !important;
+    }
+    #certificate-modal > div {
+      position: relative !important;
+      display: block !important;
+      flex: 0 1 auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      max-height: calc(100dvh - 78px - env(safe-area-inset-top)) !important;
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 auto !important;
+      padding: 12px !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain !important;
+      -webkit-overflow-scrolling: touch !important;
+      border-width: 2px !important;
+    }
+    #printable-certificate-card {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+</style>
