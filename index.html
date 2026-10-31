@@ -2912,6 +2912,18 @@ button, input, select, textarea { max-width: 100%; }
 }
 </style>
 
+
+<style id="restore-original-topic-photo-hero">
+/* Restore the original rotating photo background for each opened topic. */
+#view-topics > div:first-child {
+  background-color: #101c2d !important;
+  background-image: var(--fx-hero-image), linear-gradient(120deg,#0a1422,#172c44) !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+}
+</style>
+
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
