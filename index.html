@@ -3218,7 +3218,7 @@ button, input, select, textarea { max-width: 100%; }
         </div>
 
         <div class="bg-white/15 backdrop-blur-md p-4 rounded-2xl border border-white/30 text-center min-w-[200px] shrink-0">
-            <div class="text-[10px] uppercase tracking-wider text-white font-extrabold">Topic Progress</div>
+            <div class="text-[10px] uppercase tracking-wider text-white font-extrabold">Zone Progress</div>
             <div class="mt-2 w-full bg-white/20 rounded-full h-2 overflow-hidden"><div id="topic-progress-bar" class="topic-progress h-full bg-amber-300 rounded-full" style="width:0%"></div></div>
             <div id="topic-progress-label" class="text-[10px] text-white mt-1 font-bold">0% mastered</div>
             <div class="mt-3 pt-3 border-t border-white/20"></div>
@@ -5359,6 +5359,16 @@ main [style*="--fx-hero-image"] {
   #view-rules input, #view-rules textarea, #view-rules select,
   #view-topics input, #view-topics textarea, #view-topics select,
   #quick-challenge input, #quick-challenge textarea, #quick-challenge select {
+    color: #ffffff !important;
+  }
+</style>
+
+
+<style id="zone-progress-white-font">
+  /* Keep the zone progress heading and percentage white on desktop and mobile. */
+  #game-hud #topic-progress-label,
+  #game-hud [id="topic-progress-label"],
+  #game-hud .text-white.font-extrabold {
     color: #ffffff !important;
   }
 </style>
