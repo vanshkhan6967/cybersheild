@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Canvas Confetti CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -2439,6 +2439,44 @@ button, input, select, textarea { max-width: 100%; }
 }
 </style>
 
+
+  <style id="cybershield-low-lag-final">
+    /* Reduce background work without changing quiz, game, or navigation logic. */
+    body::before, body::after, .cyber-particle { display: none !important; animation: none !important; }
+    html { scroll-behavior: auto !important; }
+    .cyber-particle, .streak-hot { animation: none !important; }
+    section .rounded-xl::before, section .rounded-2xl::before,
+    .card::before, .mission-card::before, .topic-card::before { animation: none !important; }
+    hr { animation: none !important; }
+    .exhibition-slide { animation: none !important; }
+    .reveal-on-scroll { opacity: 1 !important; transform: none !important; transition: none !important; }
+    section .rounded-xl, section .rounded-2xl, .card, .mission-card, .topic-card {
+      will-change: auto !important;
+      transition: border-color .12s ease, background-color .12s ease !important;
+    }
+    button { transition: background-color .12s ease, border-color .12s ease !important; }
+    @media (hover: hover) and (pointer: fine) {
+      section .rounded-xl:hover, section .rounded-2xl:hover,
+      .card:hover, .mission-card:hover, .topic-card:hover { transform: none !important; }
+    }
+    @media (max-width: 767px) {
+      *, *::before, *::after { scroll-behavior: auto !important; }
+      header, #topic-tabs-bar, #mobile-bottom-dock {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      .topic-home-card, section .rounded-xl, section .rounded-2xl,
+      .card, .mission-card, .topic-card {
+        box-shadow: 0 2px 8px rgba(0,0,0,.12) !important;
+        transform: none !important;
+        will-change: auto !important;
+      }
+      button { box-shadow: none !important; filter: none !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
