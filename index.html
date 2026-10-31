@@ -2667,6 +2667,118 @@ button, input, select, textarea { max-width: 100%; }
     }
   </style>
 
+
+  <style id="cybershield-results-overflow-hard-fix">
+    /* Hard width constraints for the Results/Certificate popup on all phones. */
+    @media screen and (max-width: 767px) {
+      #certificate-modal,
+      #certificate-modal * {
+        box-sizing: border-box !important;
+        min-width: 0 !important;
+      }
+      #certificate-modal:not(.hidden) {
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        padding: 7px !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+      }
+      #certificate-modal > div {
+        display: block !important;
+        flex: 0 1 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 auto !important;
+        padding: 12px !important;
+        border-width: 2px !important;
+        max-height: none !important;
+        overflow: visible !important;
+        overflow-wrap: anywhere !important;
+      }
+      #printable-certificate-card {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding: 10px !important;
+        border-width: 3px !important;
+        overflow: hidden !important;
+      }
+      #printable-certificate-card > * {
+        max-width: 100% !important;
+        overflow-wrap: anywhere !important;
+      }
+      #printable-certificate-card h2 {
+        font-size: clamp(18px, 5.8vw, 25px) !important;
+        line-height: 1.2 !important;
+        letter-spacing: 0 !important;
+        overflow-wrap: anywhere !important;
+      }
+      #printable-certificate-card h3,
+      #printable-certificate-card p,
+      #printable-certificate-card span {
+        max-width: 100% !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+      }
+      #printable-certificate-card .flex {
+        flex-wrap: wrap !important;
+      }
+      #cert-badges-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      #cert-badges-grid > div {
+        flex: 1 1 120px !important;
+        max-width: 100% !important;
+        white-space: normal !important;
+      }
+      #printable-certificate-card .grid,
+      #printable-certificate-card .md\:col-span-5,
+      #printable-certificate-card .md\:col-span-7 {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      #printable-certificate-card .grid.grid-cols-4 {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 6px !important;
+      }
+      #printable-certificate-card .grid.grid-cols-4 > div {
+        min-width: 0 !important;
+        padding: 7px 4px !important;
+      }
+      #printable-certificate-card .items-center.justify-between {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+      }
+      #certificate-modal .no-print.mt-6 {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 8px !important;
+      }
+      #certificate-modal .no-print.mt-6 button {
+        display: flex !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        white-space: normal !important;
+        justify-content: center !important;
+        overflow-wrap: anywhere !important;
+      }
+    }
+  </style>
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
