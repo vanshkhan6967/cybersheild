@@ -3332,6 +3332,8 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
 
     function switchView(viewName) {
       currentState.view = viewName;
+      document.getElementById('mobile-dock-topics')?.classList.toggle('is-active', viewName !== 'rules');
+      document.getElementById('mobile-dock-rules')?.classList.toggle('is-active', viewName === 'rules');
       const rulesSec = document.getElementById('view-rules');
       const topicsSec = document.getElementById('view-topics');
       const tabsBar = document.getElementById('topic-tabs-bar');
