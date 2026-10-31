@@ -1810,6 +1810,60 @@ main [style*="background-image"] .hero-overlay {
 }
 </style>
 
+
+<style id="cybershield-mobile-optimization">
+/* Mobile-first layout and touch improvements */
+*,*::before,*::after{box-sizing:border-box}
+html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{width:100%;max-width:100%;min-width:0;overflow-x:hidden}
+img,svg,video,canvas,iframe{max-width:100%;height:auto}
+button,a,[role="button"],input,select,textarea{touch-action:manipulation}
+button,a,[role="button"]{-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid #36c8ff!important;outline-offset:3px}
+@media(max-width:767px){
+  body{font-size:15px;line-height:1.6;background-attachment:scroll!important}
+  main{width:100%!important;max-width:100%!important;padding-left:14px!important;padding-right:14px!important}
+  header{max-width:100%;gap:10px}
+  header .max-w-7xl,header>div{max-width:100%;min-width:0}
+  h1{font-size:clamp(1.8rem,8vw,2.7rem)!important;line-height:1.12!important;overflow-wrap:anywhere}
+  h2{font-size:clamp(1.35rem,6vw,2rem)!important;line-height:1.2!important}
+  h3{line-height:1.25!important}
+  p,li{overflow-wrap:anywhere}
+  #topic-tabs-bar{max-width:100%;overflow-x:auto!important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+  #topic-tabs{width:max-content;min-width:100%;gap:8px!important;padding:8px 12px!important}
+  #topic-tabs button{flex:0 0 auto;white-space:nowrap;min-height:42px;padding:9px 13px!important;font-size:13px!important}
+  #view-topics>div:first-child{min-height:0!important;padding:24px 18px!important;border-radius:20px!important}
+  #topic-title{font-size:clamp(2rem,9vw,2.8rem)!important;line-height:1.08!important}
+  .game-hud,#game-hud{position:relative!important;top:auto!important;margin:12px 0!important}
+  .mission-card{min-width:0}
+  button,.aiq-primary,.aiq-secondary{min-height:44px}
+  input,select,textarea{max-width:100%;min-width:0;font-size:16px!important}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .overflow-x-auto{max-width:100%;-webkit-overflow-scrolling:touch}
+  #certificate-modal{padding:10px!important;overflow-y:auto!important}
+  #certificate-modal>div{width:100%!important;max-width:100%!important;max-height:92dvh!important;overflow-y:auto!important}
+  #printable-certificate-card{max-width:100%!important}
+  #ai-quiz-modal{padding:8px!important;align-items:flex-start!important}
+  #ai-quiz-panel{width:100%!important;max-height:96dvh!important;margin:auto 0!important;border-radius:16px!important}
+  #ai-quiz-panel header{padding:13px 14px!important}
+  #aiq-content{padding:14px!important}
+  #aiq-title{font-size:19px!important}
+  #aiq-config-grid{grid-template-columns:minmax(0,1fr)!important}
+  .aiq-option{padding:12px!important}
+  footer{padding-left:14px!important;padding-right:14px!important}
+}
+@media(max-width:420px){
+  main{padding-left:11px!important;padding-right:11px!important}
+  #view-topics>div:first-child{padding:20px 15px!important}
+  #topic-tabs button{font-size:12px!important;padding:8px 10px!important}
+  .grid{min-width:0}
+  #quiz-options button{white-space:normal;text-align:left;line-height:1.45}
+}
+@media(hover:none) and (pointer:coarse){
+  button:hover,.mission-card:hover,.challenge-chip:hover{transform:none!important}
+}
+</style>
+
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
