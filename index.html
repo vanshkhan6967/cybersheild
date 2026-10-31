@@ -1898,6 +1898,96 @@ button,a,[role="button"]{-webkit-tap-highlight-color:transparent}
 </style>
 
 
+
+<style id="cybershield-all-phone-final">
+/* Final responsive pass: compact phones, large phones, tablets and touch devices */
+html { scroll-padding-top: 76px; }
+body { min-width: 320px; }
+@media (max-width: 767px) {
+  html, body { overflow-x: clip !important; }
+  body { min-height: 100svh; }
+  header { position: sticky; top: 0; }
+  header > div {
+    width: 100% !important;
+    padding: 10px 12px !important;
+    gap: 9px !important;
+    align-items: center !important;
+  }
+  header > div > div:first-child { flex: 1 1 100% !important; min-width: 0 !important; }
+  header > div > div:last-child {
+    display: flex !important;
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    gap: 7px !important;
+  }
+  header > div > div:last-child > button,
+  header > div > div:last-child > div {
+    min-height: 40px !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+  }
+  header > div > div:last-child > button { flex: 1 1 auto; justify-content: center; }
+  header > div > div:last-child > div { flex: 0 1 auto; }
+  header > div > div:last-child > button:last-child { display: none !important; }
+  #topic-tabs-bar { top: 0 !important; }
+  main {
+    padding-top: 14px !important;
+    padding-bottom: max(26px, env(safe-area-inset-bottom)) !important;
+  }
+  main, main * { min-width: 0; }
+  main .grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  #view-topics > div:first-child {
+    min-height: clamp(310px, 62svh, 470px) !important;
+    padding: clamp(18px, 5vw, 28px) !important;
+    background-position: center !important;
+  }
+  #topic-title {
+    font-size: clamp(28px, 8vw, 42px) !important;
+    line-height: 1.08 !important;
+  }
+  #view-rules, #view-topics, #game-hud { width: 100% !important; max-width: 100% !important; }
+  .topic-card, .mission-card { max-width: 100%; overflow-wrap: anywhere; }
+  button, a, input, select, textarea { max-width: 100%; }
+  button { white-space: normal; }
+  .overflow-x-auto, table { overscroll-behavior-x: contain; }
+  #reset-modal, #certificate-modal, #mission-modal, #ai-quiz-modal {
+    padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom)) !important;
+  }
+  #reset-modal > div, #mission-modal > div, #certificate-modal > div, #ai-quiz-panel {
+    width: 100% !important;
+    max-width: 560px !important;
+    max-height: 90svh !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+  footer { padding-bottom: max(20px, env(safe-area-inset-bottom)) !important; }
+}
+@media (max-width: 390px) {
+  header > div { padding-left: 10px !important; padding-right: 10px !important; }
+  header > div > div:last-child { gap: 5px !important; }
+  header > div > div:last-child > button,
+  header > div > div:last-child > div { padding: 7px 8px !important; font-size: 10px !important; }
+  main { padding-left: 10px !important; padding-right: 10px !important; }
+  #view-topics > div:first-child { min-height: 300px !important; }
+  #view-rules .grid > div { padding: 13px !important; }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  main { padding-left: 22px !important; padding-right: 22px !important; }
+  header > div { gap: 12px !important; }
+  header > div > div:last-child { flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+}
+@media (hover: none) and (pointer: coarse) {
+  button, a, [role="button"] { -webkit-tap-highlight-color: transparent; }
+  button { touch-action: manipulation; }
+}
+@supports (padding: max(0px)) {
+  body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+}
+</style>
+
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
