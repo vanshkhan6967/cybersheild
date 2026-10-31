@@ -5,7 +5,7 @@ import OpenAI from "openai";
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || "https://vanshkhana6967.github.io")
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || "https://vanshkhan6967.github.io")
   .split(",").map(value => value.trim()).filter(Boolean);
 
 app.set("trust proxy", 1); // Render runs behind a reverse proxy.
