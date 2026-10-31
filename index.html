@@ -3603,12 +3603,12 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
               return `
                 <button onclick="selectQuizAnswer(${optIdx})" ${selectedOption !== undefined || topicQuizGenerationState === 'loading' ? 'disabled' : ''} class="w-full text-left p-3 rounded-xl border transition flex items-center gap-3 text-xs ${btnStyle}">
                   <span class="w-6 h-6 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-600 shrink-0">${String.fromCharCode(65 + optIdx)}</span>
-                  <span class="flex-grow">${option}</span>
+                  <span class="flex-grow">${escapeQuizHTML(option)}</span>
                   ${badge}
                 </button>`;
             }).join('')}
           </div>
-          ${selectedOption !== undefined ? `<div class="mt-4 p-4 rounded-xl border ${selectedOption === quizData.correct ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-100 border-slate-200 text-slate-800'} text-xs leading-relaxed"><strong>${selectedOption === quizData.correct ? '🎉 Correct!' : '💡 Tip:'}</strong> ${quizData.explanation}</div>` : ''}
+          ${selectedOption !== undefined ? `<div class="mt-4 p-4 rounded-xl border ${selectedOption === quizData.correct ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-100 border-slate-200 text-slate-800'} text-xs leading-relaxed"><strong>${selectedOption === quizData.correct ? '🎉 Correct!' : '💡 Tip:'}</strong> ${escapeQuizHTML(quizData.explanation)}</div>` : ''}
         </div>`;
 
       document.getElementById('prev-quiz-btn').disabled = quizIndex === 0 || topicQuizGenerationState === 'loading';
