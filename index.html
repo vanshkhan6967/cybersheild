@@ -2843,6 +2843,23 @@ button, input, select, textarea { max-width: 100%; }
 </style>
 
 
+
+<style id="certificate-modal-visibility-guard">
+  /* The certificate is a dialog only. Never let its flex layout class
+     override the hidden state and cover the learning zones. */
+  @media screen {
+    #certificate-modal.hidden {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+    #certificate-modal:not(.hidden) {
+      display: flex !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+  }
+</style>
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
