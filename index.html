@@ -2095,6 +2095,28 @@ body{width:100%;max-width:100%;min-width:320px;overflow-x:hidden}
 }
 </style>
 
+
+<style id="cybershield-final-stability-pass">
+/* Final stability and accessibility pass */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+img, video, canvas, svg { max-width: 100%; }
+button, input, select, textarea { max-width: 100%; }
+#ai-quiz-modal { padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+#ai-quiz-panel { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+#aiq-quiz-area { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  #ai-quiz-panel { width: 100%; max-height: 96dvh; }
+  #ai-quiz-panel button { min-height: 42px; }
+  #aiq-content { padding: 16px !important; }
+}
+</style>
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
@@ -2780,14 +2802,29 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
     function loadSavedProgress() {
       try {
         const saved = JSON.parse(localStorage.getItem("cyberShieldGamified"));
-        if (!saved) return;
+        if (!saved || typeof saved !== "object" || Array.isArray(saved)) return;
         currentState = { ...currentState, ...saved };
-        currentState.topicScores = saved.topicScores || currentState.topicScores;
-        currentState.badgesEarned = saved.badgesEarned || currentState.badgesEarned;
-        currentState.quizAnswers = saved.quizAnswers || {};
-        currentState.complianceChecked = saved.complianceChecked || {};
-        currentState.missions = { ...currentState.missions, ...(saved.missions || {}) };
-      } catch (e) {}
+        const topicCount = EXHIBITION_DATA.length;
+        currentState.currentTopicIndex = Number.isInteger(saved.currentTopicIndex)
+          ? Math.min(Math.max(saved.currentTopicIndex, 0), topicCount - 1) : 0;
+        currentState.currentQuizIndex = 0;
+        currentState.score = Number.isFinite(saved.score) ? Math.max(0, saved.score) : 0;
+        currentState.xp = Number.isFinite(saved.xp) ? Math.max(0, saved.xp) : 0;
+        currentState.streak = Number.isFinite(saved.streak) ? Math.max(0, saved.streak) : 0;
+        currentState.bestStreak = Number.isFinite(saved.bestStreak) ? Math.max(0, saved.bestStreak) : 0;
+        currentState.topicScores = Array.from({ length: topicCount }, (_, i) =>
+          Number.isFinite(saved.topicScores?.[i]) ? Math.max(0, saved.topicScores[i]) : 0);
+        currentState.badgesEarned = Array.from({ length: topicCount }, (_, i) => Boolean(saved.badgesEarned?.[i]));
+        currentState.visitedTopics = Array.isArray(saved.visitedTopics)
+          ? saved.visitedTopics.filter(i => Number.isInteger(i) && i >= 0 && i < topicCount) : [];
+        currentState.quizAnswers = saved.quizAnswers && typeof saved.quizAnswers === "object" && !Array.isArray(saved.quizAnswers)
+          ? saved.quizAnswers : {};
+        currentState.complianceChecked = saved.complianceChecked && typeof saved.complianceChecked === "object" && !Array.isArray(saved.complianceChecked)
+          ? saved.complianceChecked : {};
+        currentState.missions = { explore: false, quiz: false, mini: false, champion: false, quick: false, ...(saved.missions && typeof saved.missions === "object" ? saved.missions : {}) };
+      } catch (e) {
+        try { localStorage.removeItem("cyberShieldGamified"); } catch (_) {}
+      }
     }
 
     function saveProgress() {
@@ -3326,10 +3363,13 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       setTopicAIStatus('✨ Asking the optional AI service for fresh questions for this topic only…');
       renderQuiz();
 
+      const controller = new AbortController();
+      const requestTimeout = setTimeout(() => controller.abort(), 45000);
       try {
         const response = await fetch(`${CYBER_SHIELD_API_BASE}/api/generate-quiz`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
           body: JSON.stringify({
             topic: `${topic.title}. Write practical, moderate-difficulty cyber-safety questions for everyday adults aged roughly 28–50 who are not technical specialists. Use familiar situations involving family, work, shopping, banking, messaging and smartphones. Avoid programming, jargon and obscure technical facts. Focus on sensible decisions and explain why.`,
             difficulty: 'Intermediate',
@@ -3365,9 +3405,11 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
         saveProgress();
       } catch (error) {
         topicQuizGenerationState = 'fallback';
-        setTopicAIStatus(`AI is unavailable right now (${error.message}). Your built-in moderate-level questions are still ready—no API credits are needed to continue.`, 'error');
+        const reason = error.name === 'AbortError' ? 'The request took too long' : error.message;
+        setTopicAIStatus(`AI is unavailable right now (${reason}). Your built-in moderate-level questions are still ready—no API credits are needed to continue.`, 'error');
         renderQuiz();
       } finally {
+        clearTimeout(requestTimeout);
         if (button) { button.disabled = false; button.textContent = '✨ Optional AI: generate fresh questions'; }
       }
     }
@@ -4000,7 +4042,12 @@ main [style*="--fx-hero-image"] {
     if (!topic) { $('aiq-status').textContent='Enter a topic to get started.'; $('aiq-topic').focus(); return; }
     const button=$('aiq-generate'); button.disabled=true; button.textContent='Generating…'; $('aiq-status').textContent='Asking the optional AI service to build your quiz…'; area().replaceChildren();
     try {
-      const response = await fetch(`${CYBER_SHIELD_API_BASE}/api/generate-quiz`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({topic, difficulty:$('aiq-difficulty').value, count:Number($('aiq-count').value)}) });
+      const controller = new AbortController();
+      const requestTimeout = setTimeout(() => controller.abort(), 45000);
+      let response;
+      try {
+        response = await fetch(`${CYBER_SHIELD_API_BASE}/api/generate-quiz`, { method:'POST', headers:{'Content-Type':'application/json'}, signal:controller.signal, body:JSON.stringify({topic, difficulty:$('aiq-difficulty').value, count:Number($('aiq-count').value)}) });
+      } finally { clearTimeout(requestTimeout); }
       const payload = await response.json().catch(()=>({}));
       if (!response.ok) throw new Error(payload.error || `Request failed (${response.status}).`);
       if (!Array.isArray(payload.questions) || payload.questions.length < 1) throw new Error('The AI returned an empty quiz. Please try again.');
