@@ -2301,7 +2301,7 @@ body { min-width: 320px; }
 
             <div class="flex flex-col sm:flex-row gap-2 sm:items-center">
               <div id="topic-ai-status" role="status" aria-live="polite" class="hidden rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs font-semibold text-cyan-900"></div>
-              <button id="topic-ai-generate-btn" type="button" onclick="refreshTopicQuizzesWithAI()" class="shrink-0 rounded-xl border border-cyan-300 bg-cyan-50 px-4 py-2.5 text-xs font-bold text-cyan-900 hover:bg-cyan-100 transition">✨ Optional AI: generate fresh questions</button>
+              <button id="topic-ai-generate-btn" type="button" onclick="refreshTopicQuizzesWithAI()" class="shrink-0 rounded-xl border border-cyan-300 bg-cyan-50 px-4 py-2.5 text-xs font-bold text-cyan-900 hover:bg-cyan-100 transition">✨ Optional Groq: generate fresh questions</button>
             </div>
             <div id="quiz-container" class="space-y-6"></div>
 
@@ -3891,7 +3891,7 @@ main [style*="--fx-hero-image"] {
   window.generateAIQuiz = async function() {
     const topic = $('aiq-topic').value.trim();
     if (!topic) { $('aiq-status').textContent='Enter a topic to get started.'; $('aiq-topic').focus(); return; }
-    const button=$('aiq-generate'); button.disabled=true; button.textContent='Generating…'; $('aiq-status').textContent='Asking the AI to build your quiz…'; area().replaceChildren();
+    const button=$('aiq-generate'); button.disabled=true; button.textContent='Generating…'; $('aiq-status').textContent='Asking the optional AI service to build your quiz…'; area().replaceChildren();
     try {
       const response = await fetch(`${CYBER_SHIELD_API_BASE}/api/generate-quiz`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({topic, difficulty:$('aiq-difficulty').value, count:Number($('aiq-count').value)}) });
       const payload = await response.json().catch(()=>({}));
@@ -3902,7 +3902,7 @@ main [style*="--fx-hero-image"] {
     } catch(err) {
       $('aiq-status').textContent='Could not generate quiz.';
       const box=safeText('p','',err.message || 'Something went wrong.'); box.style.cssText='color:#fda4af;margin-top:12px'; area().replaceChildren(box);
-      const help=safeText('p','aiq-muted','Make sure the backend is running and OPENAI_API_KEY is configured on the server.'); area().appendChild(help);
+      const help=safeText('p','aiq-muted','The optional AI service may be unavailable or out of quota. Your built-in quiz bank works without it.'); area().appendChild(help);
     } finally { button.disabled=false; button.textContent='↻ Generate another quiz'; }
   };
   function renderQuestion() {
