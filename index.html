@@ -3013,23 +3013,88 @@ main [style*="background-image"] .hero-overlay {
       setTopicAIStatus('✨ AI is creating fresh questions for all topics. Please wait a moment before answering.');
       renderQuiz();
 
-      const results = await Promise.allSettled(EXHIBITION_DATA.map(async (topic) => {
-        const response = await fetch(`${CYBER_SHIELD_API_BASE}/api/generate-quiz`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ topic: `${topic.title}. Focus on: ${topic.description} Key safety guidance: ${topic.tip}`, difficulty: 'Intermediate', count: 10 })
-        });
-        const payload = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(payload.error || `AI request failed (${response.status})`);
-        if (!Array.isArray(payload.questions) || payload.questions.length !== 10) throw new Error('AI returned an incomplete question set.');
-        const converted = payload.questions.map((q) => {
-          const ordered = ['A', 'B', 'C', 'D'].map(id => q.options.find(option => option.id === id)?.text || '');
-          const correct = ['A', 'B', 'C', 'D'].indexOf(q.answer);
-          if (!q.question || ordered.some(option => !option) || correct < 0) throw new Error('AI returned an invalid question.');
-          return { question: q.question, options: ordered, correct, explanation: q.explanation || '' };
-        });
-        return { topicId: topic.id, quiz: converted };
-      }));
+      
+const results = [];
+
+for (const topic of EXHIBITION_DATA) {
+  try {
+    console.log(`Generating quiz for: ${topic.title}`);
+
+    const response = await fetch(
+      `${CYBER_SHIELD_API_BASE}/api/generate-quiz`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          topic: `${topic.title}. Focus on: ${topic.description} Key safety guidance: ${topic.tip}`,
+          difficulty: 'Intermediate',
+          count: 10
+        })
+      }
+    );
+
+    const payload = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(
+        payload.error || `AI request failed (${response.status})`
+      );
+    }
+
+    if (
+      !Array.isArray(payload.questions) ||
+      payload.questions.length !== 10
+    ) {
+      throw new Error('AI returned an incomplete question set.');
+    }
+
+    const converted = payload.questions.map((q) => {
+      const ordered = ['A', 'B', 'C', 'D'].map(
+        id => q.options.find(option => option.id === id)?.text || ''
+      );
+
+      const correct = ['A', 'B', 'C', 'D'].indexOf(q.answer);
+
+      if (
+        !q.question ||
+        ordered.some(option => !option) ||
+        correct < 0
+      ) {
+        throw new Error('AI returned an invalid question.');
+      }
+
+      return {
+        question: q.question,
+        options: ordered,
+        correct,
+        explanation: q.explanation || ''
+      };
+    });
+
+    results.push({
+      status: 'fulfilled',
+      value: {
+        topicId: topic.id,
+        quiz: converted
+      }
+    });
+
+    console.log(`✓ Quiz generated for: ${topic.title}`);
+
+  } catch (error) {
+    console.error(
+      `Quiz generation failed for ${topic.title}:`,
+      error.message
+    );
+
+    results.push({
+      status: 'rejected',
+      reason: error
+    });
+  }
+}
 
       let refreshed = 0;
       results.forEach(result => {
