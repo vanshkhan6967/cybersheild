@@ -78,7 +78,7 @@ app.post("/api/generate-quiz", async (req, res) => {
       model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
       instructions: "Create accurate educational cyber-safety quizzes. Return only a JSON object with a questions array. Each question must contain question, options (four objects with id A/B/C/D and text), answer (A/B/C/D), and explanation. Exactly one answer must be correct.",
       text: { format: { type: "json_object" } },
-      input: `Generate exactly ${questionCount} multiple-choice questions.\nTopic: ${topic.trim()}\nDifficulty: ${difficulty}\nLanguage: English.`,
+      input: `Generate exactly ${questionCount} multiple-choice questions. Return the result as valid JSON.\nTopic: ${topic.trim()}\nDifficulty: ${difficulty}\nLanguage: English.`,
       max_output_tokens: 4500
     });
 
