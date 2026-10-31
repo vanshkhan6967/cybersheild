@@ -2348,6 +2348,52 @@ button, input, select, textarea { max-width: 100%; }
   .mobile-dock-item small{font-size:8px!important}
 }
 </style>
+
+<style id="topic-home-layout-2026">
+.topic-home-hero{position:relative;isolation:isolate;overflow:hidden;padding:clamp(22px,4vw,38px);border-radius:26px;background:linear-gradient(120deg,#101e34,#172d49 62%,#123d56);color:#f5f9ff;box-shadow:0 18px 44px rgba(10,30,55,.16)}
+.topic-home-hero:after{content:"";position:absolute;z-index:-1;right:7%;top:-55%;width:180px;height:230%;transform:rotate(32deg);border-left:1px solid rgba(100,220,255,.3);border-right:1px solid rgba(100,220,255,.12);background:linear-gradient(90deg,transparent,rgba(50,190,245,.12),transparent)}
+.topic-home-kicker,.topic-home-eyebrow{display:block;font-size:10px;font-weight:900;letter-spacing:.16em;color:#72d9ff}
+.topic-home-hero h2{margin-top:12px;max-width:720px;font-size:clamp(26px,4vw,42px);line-height:1.08;color:#fff!important;text-shadow:none!important}
+.topic-home-hero p{max-width:720px;margin-top:10px;color:#c6d6e8!important;font-size:14px;line-height:1.65}
+.topic-home-steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.topic-home-steps span{padding:8px 11px;border:1px solid rgba(139,210,245,.22);border-radius:999px;background:rgba(255,255,255,.07);color:#d9f3ff!important;font-size:10px;font-weight:800}
+.topic-home-count{padding:7px 10px;border-radius:9px;background:#fff0e2;color:#b33a00!important;font-size:10px;font-weight:900;letter-spacing:.08em}
+.topic-home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.topic-home-card{display:flex;min-width:0;flex-direction:column;align-items:stretch;gap:12px;padding:18px;text-align:left;border:1px solid rgba(255,106,0,.22);border-radius:20px;background:linear-gradient(150deg,#fff,#fff8f1);box-shadow:0 10px 28px rgba(83,48,20,.08);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.topic-home-card:hover{transform:translateY(-3px);border-color:#ff8a32;box-shadow:0 15px 32px rgba(255,106,0,.15)}
+.topic-home-card-top{display:flex;align-items:center;justify-content:space-between}
+.topic-home-icon{display:grid;width:48px;height:48px;place-items:center;border-radius:15px;background:#fff0e2;font-size:25px}
+.topic-home-number{font-size:11px;font-weight:900;letter-spacing:.12em;color:#bd7441}
+.topic-home-title{font-size:17px;line-height:1.25;font-weight:900;color:#24170e!important}
+.topic-home-description{min-height:62px;font-size:11px;line-height:1.55;color:#634c39!important}
+.topic-home-features{display:flex;flex-wrap:wrap;gap:5px}
+.topic-home-features span{padding:6px 7px;border-radius:8px;background:#fff0e2;color:#71411f!important;font-size:9px;font-weight:900}
+.topic-home-open{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid rgba(180,110,55,.18);font-size:11px;font-weight:900;color:#c34a08!important}
+.topic-back-button{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:9px 13px;border:1px solid rgba(255,106,0,.28);border-radius:12px;background:#fff8f1;color:#a94408!important;font-size:12px;font-weight:900}
+@media(max-width:900px){.topic-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:767px){
+  #view-home{gap:15px!important}
+  .topic-home-hero{padding:22px 17px!important;border-radius:19px!important}
+  .topic-home-hero h2{font-size:29px!important;max-width:340px}
+  .topic-home-hero p{font-size:12px!important;line-height:1.6!important}
+  .topic-home-steps{display:grid;grid-template-columns:1fr;gap:6px;margin-top:15px}
+  .topic-home-steps span{width:max-content;max-width:100%;font-size:9px;padding:7px 9px}
+  .topic-home-grid{grid-template-columns:1fr!important;gap:10px!important}
+  .topic-home-card{display:grid;grid-template-columns:44px minmax(0,1fr) auto;column-gap:10px;row-gap:7px;padding:13px!important;border-radius:16px!important}
+  .topic-home-card-top{display:contents}
+  .topic-home-icon{grid-column:1;grid-row:1/3;width:42px;height:42px;border-radius:13px;font-size:22px}
+  .topic-home-number{grid-column:3;grid-row:1;font-size:9px;align-self:start}
+  .topic-home-title{grid-column:2;grid-row:1;font-size:14px;align-self:end}
+  .topic-home-description{grid-column:2/4;grid-row:2;min-height:0;font-size:10px;line-height:1.45}
+  .topic-home-features{grid-column:1/4;grid-row:3}
+  .topic-home-features span{font-size:9px;padding:5px 7px}
+  .topic-home-open{grid-column:1/4;grid-row:4;padding-top:8px;font-size:10px}
+  .topic-home-count{font-size:9px}
+  .topic-back-button{min-height:42px}
+}
+@media(prefers-reduced-motion:reduce){.topic-home-card{transition:none}}
+</style>
+
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
@@ -2421,6 +2467,23 @@ button, input, select, textarea { max-width: 100%; }
         <span>Reset All Progress</span>
       </button>
     </div>
+
+    <!-- TOPIC HOME: visitors choose one of the five learning paths -->
+    <section id="view-home" class="space-y-5">
+      <div class="topic-home-hero">
+        <span class="topic-home-kicker">🛡️ CYBER SHIELD LEARNING HUB</span>
+        <h2>Choose a Topic. Test Your Cyber Skills.</h2>
+        <p>Explore any of the five digital-safety topics. Each topic has a short guide, its own interactive mini-game, and a scenario-based quiz.</p>
+        <div class="topic-home-steps">
+          <span>01 · Select a topic</span><span>02 · Play its mini-game</span><span>03 · Answer its quiz</span>
+        </div>
+      </div>
+      <div class="flex items-end justify-between gap-3 px-1">
+        <div><p class="topic-home-eyebrow">YOUR LEARNING PATHS</p><h3 class="text-xl sm:text-2xl font-black">Explore all 5 topics</h3></div>
+        <span class="topic-home-count">5 TOPICS</span>
+      </div>
+      <div id="topic-home-grid" class="topic-home-grid" aria-label="Choose a cyber safety topic"></div>
+    </section>
 
     <!-- GAMIFIED VISITOR HUD -->
     <section id="game-hud" class="game-hud">
@@ -2582,7 +2645,8 @@ button, input, select, textarea { max-width: 100%; }
     </section>
 
     <!-- VIEW 2: TOPIC EXHIBITION HUB & QUIZ SECTION -->
-    <section id="view-topics" class="space-y-8">
+    <section id="view-topics" class="hidden space-y-8">
+      <button type="button" onclick="switchView('topics')" class="topic-back-button">← All five topics</button>
       <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="space-y-2 text-center md:text-left">
           <div class="inline-flex items-center gap-1.5 bg-white/25 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white">
@@ -2649,7 +2713,7 @@ button, input, select, textarea { max-width: 100%; }
           <!-- INTERACTIVE MINI GAME SIMULATOR -->
           <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">🎮 Interactive Mini-Simulator</h3>
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">🎮 Topic Mini-Game &amp; Interactive Simulator</h3>
               <span class="text-[10px] font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100 uppercase">Hands-on</span>
             </div>
             <div id="demo-container"></div>
@@ -3031,7 +3095,9 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
 
     window.onload = function() {
       loadSavedProgress();
+      renderHomeTopics();
       renderTopicTabs();
+      switchView('topics');
       renderComplianceChecklist();
       loadTopic(currentState.currentTopicIndex || 0);
       updateHeaderStats();
@@ -3330,29 +3396,51 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       saveProgress();
     }
 
+    function renderHomeTopics() {
+      const grid = document.getElementById('topic-home-grid');
+      if (!grid) return;
+      grid.innerHTML = EXHIBITION_DATA.map((topic, index) => {
+        const completed = Boolean(currentState.badgesEarned && currentState.badgesEarned[index]);
+        return `
+          <button type="button" class="topic-home-card" onclick="switchTopic(${index})" aria-label="Open ${escapeQuizHTML(topic.title)}">
+            <span class="topic-home-card-top"><span class="topic-home-icon">${topic.badgeIcon}</span><span class="topic-home-number">0${index + 1}</span></span>
+            <span class="topic-home-title">${escapeQuizHTML(topic.title)}</span>
+            <span class="topic-home-description">${escapeQuizHTML(topic.description)}</span>
+            <span class="topic-home-features"><span>📖 Learn</span><span>🎮 Mini-game</span><span>🧠 Quiz</span></span>
+            <span class="topic-home-open">${completed ? '⭐ Badge earned · Open topic' : 'Explore this topic'} <span aria-hidden="true">↗</span></span>
+          </button>
+        `;
+      }).join('');
+    }
+
     function switchView(viewName) {
-      currentState.view = viewName;
-      document.getElementById('mobile-dock-topics')?.classList.toggle('is-active', viewName !== 'rules');
-      document.getElementById('mobile-dock-rules')?.classList.toggle('is-active', viewName === 'rules');
+      const isRules = viewName === 'rules';
+      const isDetail = viewName === 'topic-detail';
+      currentState.view = isRules ? 'rules' : isDetail ? 'topic-detail' : 'topics';
+
+      const homeSec = document.getElementById('view-home');
       const rulesSec = document.getElementById('view-rules');
       const topicsSec = document.getElementById('view-topics');
       const tabsBar = document.getElementById('topic-tabs-bar');
       const rulesBtn = document.getElementById('nav-rules-btn');
       const topicsBtn = document.getElementById('nav-topics-btn');
 
-      if (viewName === 'rules') {
-        rulesSec.classList.remove('hidden');
-        topicsSec.classList.add('hidden');
-        tabsBar.classList.add('hidden');
+      homeSec?.classList.toggle('hidden', isRules || isDetail);
+      rulesSec.classList.toggle('hidden', !isRules);
+      topicsSec.classList.toggle('hidden', !isDetail);
+      tabsBar.classList.toggle('hidden', !isDetail);
+
+      document.getElementById('mobile-dock-topics')?.classList.toggle('is-active', !isRules);
+      document.getElementById('mobile-dock-rules')?.classList.toggle('is-active', isRules);
+
+      if (isRules) {
         rulesBtn.className = "px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20";
         topicsBtn.className = "px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
       } else {
-        rulesSec.classList.add('hidden');
-        topicsSec.classList.remove('hidden');
-        tabsBar.classList.remove('hidden');
         topicsBtn.className = "px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20";
         rulesBtn.className = "px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 border bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
       }
+      if (!isDetail && !isRules) window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderTopicTabs() {
@@ -3380,9 +3468,10 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
         if (currentState.visitedTopics.length === 3) markMission("explore");
       }
       currentState.currentQuizIndex = 0;
-      switchView('topics');
+      switchView('topic-detail');
       renderTopicTabs();
       loadTopic(index);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function loadTopic(index) {
