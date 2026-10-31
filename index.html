@@ -2893,6 +2893,25 @@ button, input, select, textarea { max-width: 100%; }
 }
 </style>
 
+
+<style id="remove-red-topic-panels">
+/* Keep every opened topic information panel on the same dark navy card surface. */
+#view-topics #topic-explanation-dangers,
+#view-topics .bg-rose-50,
+#view-topics .bg-rose-50\\/50,
+#view-topics .bg-rose-50\\/50 *,
+#view-topics #demo-container .bg-rose-50,
+#view-topics #demo-container .bg-rose-50\\/50 {
+  background: linear-gradient(145deg, #172b43 0%, #102036 100%) !important;
+  background-color: #14263d !important;
+  border-color: rgba(105,185,230,.24) !important;
+  color: #dce9f6 !important;
+}
+#view-topics #topic-explanation-dangers {
+  box-shadow: inset 3px 0 0 rgba(105,185,230,.55) !important;
+}
+</style>
+
 </head>
 <body class="h-full bg-slate-50 text-slate-800 bg-grid-pattern flex flex-col min-h-screen">
 
