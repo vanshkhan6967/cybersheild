@@ -1964,6 +1964,13 @@ button,a,[role="button"]{-webkit-tap-highlight-color:transparent}
   <!-- MAIN APP CONTAINER -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
 
+    <!-- MOBILE RESET BUTTON -->
+    <div class="md:hidden mb-4">
+      <button type="button" onclick="openResetModal()" class="w-full flex items-center justify-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-extrabold text-rose-700 shadow-sm active:bg-rose-100">
+        <span aria-hidden="true">🔄</span>
+        <span>Reset All Progress</span>
+      </button>
+    </div>
 
     <!-- GAMIFIED VISITOR HUD -->
     <section id="game-hud" class="game-hud">
