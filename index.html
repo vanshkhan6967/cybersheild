@@ -5335,3 +5335,30 @@ main [style*="--fx-hero-image"] {
   }
   @media print { #certificate-modal > button.certificate-close-btn { display:none !important; } }
 </style>
+
+
+<style id="all-cards-sections-white-typography">
+  /* Consistent white typography across every exhibition section and its cards. */
+  #view-home, #view-rules, #view-topics, #quick-challenge, #game-hud {
+    color: #ffffff !important;
+  }
+  #view-home :is(h1,h2,h3,h4,h5,h6,p,span,label,li,strong,small,em),
+  #view-rules :is(h1,h2,h3,h4,h5,h6,p,span,label,li,strong,small,em),
+  #view-topics :is(h1,h2,h3,h4,h5,h6,p,span,label,li,strong,small,em),
+  #quick-challenge :is(h1,h2,h3,h4,h5,h6,p,span,label,li,strong,small,em),
+  #game-hud :is(h1,h2,h3,h4,h5,h6,p,span,label,li,strong,small,em),
+  #view-home :is(.topic-home-card,.card,.mission-card,.rounded-xl,.rounded-2xl) *,
+  #view-rules :is(.card,.rounded-xl,.rounded-2xl) *,
+  #view-topics :is(.topic-card,.card,.mission-card,.rounded-xl,.rounded-2xl) *,
+  #quick-challenge :is(.card,.rounded-xl,.rounded-2xl) *,
+  #game-hud :is(.card,.rounded-xl,.rounded-2xl) * {
+    color: #ffffff !important;
+  }
+  /* Keep form fields readable while typing and preserve the existing card backgrounds. */
+  #view-home input, #view-home textarea, #view-home select,
+  #view-rules input, #view-rules textarea, #view-rules select,
+  #view-topics input, #view-topics textarea, #view-topics select,
+  #quick-challenge input, #quick-challenge textarea, #quick-challenge select {
+    color: #ffffff !important;
+  }
+</style>
