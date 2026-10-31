@@ -2913,6 +2913,32 @@ button, input, select, textarea { max-width: 100%; }
 </style>
 
 
+
+<style id="topic-photo-background-behind-cards">
+/* Put the active topic photo behind the full content area; keep cards readable above it. */
+#view-topics {
+  position: relative !important;
+  isolation: isolate !important;
+  padding: clamp(14px, 2vw, 28px) !important;
+  border-radius: 24px !important;
+  background-color: #091321 !important;
+  background-image:
+    linear-gradient(rgba(4,12,24,.48), rgba(4,12,24,.68)),
+    var(--fx-topic-page-image) !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
+}
+#view-topics .bg-white,
+#view-topics .bg-slate-50,
+#view-topics .bg-rose-50,
+#view-topics .bg-rose-50\/50 {
+  background: rgba(8,20,35,.82) !important;
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+}
+</style>
+
 <style id="restore-original-topic-photo-hero">
 /* Restore the original rotating photo background for each opened topic. */
 #view-topics > div:first-child {
@@ -4774,7 +4800,7 @@ button[class*="bg-blue"]::after,button[class*="bg-cyan"]::after,button[class*="b
     const hero=document.querySelector('#view-topics > div:first-child');
     if(!hero) return;
     const item=heroImages[index]||heroImages[0];
-    hero.style.setProperty('--fx-hero-image',`url("${item.url}")`);
+    hero.style.setProperty('--fx-hero-image',`url("${item.url}")`);\n    const topicView=document.getElementById("view-topics");\n    if(topicView) topicView.style.setProperty("--fx-topic-page-image",`url("${item.url}")`);
     hero.classList.remove('fx-light','fx-enter');
     void hero.offsetWidth;
     if(item.light) hero.classList.add('fx-light');
