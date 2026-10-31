@@ -5122,3 +5122,67 @@ main [style*="--fx-hero-image"] {
     }
   }
 </style>
+
+
+<style id="results-panel-phone-overflow-fix">
+  @media screen and (max-width: 767px) {
+    /* Make the actual Results/Certificate panel fit the available phone viewport. */
+    #certificate-modal:not(.hidden) {
+      padding: 62px 8px 8px !important;
+      overflow: hidden !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+    }
+    #certificate-modal:not(.hidden) > div {
+      box-sizing: border-box !important;
+      flex: 1 1 0% !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: calc(100dvh - 72px - env(safe-area-inset-top)) !important;
+      margin: 0 auto !important;
+      padding: 10px !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+    #certificate-modal #printable-certificate-card {
+      box-sizing: border-box !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+      padding: 8px !important;
+      overflow: hidden !important;
+    }
+    #certificate-modal #printable-certificate-card .grid,
+    #certificate-modal #printable-certificate-card .flex {
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+    #certificate-modal #printable-certificate-card .grid.grid-cols-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    #certificate-modal #cert-badges-grid {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 5px !important;
+    }
+    #certificate-modal .no-print.mt-6 {
+      margin-top: 10px !important;
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 7px !important;
+    }
+    #certificate-modal .no-print.mt-6 button {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      justify-content: center !important;
+      white-space: normal !important;
+    }
+  }
+</style>
