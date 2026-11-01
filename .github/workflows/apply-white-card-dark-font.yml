@@ -1,0 +1,51 @@
+name: Apply white-card dark typography
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  apply-style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply targeted card typography fix
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          marker = 'white-card-dark-font-final'
+
+          if marker not in text:
+              css = r'''\n<style id="white-card-dark-font-final">\n  /* Keep text dark on white/light cards, especially Golden Rules.\n     Accent-colored controls, icons and badges are intentionally untouched. */\n  #view-rules .bg-white .text-slate-900,\n  #view-rules .bg-white .text-slate-800,\n  #view-rules .bg-white .text-slate-700,\n  #view-rules .bg-white .text-slate-600,\n  #view-rules .bg-slate-50 .text-slate-900,\n  #view-rules .bg-slate-50 .text-slate-800,\n  #view-rules .bg-slate-50 .text-slate-700,\n  #view-rules .bg-slate-50 .text-slate-600,\n  #view-rules .bg-gray-50 .text-gray-900,\n  #view-rules .bg-gray-50 .text-gray-800,\n  #view-rules .bg-gray-50 .text-gray-700,\n  #view-rules .bg-gray-50 .text-gray-600 {\n    color: #1f2937 !important;\n  }\n\n  #view-rules > div:not(:first-child) h3,\n  #view-rules > div:not(:first-child) p,\n  #view-rules > div:not(:first-child) li,\n  #view-rules > div:not(:first-child) label {\n    color: #1f2937 !important;\n  }\n\n  #view-rules > div:first-child h2,\n  #view-rules > div:first-child p {\n    color: #111827 !important;\n  }\n\n  /* Homepage white Zone cards */\n  #view-home .topic-home-card,\n  #view-home .topic-home-card .topic-home-title,\n  #view-home .topic-home-card .topic-home-description,\n  #view-home .topic-home-card .topic-home-features span {\n    color: #171717 !important;\n  }\n</style>\n'''
+              text = text.replace('</head>', css + '</head>', 1)
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit typography fix
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No change needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Fix dark font on white cards and Golden Rules"
+          git push
+
+      - name: Remove temporary workflow
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/apply-white-card-dark-font.yml
+          git commit -m "Remove temporary typography workflow"
+          git push
