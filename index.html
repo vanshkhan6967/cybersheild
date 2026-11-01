@@ -5402,3 +5402,16 @@ main [style*="--fx-hero-image"] {
     color: #1f2937 !important;
   }
 </style>
+
+
+<style id="compliance-rating-black-card-white-text">
+  /* Compliance Rating card: retain its dark background and make all text white. */
+  #view-rules #compliance-score-display,
+  #view-rules #compliance-score-display * {
+    color: #ffffff !important;
+  }
+  #view-rules .bg-blue-50:has(#compliance-score-display),
+  #view-rules .bg-blue-50:has(#compliance-score-display) * {
+    color: #ffffff !important;
+  }
+</style>
