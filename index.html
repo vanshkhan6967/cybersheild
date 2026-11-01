@@ -5997,3 +5997,65 @@ main [style*="--fx-hero-image"] {
   }
 }
 </style>
+
+
+<style id="certificate-print-white-paper-final-fix">
+/* Prevent the site's dark theme from printing as a black page. */
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #111827 !important;
+    print-color-adjust: economy !important;
+    -webkit-print-color-adjust: economy !important;
+  }
+
+  #certificate-modal,
+  #certificate-modal > div {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  #printable-certificate-card {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #111827 !important;
+    border-color: #b45309 !important;
+    box-shadow: none !important;
+    print-color-adjust: economy !important;
+    -webkit-print-color-adjust: economy !important;
+  }
+
+  #printable-certificate-card * {
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  #printable-certificate-card .md\:col-span-7 {
+    background: #fffaf0 !important;
+    border-color: #e7c98b !important;
+  }
+
+  #printable-certificate-card .grid.grid-cols-4 > div {
+    background: #f8fafc !important;
+    border-color: #dbe2ea !important;
+  }
+
+  #printable-certificate-card .absolute.inset-0 {
+    display: none !important;
+  }
+
+  #certificate-modal,
+  #certificate-modal > div,
+  #printable-certificate-card,
+  #printable-certificate-card * {
+    -webkit-print-color-adjust: economy !important;
+    print-color-adjust: economy !important;
+  }
+}
+</style>
