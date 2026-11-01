@@ -5917,3 +5917,83 @@ main [style*="--fx-hero-image"] {
   }
 }
 </style>
+
+
+<style id="certificate-a4-portrait-print-override">
+/* Portrait A4 override: keep the full certificate on one vertical sheet. */
+@media print {
+  @page {
+    size: A4 portrait !important;
+    margin: 0 !important;
+  }
+
+  html, body {
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #certificate-modal {
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 0 !important;
+    max-height: 297mm !important;
+  }
+
+  #printable-certificate-card {
+    position: fixed !important;
+    top: 8mm !important;
+    left: 8mm !important;
+    width: 194mm !important;
+    height: 281mm !important;
+    min-height: 0 !important;
+    max-height: 281mm !important;
+    padding: 7mm 8mm !important;
+    gap: 3mm !important;
+    overflow: hidden !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    break-before: avoid-page !important;
+    break-after: avoid-page !important;
+    break-inside: avoid-page !important;
+  }
+
+  #printable-certificate-card img {
+    max-height: 19mm !important;
+  }
+
+  #printable-certificate-card h2 {
+    font-size: 23pt !important;
+    line-height: 1.08 !important;
+  }
+
+  #printable-certificate-card .relative.z-10.border-t-2 {
+    grid-template-columns: 1fr !important;
+    gap: 4mm !important;
+    padding-top: 4mm !important;
+  }
+
+  #printable-certificate-card .md\:col-span-5,
+  #printable-certificate-card .md\:col-span-7 {
+    grid-column: 1 / -1 !important;
+  }
+
+  #printable-certificate-card .md\:col-span-5 {
+    justify-content: center !important;
+  }
+
+  #printable-certificate-card .md\:col-span-7 {
+    padding: 3mm !important;
+  }
+
+  #printable-certificate-card .grid.grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  #printable-certificate-card .grid.grid-cols-4 > div {
+    padding: 2mm 1mm !important;
+  }
+}
+</style>
