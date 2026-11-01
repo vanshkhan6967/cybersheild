@@ -5585,3 +5585,50 @@ main [style*="--fx-hero-image"] {
     .section-slide-in { animation: none !important; }
   }
 </style>
+
+
+<style id="stronger-section-slide-animations-v2">
+  /* More noticeable page transitions plus a gentle stagger on section content. */
+  .section-slide-in {
+    animation: cyberSectionSlideInStrong .68s cubic-bezier(.16,1,.3,1) both !important;
+    will-change: transform, opacity, filter;
+  }
+  @keyframes cyberSectionSlideInStrong {
+    0% {
+      opacity: 0;
+      transform: translate3d(64px, 12px, 0) scale(.975);
+      filter: blur(3px);
+    }
+    65% { opacity: 1; filter: blur(0); }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+    }
+  }
+  .section-slide-in > * {
+    animation: cyberSectionContentRise .56s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .section-slide-in > *:nth-child(1) { animation-delay: .04s; }
+  .section-slide-in > *:nth-child(2) { animation-delay: .10s; }
+  .section-slide-in > *:nth-child(3) { animation-delay: .16s; }
+  .section-slide-in > *:nth-child(4) { animation-delay: .22s; }
+  .section-slide-in > *:nth-child(5) { animation-delay: .28s; }
+  .section-slide-in > *:nth-child(n+6) { animation-delay: .32s; }
+  @keyframes cyberSectionContentRise {
+    from { opacity: 0; transform: translate3d(0, 26px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  @media (max-width: 767px) {
+    .section-slide-in {
+      animation-duration: .56s !important;
+    }
+    .section-slide-in > * {
+      animation-duration: .46s;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .section-slide-in,
+    .section-slide-in > * { animation: none !important; }
+  }
+</style>
