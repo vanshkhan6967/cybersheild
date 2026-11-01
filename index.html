@@ -3988,6 +3988,14 @@ Presented for distinguished excellence and verified completion of the Cyber Shie
       topicsSec.classList.toggle('hidden', !isDetail);
       tabsBar.classList.toggle('hidden', !isDetail);
 
+      // Re-trigger a smooth slide-in whenever the user changes sections.
+      const activeSection = isRules ? rulesSec : isDetail ? topicsSec : homeSec;
+      if (activeSection) {
+        activeSection.classList.remove('section-slide-in');
+        void activeSection.offsetWidth;
+        activeSection.classList.add('section-slide-in');
+      }
+
       document.getElementById('mobile-dock-topics')?.classList.toggle('is-active', !isRules);
       document.getElementById('mobile-dock-rules')?.classList.toggle('is-active', isRules);
 
@@ -5549,5 +5557,31 @@ main [style*="--fx-hero-image"] {
     .quiz-option:active, .answer-option:active, .choice-btn:active {
       transform: none !important;
     }
+  }
+</style>
+
+
+<style id="section-slide-animations-phone-pc">
+  /* Smooth section transitions for desktop and mobile navigation. */
+  .section-slide-in {
+    animation: cyberSectionSlideIn .42s cubic-bezier(.22,.75,.25,1) both;
+    will-change: transform, opacity;
+  }
+  @keyframes cyberSectionSlideIn {
+    from { opacity: 0; transform: translate3d(0, 22px, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  @media (min-width: 768px) {
+    .section-slide-in {
+      animation-duration: .48s;
+    }
+  }
+  @media (max-width: 767px) {
+    .section-slide-in {
+      animation-duration: .34s;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .section-slide-in { animation: none !important; }
   }
 </style>
