@@ -5711,3 +5711,209 @@ main [style*="--fx-hero-image"] {
     -webkit-text-fill-color: #ffffff !important;
   }
 </style>
+
+
+<style id="certificate-one-page-print-final">
+/* Print the certificate from any site page, on one A4 landscape sheet. */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html, body {
+    width: 297mm !important;
+    height: 210mm !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  #certificate-modal,
+  #certificate-modal > div,
+  #printable-certificate-card,
+  #printable-certificate-card * {
+    visibility: visible !important;
+  }
+
+  #certificate-modal {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+  }
+
+  #certificate-modal > .certificate-close-btn,
+  #certificate-modal button,
+  #certificate-modal input,
+  #certificate-modal .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  #certificate-modal > div {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  #printable-certificate-card {
+    position: fixed !important;
+    top: 8mm !important;
+    left: 8mm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    gap: 2.5mm !important;
+    width: 281mm !important;
+    height: 194mm !important;
+    min-height: 0 !important;
+    max-height: 194mm !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 6mm 8mm !important;
+    overflow: hidden !important;
+    border: 3px double #b45309 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    break-before: avoid-page !important;
+    break-after: avoid-page !important;
+    break-inside: avoid-page !important;
+  }
+
+  #printable-certificate-card > * {
+    flex-shrink: 0 !important;
+    min-width: 0 !important;
+  }
+
+  #printable-certificate-card .absolute.inset-0 {
+    display: none !important;
+  }
+
+  #printable-certificate-card img {
+    max-width: 100% !important;
+    max-height: 15mm !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  #printable-certificate-card h2 {
+    font-size: 25pt !important;
+    line-height: 1.08 !important;
+    margin-top: 1mm !important;
+  }
+
+  #printable-certificate-card h3 {
+    font-size: 11pt !important;
+  }
+
+  #printable-certificate-card p {
+    line-height: 1.3 !important;
+  }
+
+  #printable-certificate-card .relative.z-10.flex.flex-col.items-center {
+    margin-bottom: 1mm !important;
+    gap: 1mm !important;
+  }
+
+  #printable-certificate-card .relative.z-10.py-3 {
+    padding-top: 2mm !important;
+    padding-bottom: 2mm !important;
+  }
+
+  #printable-certificate-card .relative.z-10.border-t-2 {
+    display: grid !important;
+    grid-template-columns: 5fr 7fr !important;
+    gap: 5mm !important;
+    padding-top: 4mm !important;
+    margin-top: 1mm !important;
+  }
+
+  #printable-certificate-card .md\:col-span-5,
+  #printable-certificate-card .md\:col-span-7 {
+    grid-column: auto !important;
+    min-width: 0 !important;
+  }
+
+  #printable-certificate-card .md\:col-span-7 {
+    padding: 3mm !important;
+  }
+
+  #printable-certificate-card .grid.grid-cols-4 {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 2mm !important;
+  }
+
+  #printable-certificate-card .grid.grid-cols-4 > div {
+    min-width: 0 !important;
+    padding: 2mm !important;
+  }
+
+  #printable-certificate-card,
+  #printable-certificate-card * {
+    color: #111827 !important;
+    box-sizing: border-box !important;
+  }
+
+  #printable-certificate-card .text-blue-600,
+  #printable-certificate-card .text-blue-900 {
+    color: #1e40af !important;
+  }
+
+  #printable-certificate-card .text-amber-700,
+  #printable-certificate-card .text-amber-600,
+  #printable-certificate-card .text-amber-800,
+  #printable-certificate-card .text-amber-900 {
+    color: #92400e !important;
+  }
+
+  #printable-certificate-card .text-emerald-600 {
+    color: #047857 !important;
+  }
+
+  #printable-certificate-card .text-purple-600 {
+    color: #6b21a8 !important;
+  }
+
+  body::before,
+  body::after,
+  .cyber-particle {
+    display: none !important;
+  }
+}
+</style>
