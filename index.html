@@ -5429,3 +5429,82 @@ main [style*="--fx-hero-image"] {
     }
   }
 </style>
+
+
+<style id="background-animation-repair-v1">
+  /* Stable animated background layers: visible behind content, never blocking taps. */
+  html, body {
+    min-height: 100%;
+  }
+  body {
+    position: relative;
+    isolation: isolate;
+    background-color: #050810 !important;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    pointer-events: none;
+    opacity: .22;
+    background-image:
+      linear-gradient(rgba(24,191,255,.075) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(24,191,255,.075) 1px, transparent 1px);
+    background-size: 42px 42px;
+    background-position: 0 0, 0 0;
+    animation: cyberGridDriftFixed 24s linear infinite;
+    will-change: background-position;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    display: block;
+    width: min(42vw, 420px);
+    height: min(42vw, 420px);
+    min-width: 220px;
+    min-height: 220px;
+    left: 4%;
+    top: 16%;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(24,191,255,.16) 0%, rgba(8,124,255,.07) 38%, transparent 72%);
+    filter: blur(12px);
+    animation: cyberAmbientFloatFixed 16s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes cyberGridDriftFixed {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 42px 42px, 42px 42px; }
+  }
+  @keyframes cyberAmbientFloatFixed {
+    0% { transform: translate3d(0, 0, 0) scale(.88); }
+    50% { transform: translate3d(28vw, 18vh, 0) scale(1.08); }
+    100% { transform: translate3d(48vw, 34vh, 0) scale(.96); }
+  }
+  @media (max-width: 767px) {
+    body::before {
+      opacity: .13;
+      background-size: 34px 34px;
+      animation-duration: 34s;
+    }
+    body::after {
+      width: 240px;
+      height: 240px;
+      min-width: 240px;
+      min-height: 240px;
+      left: -70px;
+      top: 20%;
+      filter: blur(18px);
+      animation-duration: 24s;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body::before, body::after {
+      animation: none !important;
+      will-change: auto !important;
+    }
+  }
+</style>
