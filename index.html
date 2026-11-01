@@ -5508,3 +5508,46 @@ main [style*="--fx-hero-image"] {
     }
   }
 </style>
+
+
+<style id="tap-animation-phone-pc-v1">
+  /* Clear press feedback for mouse clicks and phone/tablet taps. */
+  button, a, [role="button"], .topic-home-card, .topic-card,
+  .quiz-option, .answer-option, .choice-btn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform .16s cubic-bezier(.2,.8,.2,1),
+                filter .16s ease, box-shadow .16s ease,
+                background-color .16s ease !important;
+  }
+  button:active, a:active, [role="button"]:active,
+  .topic-home-card:active, .topic-card:active,
+  .quiz-option:active, .answer-option:active, .choice-btn:active {
+    transform: scale(.96) !important;
+    filter: brightness(1.16) saturate(1.12);
+    box-shadow: 0 0 0 3px rgba(24,191,255,.22),
+                0 0 20px rgba(24,191,255,.28) !important;
+  }
+  button:focus-visible, a:focus-visible, [role="button"]:focus-visible {
+    outline: 3px solid rgba(24,191,255,.8);
+    outline-offset: 3px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    button:hover, a:hover, [role="button"]:hover { filter: brightness(1.06); }
+  }
+  @media (hover: none), (pointer: coarse) {
+    button, a, [role="button"] { transition-duration: .12s !important; }
+    button:active, a:active, [role="button"]:active {
+      transform: scale(.95) !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    button, a, [role="button"], .topic-home-card, .topic-card,
+    .quiz-option, .answer-option, .choice-btn { transition: none !important; }
+    button:active, a:active, [role="button"]:active,
+    .topic-home-card:active, .topic-card:active,
+    .quiz-option:active, .answer-option:active, .choice-btn:active {
+      transform: none !important;
+    }
+  }
+</style>
