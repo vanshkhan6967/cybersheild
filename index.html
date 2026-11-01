@@ -5332,6 +5332,45 @@ main [style*="--fx-hero-image"] {
 }
 </style>
 
+
+<style id="certificate-a4-portrait-balanced-margins">
+@media print {
+  @page { size: A4 portrait; margin: 0 !important; }
+
+  html, body, #certificate-modal {
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #printable-certificate-card {
+    position: absolute !important;
+    top: 10mm !important;
+    left: 10mm !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 190mm !important;
+    height: 277mm !important;
+    min-height: 277mm !important;
+    max-height: 277mm !important;
+    margin: 0 !important;
+    padding: 7mm !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    break-before: avoid-page !important;
+    break-after: avoid-page !important;
+    break-inside: avoid-page !important;
+  }
+}
+</style>
+
 </body>
 </html>
 
